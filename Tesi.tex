@@ -1,5 +1,15 @@
 \documentclass[a4paper, 12pt]{article}
 \usepackage{latexsym}
+\newtheorem{theorem}{Teorema}
+\newtheorem{lemma}{Lemma}
+
+% Ambiente per le dimostrazioni
+\newenvironment{proof}
+    {\textit{Dim.}
+    }
+    {\begin{flushright}$\bullet$\end{flushright}
+    }
+
 \begin{document}
 La logica modale è un'estensione della logica classica.
 Studieremo la validità di argomenti che comprendono le modalità.
@@ -12,7 +22,7 @@ e definiamo una sua estensione\footnote{Definire cos'è un'estensione, à la Tor
 \section{Definizione del linguaggio di $CM$}
 Usiamo come base quella di $CP$. Una sua definizione la si può trovare in [Tortora].
 Aggiungiamo un nuovo operatore monadico\footnote{decidere se è più bello monadico o unario}
-che indicheremo con $\Box$.
+che indicheremo con il simbolo $\Box$.
 
 \section{Definizione dell'apparato deduttivo per $CM$}
 Aggiungiamo anche una nuova regola di deduzione, chiamata necessitazione:
@@ -23,6 +33,59 @@ L'operatore che vogliamo aggiungere, ha una natura non verofunzionale. Vale a di
 che la verità o falsità della proposizione $\Box \alpha$ non dipende solo
 dal valore di verità di $\alpha$.
 
-Per quanto riguarda gli assiomi, la situazione si complica. Infatti 
+Per quanto riguarda gli assiomi, la situazione si complica. Infatti sono stati sviluppati moltissimi sistemi di logica modale,
+ognuno che rispecchiasse una certa visione delle proprietà della modalità che si considera.
+Tutti ereditano da $CP$ i suoi assiomi, e ne aggiungono di nuovi.
+Noi ci occuperemo, in particolare di tre tipi di sistemi formali:
+\begin{itemize}
+\item Sistema $T$
+\item Sistema $S4$
+\item Sistema $S5$
+\end{itemize}
+
+Tali sistemi sono in relazione tra di loro, infatti, il Sistema $T$ è contenuto in $S4$ che è contenuto in $S5$.
+Tutti i sistemi hanno lo stesso linguaggio e le stesse regole di deduzione. Ci\`o che cambia sono gli assiomi.
+
+Partiamo con l'analizzare gli assiomi del sistema pi\`u debole, il sistema $T$.
+
+\section{Il Sistema $T$}
+Il Sistema $T$ aggiunge i seguenti assiomi:
+\begin{itemize}
+\item $\Box \alpha \rightarrow \alpha$ (Assioma di necessit\`a)
+\item $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
+\end{itemize}
+
+\section{Il Sistema $S4$}
+Il Sistema $S4$ aggiunge al Sistema $T$ il seguente assioma, detto assioma $S4$:
+
+$\Box \alpha \rightarrow \Box \Box \alpha$
+
+\section{Il Sistema $S5$}
+Il Sistema $S5$ aggiunge al Sistema $T$ il seguente assioma, detto assioma $S5$:
+
+$\Diamond \alpha \rightarrow \Box \Diamond \alpha$
+
+\begin{lemma}
+$\vdash \Diamond \Box x \rightarrow \Box x$ in $S5$
+\end{lemma}
+\begin{proof}
+
+\begin{tabular} { c c|c }
+(1) & $\Diamond \neg x \rightarrow \Box \Diamond \neg x$ & sostituzione di $\neg x$ in assioma $S5$ \\
+(2) & $\neg \Box \Diamond \neg x \rightarrow \neg \Diamond \neg x$ & contrapposta di \\
+(3) & $\Diamond \neg \Diamond \neg x \rightarrow \neg \Diamond \neg x$ & definizione di $\Diamond$ \\
+(4) & $\Diamond \Box x \rightarrow \Box x$ & definizione di $\Diamond$ e $\Box$
+\end{tabular}
+\end{proof}
+
+\begin{theorem}
+$T + S5 \rightarrow T + S4$, ovvero Il sistema $S5$ contiene il sistema $S4$
+\end{theorem}
+\begin{proof}
+Lasciato come esercizio al lettore
+\end{proof}
+
+\section{Modalit\`a e funzioni modali}
+DA SCRIVERE
 
 \end{document}
