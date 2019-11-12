@@ -1,13 +1,27 @@
 \documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
 \usepackage{latexsym}
+\newtheorem{axiom}{Assioma}
 \newtheorem{theorem}{Teorema}
 \newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definizione}
 
 % Ambiente per le dimostrazioni
 \newenvironment{proof}
     {\textit{Dim.}
     }
     {\begin{flushright}$\bullet$\end{flushright}
+    }
+
+% Ambiente per le dimostrazioni formali formali
+\newenvironment{formal_proof}
+    {\begin{proof}
+
+    % \begin{tabular} {c c|c}
+    }
+    {%\end{tabular}
+
+    \end{proof}
     }
 
 \begin{document}
@@ -27,7 +41,7 @@ che indicheremo con il simbolo $\Box$.
 \section{Definizione dell'apparato deduttivo per $CM$}
 Aggiungiamo anche una nuova regola di deduzione, chiamata necessitazione:
 
-$\alpha \vdash \Box \alpha$
+$$x \vdash \Box x$$
 
 L'operatore che vogliamo aggiungere, ha una natura non verofunzionale. Vale a dirsi,
 che la verità o falsità della proposizione $\Box \alpha$ non dipende solo
@@ -44,48 +58,131 @@ Noi ci occuperemo, in particolare di tre tipi di sistemi formali:
 \end{itemize}
 
 Tali sistemi sono in relazione tra di loro, infatti, il Sistema $T$ è contenuto in $S4$ che è contenuto in $S5$.
-Tutti i sistemi hanno lo stesso linguaggio e le stesse regole di deduzione. Ci\`o che cambia sono gli assiomi.
+Tutti i sistemi hanno lo stesso linguaggio e le stesse regole di deduzione. Ciò che cambia sono gli assiomi.
 
-Partiamo con l'analizzare gli assiomi del sistema pi\`u debole, il sistema $T$.
+Partiamo con l'analizzare gli assiomi del sistema più debole, il sistema $T$.
 
 \section{Il Sistema $T$}
 Il Sistema $T$ aggiunge i seguenti assiomi:
 \begin{itemize}
-\item $\Box \alpha \rightarrow \alpha$ (Assioma di necessit\`a)
-\item $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
+\item \textbf{Assioma 1} $\Box \alpha \rightarrow \alpha$ (Assioma di necessità)
+\item \textbf{Assioma 2} $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
 \end{itemize}
 
 \section{Il Sistema $S4$}
 Il Sistema $S4$ aggiunge al Sistema $T$ il seguente assioma, detto assioma $S4$:
 
-$\Box \alpha \rightarrow \Box \Box \alpha$
+\textbf{Assioma 3} $\Box \alpha \rightarrow \Box \Box \alpha$
 
 \section{Il Sistema $S5$}
 Il Sistema $S5$ aggiunge al Sistema $T$ il seguente assioma, detto assioma $S5$:
 
-$\Diamond \alpha \rightarrow \Box \Diamond \alpha$
+\textbf{Assioma 4} $\diamond \alpha \rightarrow \Box \diamond \alpha$
 
-\begin{lemma}
-$\vdash \Diamond \Box x \rightarrow \Box x$ in $S5$
-\end{lemma}
-\begin{proof}
+\begin{flushleft}
+\textbf{Lemma 1}
+$\vdash \diamond \Box x \rightarrow \Box x$ in $S5$
 
-\begin{tabular} { c c|c }
-(1) & $\Diamond \neg x \rightarrow \Box \Diamond \neg x$ & sostituzione di $\neg x$ in assioma $S5$ \\
-(2) & $\neg \Box \Diamond \neg x \rightarrow \neg \Diamond \neg x$ & contrapposta di \\
-(3) & $\Diamond \neg \Diamond \neg x \rightarrow \neg \Diamond \neg x$ & definizione di $\Diamond$ \\
-(4) & $\Diamond \Box x \rightarrow \Box x$ & definizione di $\Diamond$ e $\Box$
-\end{tabular}
-\end{proof}
+\textit{Dim.}
 
-\begin{theorem}
+(1) $\diamond \neg x \rightarrow \Box \diamond \neg x$ ; sostituzione di $\neg x$ in assioma $S5$ \\
+(2) $\neg \Box \diamond \neg x \rightarrow \neg \diamond \neg x$ ; contrapposta di (1) \\
+(3) $\diamond \neg \diamond \neg x \rightarrow \neg \diamond \neg x$ ; definizione di $\diamond$ \\
+(4) $\diamond \Box x \rightarrow \Box x$ ; definizione di $\diamond$ e $\Box$
+
+\begin{flushright}
+$\bullet$
+\end{flushright}
+\end{flushleft}
+
+
+\begin{flushleft}
+\textbf{Teorema 1}
 $T + S5 \rightarrow T + S4$, ovvero Il sistema $S5$ contiene il sistema $S4$
-\end{theorem}
-\begin{proof}
-Lasciato come esercizio al lettore
-\end{proof}
 
-\section{Modalit\`a e funzioni modali}
-DA SCRIVERE
+\textit{Dim.}
+
+(1) $\Box x \rightarrow \diamond \Box x$ ; Necessitazione per possibilità \\
+(2) $\Box x \rightarrow \Box \diamond \Box x$ ; Sillogismo di (1) e $S5$ \\
+(3) $\diamond \Box x \rightarrow \Box x$ ; Lemma 1 \\
+(4) $\Box (\diamond \Box x \rightarrow \Box x)$ ; Necessitazione di (3) \\
+(5) $\Box \diamond \Box x \rightarrow \Box \Box x)$ ; Assioma 2 \\
+(6) $\Box x \rightarrow \Box \Box x$ ; Sillogismo di (1) e (5)
+
+\begin{flushright}$\bullet$\end{flushright}
+\end{flushleft}
+
+\section{Un teorema di deduzione}
+In questo paragrafo proviamo a derivare un teorema di deduzione per il Sistema $S4$.
+Non possiamo aspettarci che il teorema di deduzione per il calcolo proposizionale $CP$ valga,
+infatti la regola di deduzione di necessitazione ci porterebbe ad asserire che:
+$$ x \vdash \Box x \Rightarrow \vdash x \rightarrow \Box x $$
+E ciò vorrebbe dire che le modalità non aggiungono nulla al sistema del calcolo proposizionale.
+
+Se guardiamo attentamente la regola di necessitazione e la scriviamo in questo modo:
+$$x \vdash \Box x$$
+possiamo notare che l'ipotesi $x$ è sufficiente per dimostrare $\Box x$ che afferma molto più
+che semplicemente $x$.
+Notiamo anche che la regola di necessitazione ci permette di provare
+$$x \vdash \Box \Box x$$
+
+Quindi, far semplicemente passare la x da sinistra a destra, significherebbe affermare che
+da ipotesi più deboli si possono comunque dedurre le stesse conclusioni. Allora possiamo provare,
+nello spostare la x da sinistra a destra di $\vdash$, ad aggiungere un $\Box$.
+Questo può bastare in sistemi come $S4$ o più potenti, perché da $\Box x$ possiamo dedurre
+$\Box \Box x$, $\Box \Box \Box x$, ecc...
+Mentre nel sistema T questo non è vero e quindi dovremo risolvere diversamente.
+
+Recuperiamo quindi un teorema di deduzione, facendo la seguente modifica:
+$$\alpha \vdash \beta \Rightarrow \vdash \Box \alpha \rightarrow \beta$$
+Ora il precedente problema è facilmente risolvibile, infatti, la deduzione $x \vdash \Box x$
+diventa il teorema $\vdash \Box x \rightarrow \Box x$ banalmente valido.
+Otteniamo però anche il seguente teorema, $\vdash \Box x \rightarrow \Box \Box x$ che è l'assioma $S4$
+Ecco perché abbiamo supposto di trovarci nel sistema $S4$.
+
+Diamo una dimostrazione di
+
+\begin{flushleft}
+\textbf{Teorema}
+$\alpha \vdash \beta \Leftrightarrow \vdash \Box \alpha \rightarrow \beta$ in $S4$
+
+\textit{Dim.}
+Lasciata al lettore, è una banale modifica della dimostrazione nel caso del calcolo proposizionale.
+L'unica parte interessante è quella riguardante i teoremi ottenuti con la regola di necessitazione.
+In quel caso dobbiamo far uso dell'assioma $S4$ ed è tutto banale.
+\end{flushleft}
+
+
+
+\section{Modalità e funzioni modali}
+Rendiamo più formale il concetto di modalità.
+\textbf{Definizione}
+Una modalità è una successione di 0 o più di uno dei seguenti simboli: $\neg,\diamond,\Box$.
+
+Viene da domandarci, ora, quante modalità ci sono in ognuno dei sistemi che abbiamo considerato.
+Si può dimostrare che nel Sistema $T$ ce ne sono infinite,
+mentre in $S4$ e $S5$ ce ne sono solo un numero finito.
+
+Parleremo più approfonditamente di tali questioni solo dopo aver introdotto una semantica
+per il nostro linguaggio.
+
+\begin{flushleft}
+\textbf{Definizione 1}
+
+Una funzione modale è una formula contenente almeno una funzione modale
+\end{flushleft}
+
+In $T$ ovviamente c'è un numero infinito di funzioni modali esprimibili.
+In $S5$ ce n'è un numero finito, mentre sorprendentemente,
+in $S4$ ce ne sono infinite, nonostante le modalità esprimibili siano in numero finito.
+
+\section{Un sistema interessante}
+Dedichiamo questo paragrafo un sistema di logica modale particolare, chiamato Sistema $B$.
+Esso è intimamente collegato alla logica intuizionista, come si evince dal nome,
+infatti la B è la iniziale di Brouwer, logico padre dell'intuizionismo.
+
+\section{Una semantica per i sistemi modali}
+Seguendo la tradizione, proviamo a dare una semantica per i sistemi formali sopra definiti.
+La costruzione che presenteremo è dovuta a Kripke e Hintikka ed altri.
 
 \end{document}
