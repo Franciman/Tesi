@@ -3,3 +3,7 @@
 *.fdb_latexmk
 *.fls
 *.log
+cmbx12.*
+cmmi12.*
+cmsy10.*
+lasy10.*
