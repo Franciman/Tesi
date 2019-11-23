@@ -5,4 +5,4 @@ continuous:
 	latexmk -pdf -pvc
 
 clean:
-	latexmk -C
+	latexmk -c
