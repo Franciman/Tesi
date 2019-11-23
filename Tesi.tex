@@ -25,6 +25,87 @@
     }
 
 \begin{document}
+
+\section{Logica proposizionale}
+In questo paragrafo introdurremo brevemente un sistema formale per la logica proposizionale classica.
+Il sistema che introduciamo sarà usato come base per la costruzione di ulteriori sistemi formali.
+Esso sarà molto minimale, infatti conterrà pochi connettivi di base
+e tutti gli altri saranno definiti successivamente a partire da questi.
+
+Il primo passaggio è quello di definire un alfabeto. Usiamo una piccola scorciatoia,
+infatti supponiamo che ci sia dato a priori un insieme numerabile A i cui elementi saranno detti atomi.
+Nella pratica questo insieme conterrà i simboli da usare per le variabili che appaiono nelle formule.
+
+\begin{definition}
+L'alfabeto $\Sigma$ è dato dall'insieme $A \cup \{\neg, \vee, (, ) \}$
+\end{definition}
+
+Passiamo ora alla definizione dell'insieme delle formule ben formate.
+
+\begin{definition}
+L'insieme delle formule ben formate (fbf) $L$ è il più piccolo sottoinsieme dell'insieme tutte le successioni
+di elementi di $\Sigma$ determinato dalla seguente definizione induttiva:
+\begin{itemize}
+\item Se $p \in A$, allora $p \in L$;
+\item Se $\alpha \in L$, allora $\neg (\alpha) \in L$;
+\item Se $\alpha \in L$ e $\beta \in L$, allora $(\alpha) \vee (\beta) \in L$;
+\item $L$ non contiene altri elementi.
+\end{itemize}
+\end{definition}
+
+Possiamo ricavare, ora, i connettivi che mancano come segue:
+\begin{definition}
+Se $\alpha, \beta \in L$,
+$$(\alpha) \rightarrow (\beta) := (\neg (\alpha)) \vee (\beta)$$
+$$(\alpha) \wedge (\beta) := \neg ((\neg (\alpha)) \vee (\neg (\beta)))$$
+\end{definition}
+
+Per semplificare la scrittura e rendere più comprensibili le formule che scriveremo
+nel seguito, spesso ometteremo le parentesi e per interpretare correttamente
+le formule scritte si useranno le seguenti regole di precedenza tra operatori
+e le regole di associatività.
+
+\begin{definition}
+Gli operatori binari $\wedge,\vee$ sono associativi a sinistra,
+mentre $\rightarrow$ è associativo a destra.
+Per determinare l'ordine di precedenza tra due operatori si fa uso della
+seguente tabella, usando il seguente criterio:
+``Gli operatori che si trovano più in alto hanno precedenza maggiore rispetto
+agli operatori che si trovano più in basso''
+\begin{center}
+\begin{tabular} {c c}
+    $\neg$ \\
+    $\wedge$ \\
+    $\vee$ \\
+    $\rightarrow$ & $\leftrightarrow$
+\end{tabular}
+\end{center}
+\end{definition}
+
+Di conseguenza la formula $\alpha \rightarrow \beta \rightarrow \neg \gamma$
+dovrà essere interpretata come:
+$(\alpha) \rightarrow ((\beta) \rightarrow (\neg (\gamma)))$.
+
+Passiamo infine alla determinazione di un sottoinsieme di formule ben formate
+che fungeranno da assiomi e delle regole di deduzione
+per poter così definire l'apparato deduttivo del calcolo proposizionale.
+
+\begin{definition}
+Gli assiomi del calcolo proposizionale sono le seguenti formule ben formate:
+\begin{itemize}
+\item (HPD) $\alpha \rightarrow (\beta \rightarrow \alpha)$
+\item (HPMP) $(\gamma \rightarrow (\alpha \rightarrow \beta)) \rightarrow (\gamma \rightarrow \alpha) \rightarrow (\gamma \rightarrow \beta)$
+\item ($\vee$-I1) $\alpha \rightarrow (\alpha \vee \beta)$
+\item ($\vee$-I2) $\beta \rightarrow (\alpha \vee \beta)$
+\item ($\vee$-E) $(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \vee \beta \rightarrow \gamma)$
+\item ($\wedge$-I) $\alpha \rightarrow \beta \rightarrow \alpha \wedge \beta$
+\item ($\wedge$-E1) $\alpha \wedge \beta \rightarrow \alpha$
+\item ($\wedge$-E2) $\alpha \wedge \beta \rightarrow \beta$
+\item ($\neg$-I) $(\alpha \rightarrow \beta) \wedge (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
+\item (TER) $\alpha \vee \neg \alpha$
+\end{itemize}
+\end{definition}
+
 La logica modale è un'estensione della logica classica.
 Studieremo la validità di argomenti che comprendono le modalità.
 Le modalità sono modi in cui si può affermare che una proposizione è vera in certe circostanze.
