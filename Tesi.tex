@@ -32,9 +32,12 @@ Il sistema che introduciamo sarà usato come base per la costruzione di ulterior
 Esso sarà molto minimale, infatti conterrà pochi connettivi di base
 e tutti gli altri saranno definiti successivamente a partire da questi.
 
+Chiameremo il sistema che stiamo definendo CP (calcolo proposizionale).
+
 Il primo passaggio è quello di definire un alfabeto. Usiamo una piccola scorciatoia,
 infatti supponiamo che ci sia dato a priori un insieme numerabile A i cui elementi saranno detti atomi.
 Nella pratica questo insieme conterrà i simboli da usare per le variabili che appaiono nelle formule.
+In virtù di questa interpretazione, chiameremo gli elementi di A \textit{variabili proposizionali}.
 
 \begin{definition}
 L'alfabeto $\Sigma$ è dato dall'insieme $A \cup \{\neg, \vee, (, ) \}$
@@ -91,7 +94,8 @@ che fungeranno da assiomi e delle regole di deduzione
 per poter così definire l'apparato deduttivo del calcolo proposizionale.
 
 \begin{definition}
-Gli assiomi del calcolo proposizionale sono le seguenti formule ben formate:
+Gli assiomi del calcolo proposizionale sono ottenuti dai seguenti schemi
+sostituendo in modo uniforme formule ben formate al posto di $\alpha, \beta, \gamma$:
 \begin{itemize}
 \item (HPD) $\alpha \rightarrow (\beta \rightarrow \alpha)$
 \item (HPMP) $(\gamma \rightarrow (\alpha \rightarrow \beta)) \rightarrow (\gamma \rightarrow \alpha) \rightarrow (\gamma \rightarrow \beta)$
@@ -106,59 +110,149 @@ Gli assiomi del calcolo proposizionale sono le seguenti formule ben formate:
 \end{itemize}
 \end{definition}
 
-La logica modale è un'estensione della logica classica.
-Studieremo la validità di argomenti che comprendono le modalità.
-Le modalità sono modi in cui si può affermare che una proposizione è vera in certe circostanze.
-Ad esempio, ``è possibile che $\alpha$'' significa che $\alpha$ non è detto sia vera, ma nulla vieta che non lo sia.
-Quindi estendiamo il numero di proposizioni su cui possiamo dare un giudizio circa la loro validità.
-Di conseguenza partiremo da un sistema formale per il calcolo proposizionale, che chiameremo $CP$
-e definiamo una sua estensione\footnote{Definire cos'è un'estensione, à la Tortora} $CM$ \footnote{Calcolo Modale? Un po' bruttino}
+Ricordiamo le due seguenti definizioni:
 
-\section{Definizione del linguaggio di $CM$}
-Usiamo come base quella di $CP$. Una sua definizione la si può trovare in [Tortora].
-Aggiungiamo un nuovo operatore monadico\footnote{decidere se è più bello monadico o unario}
-che indicheremo con il simbolo $\Box$.
+Ricordiamo che se esiste una dimostrazione della formula $\alpha \in L$,
+ovvero, se $\alpha$ è un teorema, scriviamo $\vdash \alpha$.
+Descriviamo ora le due regole di deduzione del nostro sistema.
 
-\section{Definizione dell'apparato deduttivo per $CM$}
-Aggiungiamo anche una nuova regola di deduzione, chiamata necessitazione:
+La prima regola è il classico \textbf{Modus Ponens}:
+$$\vdash \alpha \rightarrow \beta, \vdash \alpha \Rightarrow \vdash \beta$$
 
-$$x \vdash \Box x$$
+La seconda regola non è strettamente necessaria, ma sarà particolarmente utile per riutilizzare
+teoremi già dimostrati, essa è detta \textbf{Regola di sostituzione}:
+Se $\vdash \alpha$, allora, sostituendo uniformenente (ovvero sempre allo stesso modo)
+ogni occorrenza di una variabile proposizionale all'interno di $\alpha$
+con una formula ben formata, si ottiene ancora un teorema.
 
-L'operatore che vogliamo aggiungere, ha una natura non verofunzionale. Vale a dirsi,
-che la verità o falsità della proposizione $\Box \alpha$ non dipende solo
-dal valore di verità di $\alpha$.
+Come ultima cosa dimostriamo il seguente teorema che riutilizzeremo spesso nel seguito
 
-Per quanto riguarda gli assiomi, la situazione si complica. Infatti sono stati sviluppati moltissimi sistemi di logica modale,
-ognuno che rispecchiasse una certa visione delle proprietà della modalità che si considera.
-Tutti ereditano da $CP$ i suoi assiomi, e ne aggiungono di nuovi.
-Noi ci occuperemo, in particolare di tre tipi di sistemi formali:
+\begin{flushleft}
+\textbf{Teorema(Sillogismo)}
+$\vdash (\alpha \rightarrow \beta) \rightarrow
+        (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$ in $CP$
+
+\textit{Dim.}
+Ricordiamo che per $CP$ vale il teorema di deduzione, ovvero:
+$$\Gamma,\alpha \vdash \beta \Leftrightarrow \Gamma \vdash \alpha \rightarrow \beta$$
+Quindi semplifichiamo il lavoro dimostrando:
+$$(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha \vdash \gamma$$
+
+(1) $\alpha \rightarrow \beta$ ; ipotesi \\
+(2) $\alpha$ ; ipotesi \\
+(3) $\beta$ ; Modus Ponens di (1) e (2) \\
+(4) $\beta \rightarrow \gamma$ ; ipotesi \\
+(5) $\gamma$ ; Modus Ponens di (3) e (4)
+
+Ora applicando tre volte il teorema di deduzione otteniamo:
+$$\vdash (\alpha \rightarrow \beta) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$$
+
+\begin{flushright}
+$\bullet$
+\end{flushright}
+\end{flushleft}
+
+
+\section{Logica modale}
+Ora che abbiamo definito un sistema formale per la logica proposizionale,
+lo estenderemo in vari modi.
+
+Il nostro obiettivo è avere un sistema formale nel quale possiamo definire e studiare
+le proprietà di due nuovi operatori unari che vorremmo avessero un comportamento che rispecchi
+i concetti di ``necessità'' e ``possibilità''.
+
+Prima di cominciare facciamo delle osservazioni importanti.
+Ricordiamo che un operatore verofunzionale è una funzione il cui risultato
+è univocamente determinato dal valore di verità dei parametri da cui dipende.
+Inoltre, si può dimostrare che nel calcolo proposizionale si possono esprimere
+tutti gli operatori verofunzionali possibili in termini di $\neg e \vee$.
+Notiamo, ora, che gli operatori che vogliamo aggiungere non possono essere verofunzionali,
+infatti il valore di verità della frase ``è necessario che p'' non dipende \textit{solo}
+dal valore di verità che si associ, infatti, il fatto che p sia vera, non ci permette
+di concludere che p sia necessariamente vera. Quindi per avere una speranza di formalizzare
+i concetti di necessità e possibilità siamo costretti ad estendere il sistema $CP$
+in maniera sostanziale.
+
+A tal proposito, non è esattamente chiaro come caratterizzare formalmente
+le nozioni di ``necessità'' e ``possibilità'', e anzi vedremo che queste potranno essere
+intese in modi diversi.
+Questa ricchezza di significati si rifletterà in una varietà di sistemi formali più o meno potenti.
+Noi ci focalizzeremo in particolare quattro sistemi formali:
 \begin{itemize}
-\item Sistema $T$
-\item Sistema $S4$
-\item Sistema $S5$
+\item Sistema T
+\item Sistema S4
+\item Sistema S5
 \end{itemize}
 
-Tali sistemi sono in relazione tra di loro, infatti, il Sistema $T$ è contenuto in $S4$ che è contenuto in $S5$.
-Tutti i sistemi hanno lo stesso linguaggio e le stesse regole di deduzione. Ciò che cambia sono gli assiomi.
+Questi sistemi differiscono tra di loro soltanto per gli assiomi scelti in ognuno di essi.
+Quindi iniziamo definendo la parte comune di tutti i sistemi formali, ovvero il linguaggio
+e le regole di deduzione.
 
-Partiamo con l'analizzare gli assiomi del sistema più debole, il sistema $T$.
+L'alfabeto dei sistemi è ottenuto dall'alfabeto del sistema $CP$ aggiungendo il simbolo $\Box$,
+che vorremo far corrispondere alla nozione di ``necessità''.
 
-\section{Il Sistema $T$}
-Il Sistema $T$ aggiunge i seguenti assiomi:
+Per quanto riguarda le formule ben formate, la definizione induttiva che genera l'insieme $L$
+delle formule ben formate è ottenuta dalle regole usate per definire $L$ in $CP$ più
+la seguente regola aggiuntiva:
 \begin{itemize}
-\item \textbf{Assioma 1} $\Box \alpha \rightarrow \alpha$ (Assioma di necessità)
-\item \textbf{Assioma 2} $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
+\item Se $\alpha \in L$, allora $\Box (\alpha) \in L$
 \end{itemize}
 
-\section{Il Sistema $S4$}
-Il Sistema $S4$ aggiunge al Sistema $T$ il seguente assioma, detto assioma $S4$:
+Aggiungiamo il seguente ulteriore operatore, che corrisponderà alla nozione di ``possibilità''.
 
-\textbf{Assioma 3} $\Box \alpha \rightarrow \Box \Box \alpha$
+\begin{definition}
+Se $\alpha \in L$:
+$$\Diamond (\alpha) := \neg \Box \neg (\alpha)$$
+\end{definition}
 
-\section{Il Sistema $S5$}
-Il Sistema $S5$ aggiunge al Sistema $T$ il seguente assioma, detto assioma $S5$:
+Infine, per quanto riguarda le regole di deduzione, alle due di $CP$ aggiungiamo
+una nuova regola, detta \textbf{Regola di necessitazione}:
+$$\vdash \alpha \Rightarrow \vdash \Box \alpha$$
 
-\textbf{Assioma 4} $\diamond \alpha \rightarrow \Box \diamond \alpha$
+Una volta definita la parte comune a tutti i sistemi a cui siamo interessati,
+passiamo ora ad esaminare per ogni sistema gli assiomi che lo caratterizzano.
+
+\section{Sistema T}
+Il sistema T ha come assiomi tutti gli assiomi di $CP$ più:
+\begin{itemize}
+\item (K) $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
+\item (T) $\Box \alpha \rightarrow \alpha$
+\end{itemize}
+
+\section{Sistema S4}
+Il sistema S4 ha come assiomi tutti gli assiomi del Sistema T più il seguente assioma:
+$$(S4) \Box \alpha \rightarrow \Box \Box \alpha$$
+
+\section{Sistema S5}
+Il sistema S5 ha come assiomi tutti gli assiomi del Sistema T più:
+$$(S5) \Diamond \alpha \rightarrow \Box \Diamond \alpha$$
+
+
+Ora che abbiamo definito il linguaggio e l'apparato deduttivo di tutti i sistemi
+che ci interessano, facciamo delle osservazioni su di essi.
+Per prima cosa, discende ovviamente dalla definizione che il Sistema T è contenuto
+sia in S4 che in S5.
+Ora, però mostreremo che anche S4 è contenuto in S5. A tal fine premettiamo alcuni risultati
+preliminari.
+
+Siccome il Sistema T è contenuto in ciascuno dei sistemi più potenti che abbiamo costruito,
+se dimostriamo un teorema usando solo gli assiomi del Sistema T, questo teorema sarà ovviamente valido
+anche nei sistemi più potenti.
+
+\begin{flushleft}
+\textbf{Teorema}
+$\vdash \alpha \rightarrow \Diamond \alpha$ in $T$
+
+\textit{Dim.}
+
+(1) $\Box \neg \alpha \rightarrow \neg \alpha$ ; $T[\neg \alpha/\alpha]$ \\
+(2) $\alpha \rightarrow \neg \Box \neg \alpha$ ; Contrapposta di (1) \\
+(3) $\alpha \rightarrow \Diamond \alpha$ ; Definizione di $\Diamond$
+
+\begin{flushright}
+$\bullet$
+\end{flushright}
+\end{flushleft}
 
 \begin{flushleft}
 \textbf{Lemma 1}
@@ -166,7 +260,7 @@ $\vdash \diamond \Box x \rightarrow \Box x$ in $S5$
 
 \textit{Dim.}
 
-(1) $\diamond \neg x \rightarrow \Box \diamond \neg x$ ; sostituzione di $\neg x$ in assioma $S5$ \\
+(1) $\Diamond \neg x \rightarrow \Box \Diamond \neg x$ ; $S5[\neg x/\alpha]$ \\
 (2) $\neg \Box \diamond \neg x \rightarrow \neg \diamond \neg x$ ; contrapposta di (1) \\
 (3) $\diamond \neg \diamond \neg x \rightarrow \neg \diamond \neg x$ ; definizione di $\diamond$ \\
 (4) $\diamond \Box x \rightarrow \Box x$ ; definizione di $\diamond$ e $\Box$
@@ -176,19 +270,22 @@ $\bullet$
 \end{flushright}
 \end{flushleft}
 
-
 \begin{flushleft}
 \textbf{Teorema 1}
-$T + S5 \rightarrow T + S4$, ovvero Il sistema $S5$ contiene il sistema $S4$
+$\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 contiene il Sistema S4.
 
 \textit{Dim.}
 
-(1) $\Box x \rightarrow \diamond \Box x$ ; Necessitazione per possibilità \\
-(2) $\Box x \rightarrow \Box \diamond \Box x$ ; Sillogismo di (1) e $S5$ \\
-(3) $\diamond \Box x \rightarrow \Box x$ ; Lemma 1 \\
-(4) $\Box (\diamond \Box x \rightarrow \Box x)$ ; Necessitazione di (3) \\
-(5) $\Box \diamond \Box x \rightarrow \Box \Box x)$ ; Assioma 2 \\
-(6) $\Box x \rightarrow \Box \Box x$ ; Sillogismo di (1) e (5)
+(1) $\Box x \rightarrow \Diamond \Box x$ ; Teorema \\
+(2) $(\Box x \rightarrow \Diamond \Box x) \rightarrow (\Diamond \Box x \rightarrow \Box\Diamond\Box x) \rightarrow (\Box x \rightarrow \Box \Diamond \Box x)$ ; Teorema \\
+(3) $\Diamond x \rightarrow \Box \Diamond x$ ; Assioma S5 \\
+(4) $\Box x \rightarrow \Box \Diamond \Box x$ ; Due volte Modus Ponens usando (1) (2) e (3) \\
+(5) $\Diamond \Box x \rightarrow \Box x$ ; Lemma 1 \\
+(4) $\Box (\Diamond \Box x \rightarrow \Box x)$ ; Necessitazione (5) \\
+(5) $\Box(\Diamond\Box x \rightarrow \Box x) \rightarrow \Box \Diamond \Box x \rightarrow \Box \Box x$ ; Assioma K \\
+(6) $\Box\Diamond\Box x \rightarrow \Box\Box x$ ; Modus Ponens (4) e (5) \\
+(7) $(\Box x \rightarrow \Diamond \Box x) \rightarrow (\Box\Diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ ; Teorema \\
+(8) $\Box x \rightarrow \Box \Box x$ ; Due volte Modus Ponens usando (1) (5) e (6)
 
 \begin{flushright}$\bullet$\end{flushright}
 \end{flushleft}
