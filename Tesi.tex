@@ -1,6 +1,6 @@
 \documentclass[a4paper, 12pt]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{latexsym}
+\usepackage{amssymb}
 \newtheorem{axiom}{Assioma}
 \newtheorem{theorem}{Teorema}
 \newtheorem{lemma}{Lemma}
@@ -166,7 +166,9 @@ Ricordiamo che un operatore verofunzionale è una funzione il cui risultato
 è univocamente determinato dal valore di verità dei parametri da cui dipende.
 Inoltre, si può dimostrare che nel calcolo proposizionale si possono esprimere
 tutti gli operatori verofunzionali possibili in termini di $\neg e \vee$.
-Notiamo, ora, che gli operatori che vogliamo aggiungere non possono essere verofunzionali,
+Quindi, se gli operatori che vogliamo aggiungere fossero verofunzionali, potremmo
+continuare il nostro studio usando $CP$ e non servirebbe altro.
+Notiamo, però, che gli operatori che vogliamo aggiungere non possono essere verofunzionali,
 infatti il valore di verità della frase ``è necessario che p'' non dipende \textit{solo}
 dal valore di verità che si associ, infatti, il fatto che p sia vera, non ci permette
 di concludere che p sia necessariamente vera. Quindi per avere una speranza di formalizzare
@@ -177,7 +179,7 @@ A tal proposito, non è esattamente chiaro come caratterizzare formalmente
 le nozioni di ``necessità'' e ``possibilità'', e anzi vedremo che queste potranno essere
 intese in modi diversi.
 Questa ricchezza di significati si rifletterà in una varietà di sistemi formali più o meno potenti.
-Noi ci focalizzeremo in particolare quattro sistemi formali:
+Noi ci focalizzeremo in particolare su quattro sistemi formali:
 \begin{itemize}
 \item Sistema T
 \item Sistema S4
@@ -198,11 +200,12 @@ la seguente regola aggiuntiva:
 \item Se $\alpha \in L$, allora $\Box (\alpha) \in L$
 \end{itemize}
 
-Aggiungiamo il seguente ulteriore operatore, che corrisponderà alla nozione di ``possibilità''.
+Diamo la seguente definizione, il cui intento è esprimere l'altro operatore
+che ci interessa, quello corrispondente alla nozione di ``possibilità'', in termini di $\Box$.
 
 \begin{definition}
 Se $\alpha \in L$:
-$$\Diamond (\alpha) := \neg \Box \neg (\alpha)$$
+$$\diamond (\alpha) := \neg \Box \neg (\alpha)$$
 \end{definition}
 
 Infine, per quanto riguarda le regole di deduzione, alle due di $CP$ aggiungiamo
@@ -225,29 +228,30 @@ $$(S4) \Box \alpha \rightarrow \Box \Box \alpha$$
 
 \section{Sistema S5}
 Il sistema S5 ha come assiomi tutti gli assiomi del Sistema T più:
-$$(S5) \Diamond \alpha \rightarrow \Box \Diamond \alpha$$
+$$(S5) \diamond \alpha \rightarrow \Box \diamond \alpha$$
 
 
 Ora che abbiamo definito il linguaggio e l'apparato deduttivo di tutti i sistemi
 che ci interessano, facciamo delle osservazioni su di essi.
-Per prima cosa, discende ovviamente dalla definizione che il Sistema T è contenuto
-sia in S4 che in S5.
-Ora, però mostreremo che anche S4 è contenuto in S5. A tal fine premettiamo alcuni risultati
-preliminari.
+\begin{definition}
+Diremo che un sistema formale è meno forte di un altro se tutte i teoremi del primo
+sono teoremi anche del secondo.
+\end{definition}
 
-Siccome il Sistema T è contenuto in ciascuno dei sistemi più potenti che abbiamo costruito,
-se dimostriamo un teorema usando solo gli assiomi del Sistema T, questo teorema sarà ovviamente valido
-anche nei sistemi più potenti.
+Ovviamente, per come abbiamo costruito i nostri sistemi formali, il Sistema T è meno forte
+sia di S4 che di S5.
+Ora, però mostreremo che anche S4 è meno forte di S5. A tal fine premettiamo alcuni risultati
+preliminari.
 
 \begin{flushleft}
 \textbf{Teorema}
-$\vdash \alpha \rightarrow \Diamond \alpha$ in $T$
+$\vdash \alpha \rightarrow \diamond \alpha$ in $T$
 
 \textit{Dim.}
 
 (1) $\Box \neg \alpha \rightarrow \neg \alpha$ ; $T[\neg \alpha/\alpha]$ \\
 (2) $\alpha \rightarrow \neg \Box \neg \alpha$ ; Contrapposta di (1) \\
-(3) $\alpha \rightarrow \Diamond \alpha$ ; Definizione di $\Diamond$
+(3) $\alpha \rightarrow \diamond \alpha$ ; Definizione di $\diamond$
 
 \begin{flushright}
 $\bullet$
@@ -260,7 +264,7 @@ $\vdash \diamond \Box x \rightarrow \Box x$ in $S5$
 
 \textit{Dim.}
 
-(1) $\Diamond \neg x \rightarrow \Box \Diamond \neg x$ ; $S5[\neg x/\alpha]$ \\
+(1) $\diamond \neg x \rightarrow \Box \diamond \neg x$ ; $S5[\neg x/\alpha]$ \\
 (2) $\neg \Box \diamond \neg x \rightarrow \neg \diamond \neg x$ ; contrapposta di (1) \\
 (3) $\diamond \neg \diamond \neg x \rightarrow \neg \diamond \neg x$ ; definizione di $\diamond$ \\
 (4) $\diamond \Box x \rightarrow \Box x$ ; definizione di $\diamond$ e $\Box$
@@ -272,25 +276,25 @@ $\bullet$
 
 \begin{flushleft}
 \textbf{Teorema 1}
-$\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 contiene il Sistema S4.
+$\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più forte del Sistema S4.
 
 \textit{Dim.}
 
-(1) $\Box x \rightarrow \Diamond \Box x$ ; Teorema \\
-(2) $(\Box x \rightarrow \Diamond \Box x) \rightarrow (\Diamond \Box x \rightarrow \Box\Diamond\Box x) \rightarrow (\Box x \rightarrow \Box \Diamond \Box x)$ ; Teorema \\
-(3) $\Diamond x \rightarrow \Box \Diamond x$ ; Assioma S5 \\
-(4) $\Box x \rightarrow \Box \Diamond \Box x$ ; Due volte Modus Ponens usando (1) (2) e (3) \\
-(5) $\Diamond \Box x \rightarrow \Box x$ ; Lemma 1 \\
-(4) $\Box (\Diamond \Box x \rightarrow \Box x)$ ; Necessitazione (5) \\
-(5) $\Box(\Diamond\Box x \rightarrow \Box x) \rightarrow \Box \Diamond \Box x \rightarrow \Box \Box x$ ; Assioma K \\
-(6) $\Box\Diamond\Box x \rightarrow \Box\Box x$ ; Modus Ponens (4) e (5) \\
-(7) $(\Box x \rightarrow \Diamond \Box x) \rightarrow (\Box\Diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ ; Teorema \\
+(1) $\Box x \rightarrow \diamond \Box x$ ; Teorema \\
+(2) $(\Box x \rightarrow \diamond \Box x) \rightarrow (\diamond \Box x \rightarrow \Box\diamond\Box x) \rightarrow (\Box x \rightarrow \Box \diamond \Box x)$ ; Teorema \\
+(3) $\diamond x \rightarrow \Box \diamond x$ ; Assioma S5 \\
+(4) $\Box x \rightarrow \Box \diamond \Box x$ ; Due volte Modus Ponens usando (1) (2) e (3) \\
+(5) $\diamond \Box x \rightarrow \Box x$ ; Lemma 1 \\
+(4) $\Box (\diamond \Box x \rightarrow \Box x)$ ; Necessitazione (5) \\
+(5) $\Box(\diamond\Box x \rightarrow \Box x) \rightarrow \Box \diamond \Box x \rightarrow \Box \Box x$ ; Assioma K \\
+(6) $\Box\diamond\Box x \rightarrow \Box\Box x$ ; Modus Ponens (4) e (5) \\
+(7) $(\Box x \rightarrow \diamond \Box x) \rightarrow (\Box\diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ ; Teorema \\
 (8) $\Box x \rightarrow \Box \Box x$ ; Due volte Modus Ponens usando (1) (5) e (6)
 
 \begin{flushright}$\bullet$\end{flushright}
 \end{flushleft}
 
-\section{Un teorema di deduzione}
+\section{Un teorema di deduzione (DA AGGIUSTARE)}
 In questo paragrafo proviamo a derivare un teorema di deduzione per il Sistema $S4$.
 Non possiamo aspettarci che il teorema di deduzione per il calcolo proposizionale $CP$ valga,
 infatti la regola di deduzione di necessitazione ci porterebbe ad asserire che:
@@ -337,7 +341,7 @@ Rendiamo più formale il concetto di modalità.
 \textbf{Definizione}
 Una modalità è una successione di 0 o più di uno dei seguenti simboli: $\neg,\diamond,\Box$.
 
-Viene da domandarci, ora, quante modalità ci sono in ognuno dei sistemi che abbiamo considerato.
+Viene da domandarci, ora, quante sono le modalità distinte che ci sono in ognuno dei sistemi che abbiamo considerato.
 Si può dimostrare che nel Sistema $T$ ce ne sono infinite,
 mentre in $S4$ e $S5$ ce ne sono solo un numero finito.
 
@@ -354,13 +358,119 @@ In $T$ ovviamente c'è un numero infinito di funzioni modali esprimibili.
 In $S5$ ce n'è un numero finito, mentre sorprendentemente,
 in $S4$ ce ne sono infinite, nonostante le modalità esprimibili siano in numero finito.
 
-\section{Un sistema interessante}
+\section{Una semantica per i sistemi di logica modale}
+Dopo aver definito il linguaggio comune a tutti i sistemi di logica modale introdotti,
+lo abbiamo usato unicamente come base di un calcolo che usa le regole di deduzione per costruire
+dimostrazioni. Come ben sappiamo un linguaggio può anche essere usato per parlare di qualcosa,
+di oggetti esterni al sistema formale.
+Fare ciò significa associare ad ogni formula ben formata del linguaggio un oggetto
+che rappresenti il suo significato.
+Quando seguiamo questo procedimento diciamo che abbiamo fornito una semantica per il linguaggio.
+
+Definire semantiche per i sistemi formali ci aiuta sia a confrontare sistemi formali
+con strutture maggiormente conosciute e ad assicurarci
+che alcune costruzioni corrispondano alla nostra intuizione,
+sia a determinare alcune proprietà del sistema formale. E nel nostro caso ci aiuterà anche
+a comprendere meglio quali siano le nozioni di modali rappresentate in ciascuno dei sistemi
+che abbiamo definito e come differiscono tra di loro.
+
+
+Come abbiamo fatto per l'apparato deduttivo, prima di dare una semantica ai nostri sistemi,
+partiamo ricordando come è fatta la semantica classica per $CP$.
+
+Ricordiamo che un'interpretazione $I$ è una funzione dall'insieme $A$ delle variabili proposizionali
+all'insieme $\{V, F\}$.
+
+Data un'interpretazione $I$ definiamo per ricorsione la funzione di valutazione $V_I$ che associa ad ogni formula
+del linguaggio di $CP$ un valore dell'insieme $\{V, F\}$ come segue:
+
+Se $\alpha, \beta \in L$:
+\begin{itemize}
+\item $V_I(p) = I(p)$, $\forall p \in A$
+\item $V_I(\alpha \vee \beta) = F \Leftrightarrow V_I(\alpha) = F$ e $V_I(\beta) = F$
+\item $V_I(\neg \alpha) = F \Leftrightarrow V_I(\alpha) = V$
+\end{itemize}
+
+\begin{definition}
+Sia $\alpha \in L$, diremo che $\alpha$ è valida e scriveremo $\vDash \alpha$ se
+per ogni interpretazione $I$, $V_I(\alpha) = V$.
+\end{definition}
+
+L'idea alla base di questa semantica per $CP$ è di astrarre sul concetto di proposizione
+e di tenerne solo il suo valore di verità, così si risolve il problema di definire
+formalmente cos'è una proposizione e invece di associare ``Michele è altisonante''
+alla variabile proposizionale $p$, le associamo solo $V$ o $F$ a seconda che nel mondo
+in cui vogliamo interpretare Michele sia altisonante o meno.
+Quindi un'interpretazione ci dà, in un certo senso, una lista di tutte le proposizioni
+vere nella realtà di cui vogliamo parlare usando il linguaggio di $CP$.
+Usiamo, poi, questi valori assegnati dall'interpretazione per determinare il valore di verità delle formule
+in base alla semantica che abbiamo assegnato a ogni operatore (che sono date dalle regole
+che abbiamo usato per definire la funzione $V_I$).
+
+Ricordiamo che vale il seguente teorema, di fondamentale importanza,
+che mette in relazione i due aspetti dei linguaggi, quello semantico e quello sintattico
+$$\vdash \alpha \Leftrightarrow \vDash \alpha$$
+
+Per i nostri sistemi di logica modale possiamo pensare di fare qualcosa di simile,
+però non possiamo aspettarci che $V_I$ per formule del tipo $\Box \alpha$ si basi solo
+sul valore di $V_I(\alpha)$.
+
+La semantica che useremo è in gran parte dovuta a Saul A. Kripke (vale la pena notare
+che pubblicò un teorema di completezza per i sistemi di logica modale all'età di 17 anni)
+e si basa su un concetto già introdotto da Leibniz, quello dei mondi possibili.
+Quindi non supponiamo più che esista un'unica realtà, ma che esistono tanti mondi possibili,
+e in più, e questa è una delle idee chiave della semantica di Kripke, da alcuni mondi
+si può accedere ad altri mondi, cioè sapere come sono fatte altre realtà alternative.
+Il mondo in cui si può accedere agli altri mondi sarà la base per distinguire
+tra i vari concetti di necessità e tra i vari sistemi formali che abbiamo definito prima.
+
+\section{Semantica per il Sistema T}
+Definiamo un T-modello come una tripla $(w, W, R, I)$, in cui:
+\begin{itemize}
+\item $W$ è un insieme non vuoto i cui elementi saranno chiamati mondi;
+\item $w$ è un elementi di $W$;
+\item $R$ è una relazione binaria riflessiva su $W$, detta relazione di accessibilità;
+\item $I$ è una funzione dall'insieme $L \times W$ all'insieme $\{V, F\}$;
+\end{itemize}
+
+L'insieme $W$ è l'insieme di tutti i mondi.
+$w$ è un mondo particolare tra tutti i mondi possibili, potremmo interpretarlo
+come il mondo in cui vive chi deve verificare la validità di una proposizione.
+$R$, invece è la relazione binaria
+che ci permette di determinare a quali mondi si può accedere da un determinato mondo.
+Quindi se $w_1, w_2 \in W e w_1 R w_2$, allora una persona in $w_1$ potrà accedere anche
+al mondo $w_2$. Il fatto che $R$ sia riflessiva ci dice che l'unica garanzia che abbiamo
+è che ogni persona può accedere al proprio mondo, e questa è una garanzia molto scarsa.
+Infine, $I$ ci fornirà per ogni mondo la lista di proposizione vere
+e quella delle proposizioni false, analogamente al suo corrispettivo nella semantica per $CP$.
+
+Definiamo come prima una funzione di valutazione $V$ che dipenderà da un dato T-modello
+$(w, W, R, I)$.
+
+Se $\alpha, \beta \in L$:
+\begin{itemize}
+\item $V(p) = I(p, w)$, $\forall p \in A$
+\item $V(\neg \alpha) = V \Leftrightarrow V(\alpha) = F$
+\item $V(\alpha \vee \beta) = F \Leftrightarrow V(\alpha) = F$ e $V(\beta) = F$
+\item $V(\Box \alpha) = V \Leftrightarrow \forall w_i \in W. w R w_i \Rightarrow V(\alpha, w_i) = V$
+\end{itemize}
+
+Le prime tre regole sono pressoché identiche a quelle specificate per la semantica di $CP$,
+tranne per il fatto che nella prima regola usiamo la funzione $I$ valutandola per il mondo w
+in cui ci troviamo.
+
+La novità è la quarta regola, quella riguardante la semantica di $\Box$.
+Questa regola afferma che nel mondo $w$, $\alpha$ è necessariamente vera se e solo se
+è vera in tutti i mondi accessibili da $w$.
+
+Diciamo che una formula $\alpha$ è T-valida se $V(\alpha) = T$ per ogni T-modello $(w, W, R, I)$.
+
+\section{Mostrare teorema di adeguatezza}
+
+
+\section{Un sistema interessante(DA AGGIUSTARE)}
 Dedichiamo questo paragrafo un sistema di logica modale particolare, chiamato Sistema $B$.
 Esso è intimamente collegato alla logica intuizionista, come si evince dal nome,
 infatti la B è la iniziale di Brouwer, logico padre dell'intuizionismo.
-
-\section{Una semantica per i sistemi modali}
-Seguendo la tradizione, proviamo a dare una semantica per i sistemi formali sopra definiti.
-La costruzione che presenteremo è dovuta a Kripke e Hintikka ed altri.
 
 \end{document}
