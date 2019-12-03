@@ -7,6 +7,7 @@
 \newtheorem{definition}{Definizione}
 
 \title{I sistemi di logica modale T, S4, S5: Sintassi e Semantica}
+\date{}
 
 \linespread{1.5}
 
@@ -30,106 +31,138 @@
 
 \begin{document}
 \maketitle
-\section{Logica proposizionale}
-In questo paragrafo introdurremo brevemente un sistema formale per la logica proposizionale classica.
-Il sistema che introduciamo sarà usato come base per la costruzione di ulteriori sistemi formali.
-Esso sarà molto minimale, infatti conterrà pochi connettivi di base
-e tutti gli altri saranno definiti successivamente a partire da questi.
+\section{Nozioni Preliminari}
+Premettiamo allo studio di sistemi di logica modale la definizione
+di sintassi e semantica di un sistema formale per il calcolo proposizionale,
+che da ora in poi denoteremo con $CP$, da usare come base per la definizione
+dei sistemi formali successivi.
+È possibile presentare un tale sistema in vari modi, tutti pressoché equivalenti tra di loro.
+Noi seguiremo seguire la strada di [Tortora], definendo un linguaggio con un numero ristretto
+di connettivi primitivi e introducendo successivamente i connettivi mancanti definendoli a partire
+dai connettivi primitivi.
+Questa scelta ci permette di usare tutti i connettivi che siamo soliti adoperare,
+rendendo quindi la scrittura delle formule più chiara, ma allo stesso tempo ci permette anche di
+considerare solo i connettivi primitivi nello studio delle proprietà del sistema,
+semplificandoci il lavoro.
 
-Chiameremo il sistema che stiamo definendo CP (calcolo proposizionale).
-
-Il primo passaggio è quello di definire un alfabeto. Usiamo una piccola scorciatoia,
-infatti supponiamo che ci sia dato a priori un insieme numerabile A i cui elementi saranno detti atomi.
-Nella pratica questo insieme conterrà i simboli da usare per le variabili che appaiono nelle formule.
-In virtù di questa interpretazione, chiameremo gli elementi di A \textit{variabili proposizionali}.
+\subsection{Il Linguaggio}
+Per definire il linguaggio di $CP$ avremo bisogno di un insieme di oggetti di base,
+chiamati variabili proposizionali. Senza soffermarci ulteriormente sulla natura di questi oggetti,
+possiamo tranquillamente assumere che esista un insieme $A$ numberabile
+disgiunto da $\{\neg, \lor, (, )\}$.
 
 \begin{definition}
-L'alfabeto $\Sigma$ è dato dall'insieme $A \cup \{\neg, \vee, (, ) \}$
+Chiamiamo variabile proposizionale ogni elemento di $A$
 \end{definition}
 
-Passiamo ora alla definizione dell'insieme delle formule ben formate.
+Scegliamo come connettivi primitivi $\neg$ e $\lor$,
+a partire da essi sarà possibile definire tutti gli altri.
+L'alfabeto di $CP$ è dunque dato dall'insieme $\Sigma = A \cup \{\neg, \lor, (, )\}$.
 
-\begin{definition}
-L'insieme delle formule ben formate (fbf) $L$ è il più piccolo sottoinsieme dell'insieme tutte le successioni
-di elementi di $\Sigma$ determinato dalla seguente definizione induttiva:
+Chiamiamo $\Sigma^{*} = \bigcup_{n \in A} \Sigma^n$ l'insieme delle espressioni
+e definiamo l'insieme delle formule ben formate (fbf) $L_{CP} \subseteq \Sigma^{*}$ con la seguente definizione
+per induzione:
 \begin{itemize}
-\item Se $p \in A$, allora $p \in L$;
-\item Se $\alpha \in L$, allora $\neg (\alpha) \in L$;
-\item Se $\alpha \in L$ e $\beta \in L$, allora $(\alpha) \vee (\beta) \in L$;
-\item $L$ non contiene altri elementi.
+\item $x \in A \Rightarrow x \in L_{CP}$;
+\item $\alpha \in L_{CP} \Rightarrow \neg (\alpha) \in L_{CP}$;
+\item $\alpha \in L_{CP} e \beta \in L_{CP} \Rightarrow (\alpha) \lor (\beta) \in L_{CP}$;
+\item Non ci sono altri elementi in $L_{CP}$.
+\end{itemize}
+
+Una volta definito il linguaggio, definiamo i connettivi che mancano a partire da $\neg e \lor$
+come segue:
+\begin{definition}
+Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$, allora:
+\begin{itemize}
+\item $(\alpha) \land (\beta) := \neg(\neg(\alpha) \lor \neg(\beta))$
+\item $(\alpha) \rightarrow (\beta) := (\neg(\alpha)) \lor (\beta)$
+\item $(\alpha) \leftrightarrow (\beta) := ((\alpha) \rightarrow (\beta)) \land ((\beta) \rightarrow (\alpha))$
 \end{itemize}
 \end{definition}
 
-Possiamo ricavare, ora, i connettivi che mancano come segue:
-\begin{definition}
-Se $\alpha, \beta \in L$,
-$$(\alpha) \rightarrow (\beta) := (\neg (\alpha)) \vee (\beta)$$
-$$(\alpha) \wedge (\beta) := \neg ((\neg (\alpha)) \vee (\neg (\beta)))$$
-\end{definition}
+Al fine di rendere le formule che scriveremo più comprensibili, seguendo la prassi,
+ometteremo spesso le parentesi usando le convenzioni descritte in [Tortora; pag 46].
 
-Per semplificare la scrittura e rendere più comprensibili le formule che scriveremo
-nel seguito, spesso ometteremo le parentesi e per interpretare correttamente
-le formule scritte si useranno le seguenti regole di precedenza tra operatori
-e le regole di associatività.
+\subsection{L'apparato deduttivo}
+Presentiamo gli schemi di assiomi e le regole di deduzione
+che compongono l'apparato deduttivo di $CP$.
 
-\begin{definition}
-Gli operatori binari $\wedge,\vee$ sono associativi a sinistra,
-mentre $\rightarrow$ è associativo a destra.
-Per determinare l'ordine di precedenza tra due operatori si fa uso della
-seguente tabella, usando il seguente criterio:
-``Gli operatori che si trovano più in alto hanno precedenza maggiore rispetto
-agli operatori che si trovano più in basso''
-\begin{center}
-\begin{tabular} {c c}
-    $\neg$ \\
-    $\wedge$ \\
-    $\vee$ \\
-    $\rightarrow$ & $\leftrightarrow$
-\end{tabular}
-\end{center}
-\end{definition}
-
-Di conseguenza la formula $\alpha \rightarrow \beta \rightarrow \neg \gamma$
-dovrà essere interpretata come:
-$(\alpha) \rightarrow ((\beta) \rightarrow (\neg (\gamma)))$.
-
-Passiamo infine alla determinazione di un sottoinsieme di formule ben formate
-che fungeranno da assiomi e delle regole di deduzione
-per poter così definire l'apparato deduttivo del calcolo proposizionale.
-
-\begin{definition}
-Gli assiomi del calcolo proposizionale sono ottenuti dai seguenti schemi
-sostituendo in modo uniforme formule ben formate al posto di $\alpha, \beta, \gamma$:
+Gli schemi di assiomi di $CP$ sono:
 \begin{itemize}
-\item (HPD) $\alpha \rightarrow (\beta \rightarrow \alpha)$
-\item (HPMP) $(\gamma \rightarrow (\alpha \rightarrow \beta)) \rightarrow (\gamma \rightarrow \alpha) \rightarrow (\gamma \rightarrow \beta)$
-\item ($\vee$-I1) $\alpha \rightarrow (\alpha \vee \beta)$
-\item ($\vee$-I2) $\beta \rightarrow (\alpha \vee \beta)$
-\item ($\vee$-E) $(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \vee \beta \rightarrow \gamma)$
-\item ($\wedge$-I) $\alpha \rightarrow \beta \rightarrow \alpha \wedge \beta$
-\item ($\wedge$-E1) $\alpha \wedge \beta \rightarrow \alpha$
-\item ($\wedge$-E2) $\alpha \wedge \beta \rightarrow \beta$
-\item ($\neg$-I) $(\alpha \rightarrow \beta) \wedge (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
-\item (TER) $\alpha \vee \neg \alpha$
+\item (A1) $\alpha \rightarrow (\beta \rightarrow \alpha)$
+\item (A2) $(\alpha \rightarrow (\beta \rightarrow \gamma)) \rightarrow (\alpha \rightarrow \beta) \rightarrow (\alpha \rightarrow \gamma)$
+\item (A3) $(\alpha \rightarrow \beta) \rightarrow (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
+\item (A4) $\alpha \lor \neg \alpha$
+\end{itemize}
+
+L'unica regola di deduzione di $CP$ è il \textit{Modus Ponens}:
+$$\frac{\alpha \rightarrow \beta \ \ \alpha}{\beta}$$
+
+%\begin{definition}
+%Gli assiomi del calcolo proposizionale sono ottenuti dai seguenti schemi
+%sostituendo in modo uniforme formule ben formate al posto di $\alpha, \beta, \gamma$:
+%\begin{itemize}
+%\item (HPD) $\alpha \rightarrow (\beta \rightarrow \alpha)$
+%\item (HPMP) $(\gamma \rightarrow (\alpha \rightarrow \beta)) \rightarrow (\gamma \rightarrow \alpha) \rightarrow (\gamma \rightarrow \beta)$
+%\item ($\vee$-I1) $\alpha \rightarrow (\alpha \vee \beta)$
+%\item ($\vee$-I2) $\beta \rightarrow (\alpha \vee \beta)$
+%\item ($\vee$-E) $(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \vee \beta \rightarrow \gamma)$
+%\item ($\wedge$-I) $\alpha \rightarrow \beta \rightarrow \alpha \wedge \beta$
+%\item ($\wedge$-E1) $\alpha \wedge \beta \rightarrow \alpha$
+%\item ($\wedge$-E2) $\alpha \wedge \beta \rightarrow \beta$
+%\item ($\neg$-I) $(\alpha \rightarrow \beta) \wedge (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
+%\item (TER) $\alpha \vee \neg \alpha$
+%\end{itemize}
+%\end{definition}
+
+Diamo ora le seguenti due definizioni che introducono i concetti di dimostrazione e di
+deduzione, strettamente collegati tra loro.
+
+\begin{definition}
+Una dimostrazione è una sequenza finita $D$ di fbf tale che
+ogni termine $D_i$ della sequenza soddisfa almeno una delle seguenti condizioni
+\begin{itemize}
+\item $D_i$ è un assioma;
+\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \textit{Modus Ponens}
+da $D_h$ e $D_k$.
 \end{itemize}
 \end{definition}
 
-Ricordiamo le due seguenti definizioni:
+Se $\alpha \in L_{CP}$ ed esiste una dimostrazione $D$ il cui ultimo termine è $\alpha$,
+diciamo che esiste una dimostrazione di $\alpha$ e scriviamo $\vdash \alpha$.
 
-Ricordiamo che se esiste una dimostrazione della formula $\alpha \in L$,
-ovvero, se $\alpha$ è un teorema, scriviamo $\vdash \alpha$.
-Descriviamo ora le due regole di deduzione del nostro sistema.
 
-La prima regola è il classico \textbf{Modus Ponens}:
-$$\vdash \alpha \rightarrow \beta, \vdash \alpha \Rightarrow \vdash \beta$$
+\begin{definition}
+Se $Gamma \subseteq L_{CP}$, una deduzione a partire dalle ipotesi $\Gamma$ è una sequenza finita $D$
+di fbf tale che ogni termine $D_i$ della sequenza soddisfa almeno una delle seguenti condizioni
+\begin{itemize}
+\item $D_i \in \Gamma$;
+\item $D_i$ è un assioma;
+\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \textit{Modus Ponens}
+da $D_h$ e $D_k$.
+\end{itemize}
+\end{definition}
 
-La seconda regola non è strettamente necessaria, ma sarà particolarmente utile per riutilizzare
-teoremi già dimostrati, essa è detta \textbf{Regola di sostituzione}:
-Se $\vdash \alpha$, allora, sostituendo uniformenente (ovvero sempre allo stesso modo)
-ogni occorrenza di una variabile proposizionale all'interno di $\alpha$
-con una formula ben formata, si ottiene ancora un teorema.
+Se $\alpha \in L_{CP}$, $\Gamma \subseteq L_{CP}$ ed esiste una deduzione $D$ a partire dalle ipotesi $\Gamma$
+il cui ultimo termine è $\alpha$, diciamo che esiste una deduzione di $\alpha$
+a partire dalle ipotesi $\Gamma$ e scriviamo $\Gamma \vdash \alpha$.
 
-Come ultima cosa dimostriamo il seguente teorema che riutilizzeremo spesso nel seguito
+Nel seguito, scriveremo $\Gamma, \alpha \vdash \beta$
+per indicare $\Gamma \cup \{\alpha\} \vdash \beta$.
+
+Vale la pena ricordare il seguente teorema:
+\begin{flushleft}
+\textbf{Teorema di deduzione}
+$$\Gamma, \alpha \vdash \beta \Leftrightarrow \Gamma \vdash \alpha \rightarrow \beta$$
+\textit{Dim.} [Tortora]
+\begin{flushright}
+$\bullet$
+\end{flushright}
+\end{flushleft}
+
+
+Terminiamo questo paragrafo mostrando un esempio di dimostrazione di una formula
+ben formata che ci tornerà utile anche in seguito.
 
 \begin{flushleft}
 \textbf{Teorema(Sillogismo)}
@@ -137,10 +170,15 @@ $\vdash (\alpha \rightarrow \beta) \rightarrow
         (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$ in $CP$
 
 \textit{Dim.}
-Ricordiamo che per $CP$ vale il teorema di deduzione, ovvero:
-$$\Gamma,\alpha \vdash \beta \Leftrightarrow \Gamma \vdash \alpha \rightarrow \beta$$
-Quindi semplifichiamo il lavoro dimostrando:
+Semplifichiamo il lavoro dimostrando
 $$(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha \vdash \gamma$$
+in luogo di
+$$\vdash (\alpha \rightarrow \beta) \rightarrow
+        (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$$
+e sfruttiamo poi il teorema di deduzione sopra menzionato.
+
+Una possibile deduzione per $\gamma$ a partire dalle ipotesi
+$\{(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha\}$ è la seguente.
 
 (1) $\alpha \rightarrow \beta$ ; ipotesi \\
 (2) $\alpha$ ; ipotesi \\
@@ -148,7 +186,10 @@ $$(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha \vdash \gamma$$
 (4) $\beta \rightarrow \gamma$ ; ipotesi \\
 (5) $\gamma$ ; Modus Ponens di (3) e (4)
 
-Ora applicando tre volte il teorema di deduzione otteniamo:
+Possiamo dunque affermare:
+$$(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha \vdash \gamma$$
+
+Infine, applicando tre volte il teorema di deduzione otteniamo:
 $$\vdash (\alpha \rightarrow \beta) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$$
 
 \begin{flushright}
@@ -156,6 +197,7 @@ $\bullet$
 \end{flushright}
 \end{flushleft}
 
+\subsection{Semantica di $CP$}
 
 \section{Logica modale}
 Ora che abbiamo definito un sistema formale per la logica proposizionale,
