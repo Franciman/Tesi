@@ -37,7 +37,7 @@ di sintassi e semantica di un sistema formale per il calcolo proposizionale,
 che da ora in poi denoteremo con $CP$, da usare come base per la definizione
 dei sistemi formali successivi.
 È possibile presentare un tale sistema in vari modi, tutti pressoché equivalenti tra di loro.
-Noi seguiremo seguire la strada di [Tortora], definendo un linguaggio con un numero ristretto
+Noi seguiremo seguire la strada di [Hughes-Cresswell], definendo un linguaggio con un numero ristretto
 di connettivi primitivi e introducendo successivamente i connettivi mancanti definendoli a partire
 dai connettivi primitivi.
 Questa scelta ci permette di usare tutti i connettivi che siamo soliti adoperare,
@@ -52,7 +52,7 @@ possiamo tranquillamente assumere che esista un insieme $A$ numberabile
 disgiunto da $\{\neg, \lor, (, )\}$.
 
 \begin{definition}
-Chiamiamo variabile proposizionale ogni elemento di $A$
+Chiamiamo variabile proposizionale ogni elemento di $A$.
 \end{definition}
 
 Scegliamo come connettivi primitivi $\neg$ e $\lor$,
@@ -65,11 +65,11 @@ per induzione:
 \begin{itemize}
 \item $x \in A \Rightarrow x \in L_{CP}$;
 \item $\alpha \in L_{CP} \Rightarrow \neg (\alpha) \in L_{CP}$;
-\item $\alpha \in L_{CP} e \beta \in L_{CP} \Rightarrow (\alpha) \lor (\beta) \in L_{CP}$;
+\item $\alpha \in L_{CP}$ e $\beta \in L_{CP} \Rightarrow (\alpha) \lor (\beta) \in L_{CP}$;
 \item Non ci sono altri elementi in $L_{CP}$.
 \end{itemize}
 
-Una volta definito il linguaggio, definiamo i connettivi che mancano a partire da $\neg e \lor$
+Una volta definito il linguaggio, definiamo i connettivi che mancano a partire da $\neg$ e $\lor$
 come segue:
 \begin{definition}
 Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$, allora:
@@ -84,38 +84,39 @@ Al fine di rendere le formule che scriveremo più comprensibili, seguendo la pra
 ometteremo spesso le parentesi usando le convenzioni descritte in [Tortora; pag 46].
 
 \subsection{L'apparato deduttivo}
-Presentiamo gli schemi di assiomi e le regole di deduzione
-che compongono l'apparato deduttivo di $CP$.
+Per la definizione dell'apparato deduttivo di $CP$ seguiamo quanto fatto in [Tortora].
 
-Gli schemi di assiomi di $CP$ sono:
+Vale la pena far notare che questa non è l'unica possibilità, ma ci sono tante altre scelte sia
+per quanto riguarda gli assiomi che le regole di deduzione, che sono altrettanto valide
+e che portano allo stesso risultato. La motivazione dietro la nostra scelta
+risiede semplicemente nel fatto che questo approccio è quello da noi ritenuto più familiare.
+
+\begin{definition}
+Gli assiomi di $CP$ sono ottenuti dai seguenti schemi
+sostituendo in modo uniforme formule ben formate al posto di $\alpha, \beta, \gamma$:
 \begin{itemize}
-\item (A1) $\alpha \rightarrow (\beta \rightarrow \alpha)$
-\item (A2) $(\alpha \rightarrow (\beta \rightarrow \gamma)) \rightarrow (\alpha \rightarrow \beta) \rightarrow (\alpha \rightarrow \gamma)$
-\item (A3) $(\alpha \rightarrow \beta) \rightarrow (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
-\item (A4) $\alpha \lor \neg \alpha$
+\item (HPD) $\alpha \rightarrow (\beta \rightarrow \alpha)$
+\item (HPMP) $(\gamma \rightarrow (\alpha \rightarrow \beta)) \rightarrow (\gamma \rightarrow \alpha) \rightarrow (\gamma \rightarrow \beta)$
+\item ($\lor$-I1) $\alpha \rightarrow (\alpha \lor \beta)$
+\item ($\lor$-I2) $\beta \rightarrow (\alpha \lor \beta)$
+\item ($\lor$-E) $(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \lor \beta \rightarrow \gamma)$
+\item ($\land$-I) $\alpha \rightarrow \beta \rightarrow \alpha \land \beta$
+\item ($\land$-E1) $\alpha \land \beta \rightarrow \alpha$
+\item ($\land$-E2) $\alpha \land \beta \rightarrow \beta$
+\item ($\neg$-I) $(\alpha \rightarrow \beta) \land (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
+\item (TER) $\alpha \lor \neg \alpha$
 \end{itemize}
+\end{definition}
 
 L'unica regola di deduzione di $CP$ è il \textit{Modus Ponens}:
 $$\frac{\alpha \rightarrow \beta \ \ \alpha}{\beta}$$
 
-%\begin{definition}
-%Gli assiomi del calcolo proposizionale sono ottenuti dai seguenti schemi
-%sostituendo in modo uniforme formule ben formate al posto di $\alpha, \beta, \gamma$:
-%\begin{itemize}
-%\item (HPD) $\alpha \rightarrow (\beta \rightarrow \alpha)$
-%\item (HPMP) $(\gamma \rightarrow (\alpha \rightarrow \beta)) \rightarrow (\gamma \rightarrow \alpha) \rightarrow (\gamma \rightarrow \beta)$
-%\item ($\vee$-I1) $\alpha \rightarrow (\alpha \vee \beta)$
-%\item ($\vee$-I2) $\beta \rightarrow (\alpha \vee \beta)$
-%\item ($\vee$-E) $(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \vee \beta \rightarrow \gamma)$
-%\item ($\wedge$-I) $\alpha \rightarrow \beta \rightarrow \alpha \wedge \beta$
-%\item ($\wedge$-E1) $\alpha \wedge \beta \rightarrow \alpha$
-%\item ($\wedge$-E2) $\alpha \wedge \beta \rightarrow \beta$
-%\item ($\neg$-I) $(\alpha \rightarrow \beta) \wedge (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
-%\item (TER) $\alpha \vee \neg \alpha$
-%\end{itemize}
-%\end{definition}
+Notiamo che gli assiomi che abbiamo scelto per $CP$ non sono in numero finito,
+ma sono infiniti. L'uso di schemi di assiomi porta a notevoli semplificazioni
+nella pratica; infatti ci permette di dimostrare in una sola volta famiglie di teoremi,
+senza dover ripetere volta per volta un procedimento che sarebbe essenzialmente sempre uguale.
 
-Diamo ora le seguenti due definizioni che introducono i concetti di dimostrazione e di
+Diamo ora le seguenti definizioni che introducono i concetti di dimostrazione e di
 deduzione, strettamente collegati tra loro.
 
 \begin{definition}
@@ -133,7 +134,7 @@ diciamo che esiste una dimostrazione di $\alpha$ e scriviamo $\vdash \alpha$.
 
 
 \begin{definition}
-Se $Gamma \subseteq L_{CP}$, una deduzione a partire dalle ipotesi $\Gamma$ è una sequenza finita $D$
+Se $\Gamma \subseteq L_{CP}$, una deduzione a partire dalle ipotesi $\Gamma$ è una sequenza finita $D$
 di fbf tale che ogni termine $D_i$ della sequenza soddisfa almeno una delle seguenti condizioni
 \begin{itemize}
 \item $D_i \in \Gamma$;
@@ -161,13 +162,14 @@ $\bullet$
 \end{flushleft}
 
 
-Terminiamo questo paragrafo mostrando un esempio di dimostrazione di una formula
-ben formata che ci tornerà utile anche in seguito.
+Terminiamo questo paragrafo mostrando un esempio di dimostrazione di una famiglia
+di teoremi, che ci tornerà utile anche nel seguito.
 
 \begin{flushleft}
 \textbf{Teorema(Sillogismo)}
-$\vdash (\alpha \rightarrow \beta) \rightarrow
-        (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$ in $CP$
+Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$
+$$\vdash (\alpha \rightarrow \beta) \rightarrow
+        (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$$
 
 \textit{Dim.}
 Semplifichiamo il lavoro dimostrando
@@ -198,6 +200,85 @@ $\bullet$
 \end{flushleft}
 
 \subsection{Semantica di $CP$}
+Ci proponiamo, ora, di fornire una semantica per $CP$.
+La semantica che intendiamo fornire per $CP$ è quella standard, in particolare
+seguiamo l'esposizione di [Tortora] per presentarla.
+L'idea è quella di associare ad ogni formula
+un valore di verità, interpretando le variabili proposizionali come proposizioni
+che descrivono fatti della \textit{realtà}, ad esempio ``Michele è altisonante'',
+il simbolo $\neg$ come il connettivo logico ``non'' dell'italiano
+e il simbolo $\lor$ come disgiunzione inclusiva, ossia quel connettivo
+logico che in italiano si rappresenta spesso come ``o..., o..., oppure entrambi''.
+Per fare ciò dovremmo definire cosa si intende per proposizione,
+ma possiamo omettere questo passaggio, a dire il vero un po' problematico,
+osservando che, associando ad ogni variabile proposizionale un valore di verità,
+siamo in grado di associare un valore di verità ad ogni formula ben formata.
+Infatti, il valore di verità di ``non $\alpha$'' dipende solo dal valore di verità
+di $\alpha$ e allo stesso modo il valore di verità di
+``o $\alpha$, o $\beta$, oppure entrambi``
+dipende solo dal valore di verità di $\alpha$ e $\beta$.
+
+Connettivi che hanno questa peculiarità vengono detti operatori vero-funzionali.
+
+Passiamo, ora alla formalizzazione di queste idee e diamo le seguenti definizioni:
+
+\begin{definition}
+Chiamiamo interpretazione una funzione $I: A \to \{0, 1\}$
+\end{definition}
+
+Data un'interpretazione $I$ definiamo per ricorsione la funzione di valutazione $V_I$ che associa ad ogni formula
+del linguaggio di $CP$ un valore dell'insieme $\{0, 1\}$ come segue:
+
+Se $\alpha, \beta \in L_{CP}$:
+\begin{itemize}
+\item $V_I(p) = I(p)$, $\forall p \in A$
+\item $V_I(\alpha \lor \beta) = max\{V_I(\alpha), V_I(\beta)\}$
+\item $V_I(\neg \alpha) = 1 - V_I(\alpha)$
+\end{itemize}
+
+
+Quindi un'interpretazione ci dà, in un certo senso, una lista di tutte le proposizioni
+vere e di tutte le proposizioni false.
+Usiamo, poi, questi valori assegnati dall'interpretazione per determinare il valore di verità delle formule
+in base alla semantica che abbiamo assegnato a ciascun connettivo (che sono codificate nelle regole
+che abbiamo usato per definire la funzione $V_I$).
+
+\begin{definition}
+Sia $\alpha \in L_{CP}$, diremo che $\alpha$ è valida e scriveremo $\vDash \alpha$ se
+per ogni interpretazione $I$, $V_I(\alpha) = 1$.
+\end{definition}
+
+È noto, e una discussione approfondita di questo argomento si può trovare in [Mendelson],
+che è possibile definire qualsiasi tipo di operatore vero-funzionale usando
+solo gli operatori di negazione e disgiunzione inclusiva.
+Quindi, analogamente a quanto fatto per i connettivi $\land, \rightarrow, \leftrightarrow$,
+possiamo pensare di aggiungere qualsiasi operatore vero-funzionale ci venga in mente
+a $CP$ definendolo in termini di $\neg$ e $\lor$.
+Quindi anche se dalla presentazione non sembrerebbe, in realtà in $CP$ sono presenti
+tutti gli operatori vero-funzionali possibili.
+
+\subsection{Alcune proprietà importanti di $CP$}
+
+Terminiamo questo capitolo richiamando alcune proprietà di $CP$ fondamentali, omettendone
+le dimostrazioni. Un trattamento più approfondito di questi argomenti si può trovare in
+[Tortora] o [Mendelson].
+
+Esiste una procedura di decisione che data una qualsiasi formula ben formata di $CP$
+ci permette sempre di determinare in un numero finito di passi se questa è valida o no.
+
+Inoltre vale il seguente teorema che collega l'aspetto sintattico all'aspetto semantico
+di $CP$:
+
+\begin{flushleft}
+\textbf{Teorema di completezza}
+$$\vdash \alpha \Leftrightarrow \vDash \alpha$$
+\end{flushleft}
+
+Un corollario immediato del teorema di completezza è che anche l'insieme dei teoremi
+di $CP$ è un insieme decidibile, infatti secondo il teorema di completezza
+l'insieme dei teoremi di $CP$ e l'insieme delle formule ben formate di $CP$ valide
+coincidono, quindi usando la procedura di decisione per le formule valide
+possiamo anche determinare le formule che sono teoremi.
 
 \section{Logica modale}
 Ora che abbiamo definito un sistema formale per la logica proposizionale,
@@ -424,39 +505,6 @@ che abbiamo definito e come differiscono tra di loro.
 Come abbiamo fatto per l'apparato deduttivo, prima di dare una semantica ai nostri sistemi,
 partiamo ricordando come è fatta la semantica classica per $CP$.
 
-Ricordiamo che un'interpretazione $I$ è una funzione dall'insieme $A$ delle variabili proposizionali
-all'insieme $\{V, F\}$.
-
-Data un'interpretazione $I$ definiamo per ricorsione la funzione di valutazione $V_I$ che associa ad ogni formula
-del linguaggio di $CP$ un valore dell'insieme $\{V, F\}$ come segue:
-
-Se $\alpha, \beta \in L$:
-\begin{itemize}
-\item $V_I(p) = I(p)$, $\forall p \in A$
-\item $V_I(\alpha \vee \beta) = F \Leftrightarrow V_I(\alpha) = F$ e $V_I(\beta) = F$
-\item $V_I(\neg \alpha) = F \Leftrightarrow V_I(\alpha) = V$
-\end{itemize}
-
-\begin{definition}
-Sia $\alpha \in L$, diremo che $\alpha$ è valida e scriveremo $\vDash \alpha$ se
-per ogni interpretazione $I$, $V_I(\alpha) = V$.
-\end{definition}
-
-L'idea alla base di questa semantica per $CP$ è di astrarre sul concetto di proposizione
-e di tenerne solo il suo valore di verità, così si risolve il problema di definire
-formalmente cos'è una proposizione e invece di associare ``Michele è altisonante''
-alla variabile proposizionale $p$, le associamo solo $V$ o $F$ a seconda che nel mondo
-in cui vogliamo interpretare Michele sia altisonante o meno.
-Quindi un'interpretazione ci dà, in un certo senso, una lista di tutte le proposizioni
-vere nella realtà di cui vogliamo parlare usando il linguaggio di $CP$.
-Usiamo, poi, questi valori assegnati dall'interpretazione per determinare il valore di verità delle formule
-in base alla semantica che abbiamo assegnato a ogni operatore (che sono date dalle regole
-che abbiamo usato per definire la funzione $V_I$).
-
-Ricordiamo che vale il seguente teorema, di fondamentale importanza,
-che mette in relazione i due aspetti dei linguaggi, quello semantico e quello sintattico
-$$\vdash \alpha \Leftrightarrow \vDash \alpha$$
-
 Per i nostri sistemi di logica modale possiamo pensare di fare qualcosa di simile,
 però non possiamo aspettarci che $V_I$ per formule del tipo $\Box \alpha$ si basi solo
 sul valore di $V_I(\alpha)$.
@@ -471,45 +519,44 @@ Il mondo in cui si può accedere agli altri mondi sarà la base per distinguire
 tra i vari concetti di necessità e tra i vari sistemi formali che abbiamo definito prima.
 
 \section{Semantica per il Sistema T}
-Definiamo un T-modello come una tripla $(w, W, R, I)$, in cui:
+Definiamo un T-modello come una tripla $(W, R, I)$, in cui:
 \begin{itemize}
 \item $W$ è un insieme non vuoto i cui elementi saranno chiamati mondi;
-\item $w$ è un elementi di $W$;
 \item $R$ è una relazione binaria riflessiva su $W$, detta relazione di accessibilità;
-\item $I$ è una funzione dall'insieme $L \times W$ all'insieme $\{V, F\}$;
+\item $I$ è una funzione dall'insieme $L \times W$ all'insieme $\{0, 1\}$;
 \end{itemize}
 
 L'insieme $W$ è l'insieme di tutti i mondi.
-$w$ è un mondo particolare tra tutti i mondi possibili, potremmo interpretarlo
-come il mondo in cui vive chi deve verificare la validità di una proposizione.
-$R$, invece è la relazione binaria
-che ci permette di determinare a quali mondi si può accedere da un determinato mondo.
-Quindi se $w_1, w_2 \in W e w_1 R w_2$, allora una persona in $w_1$ potrà accedere anche
-al mondo $w_2$. Il fatto che $R$ sia riflessiva ci dice che l'unica garanzia che abbiamo
-è che ogni persona può accedere al proprio mondo, e questa è una garanzia molto scarsa.
-Infine, $I$ ci fornirà per ogni mondo la lista di proposizione vere
+$I$ ci fornisce per ogni mondo la lista di proposizione vere
 e quella delle proposizioni false, analogamente al suo corrispettivo nella semantica per $CP$.
+$R$, infine, è la \textit{relazione di accessibilità},
+essa ci permette di determinare a quali mondi si può accedere da un determinato mondo.
+Quindi se $w_1, w_2 \in W e w_1 R w_2$, allora una persona in $w_1$ potrà accedere
+al mondo $w_2$ e sapere quali proposizioni sono vere in $w_2$.
+Il fatto che $R$ sia riflessiva ci dice che l'unica garanzia che abbiamo
+è che ogni persona può accedere al proprio mondo, e questa è una garanzia molto scarsa.
 
-Definiamo come prima una funzione di valutazione $V$ che dipenderà da un dato T-modello
+Definiamo come prima una funzione di valutazione $V : L \times W \to \{0, 1\}$ che dipenderà da un dato T-modello
 $(w, W, R, I)$.
 
 Se $\alpha, \beta \in L$:
 \begin{itemize}
-\item $V(p) = I(p, w)$, $\forall p \in A$
-\item $V(\neg \alpha) = V \Leftrightarrow V(\alpha) = F$
-\item $V(\alpha \vee \beta) = F \Leftrightarrow V(\alpha) = F$ e $V(\beta) = F$
-\item $V(\Box \alpha) = V \Leftrightarrow \forall w_i \in W. w R w_i \Rightarrow V(\alpha, w_i) = V$
+\item $V(p, w) = I(p, w)$, $\forall p \in A$
+\item $V(\neg \alpha, w) = 1 - V(\alpha, w)$
+\item $V(\alpha \vee \beta, w) = max\{V(\alpha, w), V(\beta)\}$
+\item $V(\Box \alpha, w) = min\{ V(\alpha, w') : w R w' \}$
 \end{itemize}
 
 Le prime tre regole sono pressoché identiche a quelle specificate per la semantica di $CP$,
 tranne per il fatto che nella prima regola usiamo la funzione $I$ valutandola per il mondo w
-in cui ci troviamo.
+a cui siamo interessati.
 
 La novità è la quarta regola, quella riguardante la semantica di $\Box$.
 Questa regola afferma che nel mondo $w$, $\alpha$ è necessariamente vera se e solo se
-è vera in tutti i mondi accessibili da $w$.
+è $\alpha$ vera in tutti i mondi accessibili da $w$.
 
-Diciamo che una formula $\alpha$ è T-valida se $V(\alpha) = T$ per ogni T-modello $(w, W, R, I)$.
+Diciamo che una formula $\alpha$ è T-valida e scriviamo $\vDash \alpha$
+se per ogni T-modello $(w, W, R, I)$ $\forall w \in W. V(\alpha, w) = 1$.
 
 \section{Mostrare teorema di adeguatezza}
 
