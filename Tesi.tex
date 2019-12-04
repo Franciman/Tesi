@@ -48,7 +48,7 @@ semplificandoci il lavoro.
 \subsection{Il Linguaggio}
 Per definire il linguaggio di $CP$ avremo bisogno di un insieme di oggetti di base,
 chiamati variabili proposizionali. Senza soffermarci ulteriormente sulla natura di questi oggetti,
-possiamo tranquillamente assumere che esista un insieme $A$ numberabile
+possiamo tranquillamente assumere che esista un insieme $A$ non vuoto numberabile
 disgiunto da $\{\neg, \lor, (, )\}$.
 
 \begin{definition}
@@ -200,7 +200,7 @@ $\bullet$
 \end{flushleft}
 
 \subsection{Semantica di $CP$}
-Ci proponiamo, ora, di fornire una semantica per $CP$.
+Ci proponiamo ora di fornire una semantica per $CP$.
 La semantica che intendiamo fornire per $CP$ è quella standard, in particolare
 seguiamo l'esposizione di [Tortora] per presentarla.
 L'idea è quella di associare ad ogni formula
@@ -210,8 +210,8 @@ il simbolo $\neg$ come il connettivo logico ``non'' dell'italiano
 e il simbolo $\lor$ come disgiunzione inclusiva, ossia quel connettivo
 logico che in italiano si rappresenta spesso come ``o..., o..., oppure entrambi''.
 Per fare ciò dovremmo definire cosa si intende per proposizione,
-ma possiamo omettere questo passaggio, a dire il vero un po' problematico,
-osservando che, associando ad ogni variabile proposizionale un valore di verità,
+ma possiamo omettere questo passaggio, a dire il vero un po' problematico.
+Infatti, osserviamo che, associando ad ogni variabile proposizionale un valore di verità,
 siamo in grado di associare un valore di verità ad ogni formula ben formata.
 Infatti, il valore di verità di ``non $\alpha$'' dipende solo dal valore di verità
 di $\alpha$ e allo stesso modo il valore di verità di
@@ -220,7 +220,7 @@ dipende solo dal valore di verità di $\alpha$ e $\beta$.
 
 Connettivi che hanno questa peculiarità vengono detti operatori vero-funzionali.
 
-Passiamo, ora alla formalizzazione di queste idee e diamo le seguenti definizioni:
+Passiamo ora alla formalizzazione di queste idee e diamo le seguenti definizioni:
 
 \begin{definition}
 Chiamiamo interpretazione una funzione $I: A \to \{0, 1\}$
@@ -237,15 +237,15 @@ Se $\alpha, \beta \in L_{CP}$:
 \end{itemize}
 
 
-Quindi un'interpretazione ci dà, in un certo senso, una lista di tutte le proposizioni
+Quindi un'interpretazione ci dà in un certo senso una lista di tutte le proposizioni
 vere e di tutte le proposizioni false.
-Usiamo, poi, questi valori assegnati dall'interpretazione per determinare il valore di verità delle formule
+Usiamo poi i valori assegnati dall'interpretazione per determinare il valore di verità delle formule
 in base alla semantica che abbiamo assegnato a ciascun connettivo (che sono codificate nelle regole
 che abbiamo usato per definire la funzione $V_I$).
 
 \begin{definition}
 Sia $\alpha \in L_{CP}$, diremo che $\alpha$ è valida e scriveremo $\vDash \alpha$ se
-per ogni interpretazione $I$, $V_I(\alpha) = 1$.
+$V_I(\alpha) = 1$, per ogni interpretazione $I$.
 \end{definition}
 
 È noto, e una discussione approfondita di questo argomento si può trovare in [Mendelson],
@@ -342,18 +342,18 @@ $$\vdash \alpha \Rightarrow \vdash \Box \alpha$$
 Una volta definita la parte comune a tutti i sistemi a cui siamo interessati,
 passiamo ora ad esaminare per ogni sistema gli assiomi che lo caratterizzano.
 
-\section{Sistema T}
+\subsection{Sistema T}
 Il sistema T ha come assiomi tutti gli assiomi di $CP$ più:
 \begin{itemize}
 \item (K) $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
 \item (T) $\Box \alpha \rightarrow \alpha$
 \end{itemize}
 
-\section{Sistema S4}
+\subsection{Sistema S4}
 Il sistema S4 ha come assiomi tutti gli assiomi del Sistema T più il seguente assioma:
 $$(S4) \Box \alpha \rightarrow \Box \Box \alpha$$
 
-\section{Sistema S5}
+\subsection{Sistema S5}
 Il sistema S5 ha come assiomi tutti gli assiomi del Sistema T più:
 $$(S5) \diamond \alpha \rightarrow \Box \diamond \alpha$$
 
@@ -421,7 +421,7 @@ $\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più fo
 \begin{flushright}$\bullet$\end{flushright}
 \end{flushleft}
 
-\section{Un teorema di deduzione (DA AGGIUSTARE)}
+\subsection{Un teorema di deduzione (DA AGGIUSTARE)}
 In questo paragrafo proviamo a derivare un teorema di deduzione per il Sistema $S4$.
 Non possiamo aspettarci che il teorema di deduzione per il calcolo proposizionale $CP$ valga,
 infatti la regola di deduzione di necessitazione ci porterebbe ad asserire che:
@@ -463,7 +463,7 @@ In quel caso dobbiamo far uso dell'assioma $S4$ ed è tutto banale.
 
 
 
-\section{Modalità e funzioni modali}
+\subsection{Modalità e funzioni modali}
 Rendiamo più formale il concetto di modalità.
 \textbf{Definizione}
 Una modalità è una successione di 0 o più di uno dei seguenti simboli: $\neg,\diamond,\Box$.
@@ -485,7 +485,7 @@ In $T$ ovviamente c'è un numero infinito di funzioni modali esprimibili.
 In $S5$ ce n'è un numero finito, mentre sorprendentemente,
 in $S4$ ce ne sono infinite, nonostante le modalità esprimibili siano in numero finito.
 
-\section{Una semantica per i sistemi di logica modale}
+\subsection{Una semantica per i sistemi di logica modale}
 Dopo aver definito il linguaggio comune a tutti i sistemi di logica modale introdotti,
 lo abbiamo usato unicamente come base di un calcolo che usa le regole di deduzione per costruire
 dimostrazioni. Come ben sappiamo un linguaggio può anche essere usato per parlare di qualcosa,
@@ -518,7 +518,7 @@ si può accedere ad altri mondi, cioè sapere come sono fatte altre realtà alte
 Il mondo in cui si può accedere agli altri mondi sarà la base per distinguire
 tra i vari concetti di necessità e tra i vari sistemi formali che abbiamo definito prima.
 
-\section{Semantica per il Sistema T}
+\subsection{Semantica per il Sistema T}
 Definiamo un T-modello come una tripla $(W, R, I)$, in cui:
 \begin{itemize}
 \item $W$ è un insieme non vuoto i cui elementi saranno chiamati mondi;
@@ -558,12 +558,312 @@ Questa regola afferma che nel mondo $w$, $\alpha$ è necessariamente vera se e s
 Diciamo che una formula $\alpha$ è T-valida e scriviamo $\vDash \alpha$
 se per ogni T-modello $(w, W, R, I)$ $\forall w \in W. V(\alpha, w) = 1$.
 
-\section{Mostrare teorema di adeguatezza}
+Ci occupiamo adesso di mostrare che tutti i teoremi del sistema T sono formule valide
+nella semantica che abbiamo fornito.
+
+\begin{flushleft}
+\textbf{Teorema di adeguatezza per T}
+$\vdash \alpha \Rightarrow \vDash \alpha$ in $T$
+
+\textit{Dim.}
+
+Premettiamo alla dimostrazione vera e propria le seguenti osservazioni:
+
+Se $(W, R, I)$ è un T-modello, $w \in W$ e $\alpha, \beta \in L$, allora:
+$V(\alpha \rightarrow \beta, w) = V(\neg \alpha \lor \beta, w) = 0$ se e solo se
+$V(\neg \alpha, w) = 0$ e $V(\beta, w) = 0$, ovvero, se e solo se $V(\alpha, w) = 1$ e $V(\beta, w) = 0$.
+
+Se poi $V(\alpha \rightarrow \beta, w) = 1$ e $V(\alpha, w) = 1$, allora, se fosse
+$V(\beta, w) = 0$, per quanto detto prima avremmo $V(\alpha \rightarrow \beta, w) = 1$, ma ciò
+è assurdo, quindi deve essere $V(\beta, w) = 1$.
+
+Occupiamoci ora di dimostrare il teorema di adeguatezza, la strategia che seguiremo è la seguente:
+mostriamo che tutti gli assiomi sono T-validi e che le regole di deduzione conservano la T-validità.
+Di conseguenza per le condizioni che abbiamo dato sulle formule ben formate che formano una dimostrazione,
+deduciamo che tutte le formule ben formate che appaiono in una dimostrazione sono T-valide
+ed in particolare l'ultima formula della sequenza finita è T-valida.
+Questo sarà sufficiente per giungere alla tesi.
+
+Iniziamo col mostrare che tutti gli assiomi sono T-validi:
+
+Mostriamo che $\vDash \Box \alpha \rightarrow \alpha$:
+
+Se $(W, R, I)$ è un T-modello, per quanto visto in precedenza abbiamo che:
+$V(\Box \alpha \rightarrow \alpha, w) = 0 \Leftrightarrow V(\Box \alpha, w) = 1$ e $V(\alpha, w) = 1$.
+Siccome $R$ è una relazione riflessiva, dalla definizione di $V$ segue che:
+$V(\Box \alpha, w) <= V(\alpha, w)$ e quindi se $V(\Box \alpha, w) = 1$, si ha anche che
+$V(\alpha, w) = 1$ e quindi otteniamo che
+$\forall w \in W. V(\Box \alpha \rightarrow \alpha, w) = 1$ e per l'arbitrarietà
+del T-modello otteniamo l'asserto.
+
+Mostriamo che $\vDash \Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$:
+
+Se $(W, R, I)$ è un T-modello, come prima abbiamo che:
+$V(\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta), w) = 0
+\Leftrightarrow V(\Box (\alpha \rightarrow \beta), w) = 1$ e $V(\Box \alpha \rightarrow \Box \beta, w) = 0$.
+
+Se $V(\Box(\alpha \rightarrow \beta), w) = 1$, allora: $\forall w' \in W. wRw' \Rightarrow V(\alpha \rightarrow \beta, w') = 1$
+Se fosse $V(\Box \alpha, w) = 1$ e $V(\Box \beta, w) = 0$, allora si avrebbe la seguente
+situazione: $\forall w' \in W. wRw' \Rightarrow V(\alpha, w') = 1$. Quindi avremmo che:
+$\forall w' \in W. wRw' \Rightarrow V(\alpha \rightarrow \beta, w') = 1$ e $V(\alpha, w') = 1$,
+dunque per l'osservazione precedente si avrebbe: $\forall w' \in W. wRw' \Rightarrow V(\beta, w') = 1$
+e perciò $V(\Box \beta, w) = 1$, il che è assurdo.
+
+Quindi se $V(\Box(\alpha \rightarrow \beta), w) = 1$, deve essere $V(\Box \alpha \rightarrow \Box \beta, w) = 1$,
+e quindi per l'arbitrarietà di $w$ e del T-modello otteniamo l'asserto.
+
+Ci resta da verificare la T-validità degli assiomi derivanti dagli schemi di assiomi ereditati da $CP$.
+Gli assiomi di $CP$ sono ottenuti sostituendo in modo uniforme le metavariabili con
+formule del linguaggio $L_{CP}$.
+Per il teorema di completezza per $CP$, tutti gli assiomi sono formule valide per $CP$,
+questo significa che fissata un'interpretazione $I$ per $CP$,
+non importa quale sia il valore di verità delle formule sostituite nello schema,
+l'assioma risultante sarà sempre vero.
+
+Quindi, poiché, una volta forniti i valori di verità per $\alpha$ e $\beta$,
+le regole per determinare i valori di verità delle formule $\neg \alpha$ e $\alpha \lor \beta$
+sono le stesse sia per $CP$ che per il sistema T
+($\neg$ e $\lor$ sono interpretati allo stesso modo sia in T che in $CP$) e poiché
+gli schemi di assiomi ereditati da $CP$ contengono solo $\neg$ e $\lor$ come connettivi
+(gli altri connettivi di $CP$ sono definiti in termini di questi due),
+possiamo dedurre che tutte le possibili sostituzioni uniformi di formule di $L$
+negli schemi di assiomi derivati da $CP$ forniscono formule ancora valide.
+
+Ora dimostriamo che il \textit{Modus Ponens} conserva la validità:
+
+Se $\alpha \rightarrow \beta$ e $\alpha$ sono T-valide, allora fissato un T-modello $(W, R, I)$,
+$\forall w \in W. V(\alpha \rightarrow \beta, w) = 1$ e $V(\alpha, w) = 1$.
+Allora per l'osservazione che abbiamo fatto prima otteniamo che:
+$\forall w \in W. V(\beta, w) = 1$. Per l'arbitrarietà del T-modello otteniamo l'asserto.
+
+Infine dimostriamo che la regola di necessitazione conserva la validità:
+Fissato un T-modello $(W, R, I)$ e un mondo $w \in W$,
+se $\alpha$ è T-valida, allora $\forall w' \in W.V(\alpha, w') = 1$,
+quindi in particolare si ha: $\forall w' \in W. wRw' \Rightarrow V(\alpha, w') = 1$.
+Quindi $V(\Box \alpha, w) = 1$ e per l'arbitrarietà di $w$ e del T-modello otteniamo l'asserto.
 
 
-\section{Un sistema interessante(DA AGGIUSTARE)}
-Dedichiamo questo paragrafo un sistema di logica modale particolare, chiamato Sistema $B$.
-Esso è intimamente collegato alla logica intuizionista, come si evince dal nome,
-infatti la B è la iniziale di Brouwer, logico padre dell'intuizionismo.
+\begin{flushright}
+$\bullet$
+\end{flushright}
+\end{flushleft}
+
+\subsection{Semantica per i sistemi S4 e S5}
+Con leggere modifiche alla definizione di T-modello possiamo costruire delle semantiche
+anche per i sistemi S4 e S5.
+
+\begin{definition}
+Un S4-modello è un T-modello $(W, R, I)$ in cui $R$ oltre ad essere riflessiva è anche transitiva.
+\end{definition}
+
+\begin{definition}
+Un S5-modello è un T-modello $(W, R, I)$ in cui $R$ è la relazione di equivalenza totale
+(e in particolare è una relazione di equivalenza),
+vale a dire che si ha: $\forall w_1, w_2 \in W. w_1 R w_2$.
+\end{definition}
+
+\begin{flushleft}
+\textbf{Teorema di adeguatezza per S4}
+$\vdash \alpha \Rightarrow \vDash \alpha$ in $S4$
+
+\textit{Dim.}
+Siccome un S4-modello è anche un T-modello e poiché ogni teorema del Sistema T
+è anche un teorema del Sistema S4, possiamo sfruttare il teorema di adeguatezza per T
+e dimostrare qui solo che l'assioma $S4$ è una formula valida:
+
+Se $(W, R, I)$ è un S4-modello e $w \in W$,
+se $V(\Box \alpha, w) = 1$, allora $\forall w_1 \in W. wRw_1 \Rightarrow V(\alpha, w_1) = 1$,
+quindi poiché $R$ è riflessiva e transitiva
+se $w_1, w_2 \in W$ e $wRw_1, w_1Rw_2$, risulta $wRw_2$, quindi per ipotesi,
+$\forall w_2 \in W. w_1Rw_2 \Rightarrow V(\alpha, w_2) = 1$, quindi $V(\Box \alpha, w_1) = 1$
+e perciò $\forall w_1 \in W. wRw_1 \Rightarrow V(\Box \alpha, w_1) = 1$,
+dunque $V(\Box \Box \alpha, w) = 1$.
+Per l'arbitrarietà di $w$ e dell'S4-modello abbiamo la tesi.
+
+
+\begin{flushright}
+$\bullet$
+\end{flushright}
+\end{flushleft}
+
+
+\begin{flushleft}
+\textbf{Teorema di adeguatezza per S4}
+$\vdash \alpha \Rightarrow \vDash \alpha$ in $S5$
+
+\textit{Dim.}
+Siccome un S5-modello è anche un T-modello e poiché ogni teorema del Sistema T
+è anche un teorema del Sistema S5, possiamo sfruttare il teorema di adeguatezza per T
+e dimostrare qui solo che l'assioma $S5$ è una formula valida:
+
+Se $(W, R, I)$ è un S5-modello e $w \in W$,
+
+se $V(\diamond \alpha, w) = 1$, allora $\exists w_1 \in W. wRw_1$ e $V(\alpha, w_1) = 1$,
+
+Se $w_2 \in W$ e $wRw_2$, allora siccome $R$ è simmetrica, $w_2Rw$ e poiché
+è transitiva $w_2Rw_1$, ma $V(\alpha, w_1) = 1$, quindi
+$\exists w_1 \in W. w_2Rw_1$ e $V(\alpha, w_1) = 1$, cioè $V(\diamond \alpha, w_2) = 1$.
+
+Ciò ci permette di affermare che $\forall w_2 \in W. wRw_2 \Rightarrow V(\diamond \alpha, w_2) = 1$
+e quindi $V(\Box \diamond \alpha, w) = 1$.
+Per l'arbitrarietà di $w$ e dell'S5-modello otteniamo la tesi.
+
+\begin{flushright}
+$\bullet$
+\end{flushright}
+\end{flushleft}
+
+\subsection{Proprietà dei sistemi T, S4, S5}
+I teoremi di adeguatezza che abbiamo dimostrato ci dicono che ogni teorema
+è anche una formula valida per i vari sistemi.
+Questo significa che il concetto di semantico di validità che abbiamo poco fa definita
+si concilia bene con quello di dimostrabilità. Ciò è una buona assicurazione circa
+la bontà delle semantiche.
+
+Il teorema di adeguatezza ci permette di dimostrare varie importanti proprietà tramite
+strumenti semantici e che sarebbero difficili da dimostrare usando solo l'apparato deduttivo.
+
+\begin{flushleft}
+\textbf{Teorema}
+S4 e T sono due sistemi distinti, ovvero l'assioma S4 non è una tesi del sistema T.
+
+\textit{Dim.}
+
+In virtù del teorema di adeguatezza se troviamo un T-modello nel quale l'assioma S4
+sia falso, potremo dedurre che S4 non può essere un teorema del sistema T.
+
+Consideriamo 3 mondi $W = \{w_1, w_2, w_3\}$, e definiamo la relazione di accessibilità
+in questo modo:
+\begin{itemize}
+    \item $wRw, \forall w \in W$;
+    \item $w_1Rw_2$;
+    \item $w_2Rw_3$;
+    \item Non ci sono altre relazioni tra mondi.
+\end{itemize}
+
+Siccome $A$ è non vuoto, esiste $p \in A$ e definiamo la seguente interpretazione $I:$
+\begin{itemize}
+    \item Se $x \in A \setminus \{p\}, \forall w \in W. I(x, w) = 0$;
+    \item $I(p, w_1) = I(p, w_2) = 1$;
+    \item $I(p, w_3) = 0$.
+\end{itemize}
+
+È facile vedere che $(W, R, I)$ è un T-modello, infatti $W$ è non vuoto e $R$ è una relazione binaria riflessiva.
+
+Inoltre $V(p, w_1) = V(p, w_2) = 1$ e $V(p, w_3) = 0$, quindi per come è definita
+la relazione di accessibilità, $V(\Box p, w_1) = 1$, mentre
+$V(\Box p, w_2) = 0$. Quindi $\Box p$ non è vera in tutti i mondi accessibili da $w_1$
+e quindi $V(\Box \Box p, w_1) = 0$ e perciò: $V(\Box p \rightarrow \Box\Box p, w_1) = 0$.
+Quindi $\Box p \rightarrow \Box\Box p$ non è una formula valida per il sistema T e quindi
+non è dimostrabile.
+Nel sistema S4 invece è un'istanza dell'assioma (S4) e quindi è banalmente dimostrabile.
+Possiamo perciò concludere che i sistemi S4 e T non hanno gli stessi teoremi e quindi non
+sono lo stesso sistema formale.
+
+
+\end{flushleft}
+
+\begin{flushleft}
+\textbf{Corollario}
+S5 e T sono due sistemi distinti
+
+\textit{Dim.}
+
+Abbiamo dimostrato in precedenza che l'assioma (S4) è una tesi di S5 e quindi
+per il teorema precedente, S5 ha più tesi di T.
+\end{flushleft}
+
+\begin{flushleft}
+\textbf{Teorema}
+S5 e S4 sono due sistemi distinti, ovvero l'assioma S5 non è una tesi del sistema S4.
+
+\textit{Dim.}
+
+In virtù del teorema di adeguatezza se troviamo un S4-modello nel quale l'assioma S5
+sia falso, potremo dedurre che S5 non può essere un teorema del sistema S4.
+
+Consideriamo 2 mondi $W = \{w_1, w_2\}$, e definiamo la relazione di accessibilità
+in questo modo:
+\begin{itemize}
+    \item $wRw, \forall w \in W$;
+    \item $w_1Rw_2$;
+    \item Non ci sono altre relazioni tra mondi.
+\end{itemize}
+
+Siccome $A$ è non vuoto, esiste $p \in A$ e definiamo la seguente interpretazione $I:$
+\begin{itemize}
+    \item Se $x \in A \setminus \{p\}, \forall w \in W. I(x, w) = 0$;
+    \item $I(p, w_1) = 1$;
+    \item $I(p, w_2) = 0$.
+\end{itemize}
+
+È facile vedere che $(W, R, I)$ è un S4-modello, infatti $W$ è non vuoto e
+$R$ è una relazione binaria riflessiva e transitiva.
+
+Inoltre $V(p, w_1) = 1$ e $V(p, w_2) = 0$, quindi per come è definita
+la relazione di accessibilità, $V(\diamond p, w_1) = 1$, mentre
+$V(\diamond p, w_2) = 0$. Quindi $\diamond p$ non è vera in tutti i mondi accessibili da $w_1$
+e quindi $V(\Box \diamond p, w_1) = 0$ e perciò: $V(\diamond p \rightarrow \Box\diamond p, w_1) = 0$.
+Quindi $\diamond p \rightarrow \Box\diamond p$ non è una formula valida per il sistema S4 e quindi
+non è dimostrabile.
+Nel sistema S5 invece è un'istanza dell'assioma (S5) e quindi è banalmente dimostrabile.
+Possiamo perciò concludere che i sistemi S5 e S4 non hanno gli stessi teoremi e quindi non
+sono lo stesso sistema formale.
+
+
+\end{flushleft}
+
+In definitiva abbiamo dimostrato che i sistemi T, S4 e S5 sono tre sistemi distinti
+e questo significa che presentano tre nozioni diverse di ``necessità'' e ``possibilità''.
+
+Forniamo, infine quest'ultima dimostrazione:
+
+\begin{flushleft}
+\textbf{Teorema}
+Esiste $\alpha \in L$, tale che $\alpha \rightarrow \Box \alpha$ non è una tesi di T (e quindi nemmeno di S4 e S5)
+
+\textit{Dim.}
+
+Costruiamo un T-modello in cui $\alpha \rightarrow \Box \alpha$ è falsa.
+
+Consideriamo 2 mondi $W = \{w_1, w_2\}$, e definiamo la relazione di accessibilità
+in questo modo:
+\begin{itemize}
+    \item $wRw, \forall w \in W$;
+    \item $w_1Rw_2$;
+    \item Non ci sono altre relazioni tra mondi.
+\end{itemize}
+
+Siccome $A$ è non vuoto, esiste $p \in A$ e definiamo la seguente interpretazione $I:$
+\begin{itemize}
+    \item Se $x \in A \setminus \{p\}, \forall w \in W. I(x, w) = 0$;
+    \item $I(p, w_1) = 1$;
+    \item $I(p, w_2) = 0$.
+\end{itemize}
+
+
+È facile vedere che $(W, R, I)$ è un T-modello, infatti $W$ è non vuoto e
+$R$ è una relazione binaria riflessiva.
+
+Inoltre $V(p, w_1) = 1$ e $V(p, w_2) = 0$, quindi per come è definita
+la relazione di accessibilità, $V(\Box p, w_1) = 1$, perciò: $V(p \rightarrow \Box p, w_1) = 0$.
+Quindi $\diamond p \rightarrow \Box\diamond p$ non è una formula valida per il sistema T e quindi
+non è dimostrabile.
+Abbiamo ottenuto così la tesi.
+
+\end{flushleft}
+
+Nei sistemi di logica modale in cui per ogni
+$\alpha \in L$ vale $\alpha \leftrightarrow \Box \alpha$ si dice che avviene il collasso
+delle modalità. Questi sistemi sono solo una versione barocca, con simboli inutili,
+di un sistema formale per il calcolo proposizionale:
+gli operatori modali sono inutili, infatti la formula
+precedente ci dice che affermare $\Box \alpha$ è esattamente lo stesso che affermare $\alpha$
+e quindi non aggiungono niente di nuovo.
+
+Il teorema che abbiamo appena dimostrato ci assicura che nei sistemi definiti non avviene
+il collasso delle modalità e che quindi gli operatori modali introdotti non sono solo inutili
+orpelli che non aggiungono niente a $CP$.
+
 
 \end{document}
