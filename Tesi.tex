@@ -1,6 +1,7 @@
 \documentclass[a4paper, 12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb}
+\usepackage{amsmath}
 \newtheorem{axiom}{Assioma}
 \newtheorem{theorem}{Teorema}
 \newtheorem{lemma}{Lemma}
@@ -865,36 +866,288 @@ Il teorema che abbiamo appena dimostrato ci assicura che nei sistemi definiti no
 il collasso delle modalità e che quindi gli operatori modali introdotti non sono solo inutili
 orpelli che non aggiungono niente a $CP$.
 
-\subsection{Procedura di decisione e teorema di completezza per T}
+\subsection{Procedura di decisione per T}
 Ci occupiamo ora di definira una procedura di decisione per l'insieme delle formule T-valide.
-In questo capitolo non faremo uso dei connettivi non primitivi e quindi considereremo
-solo formule in cui compaiono in connettivi $\neg, \lor, \Box$.
 
 Per verificare la T-validità di una formula $\alpha$ dovremmo verificare che essa sia vera in tutti
-i mondi di tutti i T-modelli, mentre ciò che ci proponiamo di fare è dedurre quali sono le proprietà \textit{necessarie}
-che un T-modello in cui esista un mondo in cui $\alpha$ sia falsa deve avere. Se nella determinazione di tali proprietà
-giungiamo ad un'inconsistenza, cioè ci troviamo ad assegnare a una sottoformula di $\alpha$
-due valori di verità diversi, avremo dimostrato che non può esistere nessun T-modello
-in cui c'è un mondo in cui $\alpha$ sia falsa. Al contrario se non troveremo alcuna inconsistenza, saremo in grado
+i mondi di tutti i T-modelli, mentre ciò che ci proponiamo di fare è dedurre quali sono i valori di verità
+che le sottoformule di $\alpha$ devono assumere nei vari mondi affinché esista un T-modello
+in cui esista un mondo in cui $\alpha$ sia falsa.
+Se così facendo riusciamo ad assegnare per ogni mondo un valore di verità ad ogni variabile proposizionale
+senza cadere in contraddizione, ossia senza dover assegnare ad una sottoformula di $\alpha$ sia $1$ che $0$,
+allora ciò significa che non esiste alcun T-modello che falsifichi $\alpha$, visto che se un tale T-modello
+esistesse, necessariamente ci sarebbe una valutazione che associa
+alla stessa formula sia $1$ che $0$ ma ciò è impossibile per un T-modello.
+Al contrario se non incontriamo alcuna inconsistenza, saremo in grado
 di determinare un T-modello in cui esiste un mondo in cui $\alpha$ è falsa.
 
-Il fulcro della procedura che andremo a definire si basa sulle seguenti considerazioni
-circa la natura delle regole usate nella definizione della funzione di valutazione $V$:
+Presentiamo la procedura di decisione mostrando come applicarla a vari esempi che ne
+esemplificano bene tutte le regole:
 
-Affinché $\Box \alpha$ sia falsa in un mondo $w_1$, allora deve esistere
-un mondo $w_2$ accessibile da $w_1$ in cui $\alpha$ sia falsa.
-Al contrario, se $\Box \alpha$ deve essere vera in $w_1$, allora in ogni
-mondo $w_2$ accessibile da $w_1$, $\alpha$ deve essere falsa.
-Se poi $\neg \alpha$ è falsa (vera), allora $\alpha$ deve essere vera (falsa).
-Per $\lor$, invece, se $\alpha \lor \beta$ è vera, allora sia $\alpha$ che $\beta$ devono essere vere,
-mentre se $\alpha \lor \beta$ è falsa, abbiamo tre possibilità:
-solo $\alpha$ è falsa, solo $\beta$ è falsa, oppure sono entrambe false.
+Per ogni mondo disegniamo un rettangolo che conterrà delle formule.
+Successivamente per indicare che un mondo $w_2$ è accessibile da un'altro mondo $w_1$,
+colleghiamo i due rettangoli con una freccia che va dal rettangolo del mondo $w_1$
+a quello del rettangolo del mondo $w_2$.
+
+Nel rettangolo del mondo $w_1$, quando scriviamo un valore di verità $v$ sotto ad una
+variabile proposizionale $p$ intendiamo indicare che nel modello che stiamo costruendo
+vale $I(p, w_1) = v$.
+Mentre se scriviamo un valore di verità $v$ sotto ad un connettivo, intendiamo indicare
+che per la formula $\alpha$ che ha come connettivo più esterno quel connettivo,
+vale $V(\alpha, w_1) = v$ nel modello che stiamo costruendo.
+
+Quindi se scriviamo
+$\underset{1}{q} \underset{1}{\rightarrow} \underset{1}{q}$ nel rettangolo di $w_1$
+intendiamo indicare che $I(q, w_1) = 1$ e che $V(q \rightarrow q, w_1) = 1$.
+
+Iniziamo considerando la formula
+$$\Box(p \rightarrow \Box(q \rightarrow r)) \rightarrow \diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
+Vogliamo che questa formula sia falsa nel primo mondo che introduciamo $w_1$.
+Quindi nel rettangolo per $w_1$ scriviamo dapprima:
+$$\Box(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
+Perciò per le regole di valutazione che abbiamo dato:
+$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
+Il fatto che $\diamond(q \rightarrow (\Box p \rightarrow \diamond r))$ sia falsa in $w_1$ ci porta a dire che:
+$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(q \underset{0}{\rightarrow} (\Box p \rightarrow \diamond r))$$
+E quindi:
+$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\Box p \underset{0}{\rightarrow} \diamond r))$$
+Continuando nell'argomento di $\diamond$ deduciamo che:
+$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\underset{1}{\Box} \underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\diamond} \underset{0}{r}))$$
+Abbiamo determinato un valore di verità per tutte le variabili proposizionali nella formula, non ci resta che vedere se c'è qualche inconsistenza nella valutazione.
+Se assegnamo alle variabili proposizionali dell'antecedente dell'implicazione più esterna i valori
+che abbiamo trovato otteniamo:
+$$\underset{1}{\Box}(\underset{1}{p} \rightarrow \Box(\underset{1}{q} \rightarrow \underset{0}{r})) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\underset{1}{\Box} \underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\diamond} \underset{0}{r}))$$
+Perciò:
+$$\underset{1}{\Box}(\underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\Box}(\underset{1}{q} \underset{0}{\rightarrow} \underset{0}{r})) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\underset{1}{\Box} \underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\diamond} \underset{0}{r}))$$
+
+Ma abbiamo un'inconsistenza, perché abbiamo:
+$$\underset{1}{\Box}(\underset{1}{p} \underset{0}{\rightarrow}\underset{0}{\Box}(\underset{1}{q} \underset{0}{\rightarrow} \underset{0}{r}))$$
+cioè in un primo momento abbiamo dedotto che in $w_1$ questa formula deve essere vera in $w_1$,
+ma per le assegnazioni che abbiamo trovato per le variabili $p, q, r$, essa risulta essere falsa.
+
+Abbiamo perciò ottenuto che la seguente formula è T-valida:
+$$\Box(p \rightarrow \Box(q \rightarrow r)) \rightarrow \diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
+
+In questo caso siamo riusciti a decidere circa la validità della formula fornitaci
+senza dover introdurre nuovi mondi, ma ciò avviene solo di rado.
+
+E allora descriviamo la procedura di decisione come segue:
+
+Si inizia disegnado un rettangolo  con etichetta $w_1$ dentro cui scriviamo la formula $\alpha$
+di cui si vuole controllare la validità, seguendo il procedimento delineato sopra
+si iniziano a desumere dei valori di verità da assegnare alle sottoformule ben formate di $\alpha$
+in modo che $\alpha$ risulti falsa.
+
+Ogni rettangolo è accessibile a se stesso.
+
+Se in un rettangolo con etichetta $w_i$ si assegna il valore $1$ ($0$) ad una sottoformula
+del tipo $\box \beta$ ($\diamond \beta$), allora in tutti i rettangoli accessibili da $w_i$ si dovrà
+associare a $\beta$ il valore di verità $1$ ($0$) e per ricordarcelo scriviamo questa condizione
+vicino ad ogni rettangolo in cui essa vale.
+
+Se in un rettangolo con etichetta $w_i$ c'è una formula $\beta$
+in cui ci sono delle sottoformule per cui univoco il valore di verità da associare loro,
+come può succedere quando $\gamma \lor \delta$ deve essere vera: In questo caso abbiamo
+tre possibili assegnamenti:
+$\gamma$ vera e $\delta$ vera, $\gamma$ vera e $\delta$ falsa, $\gamma$ falsa, $\delta$ vera.
+Allora procediamo creando più versioni alternative dello stesso rettangolo indicate con $w_i(n)$,
+e facciamo in modo che in ognuno di essi alle sottoformule con valori ambigui siano assegnati
+tutti le possibili combinazioni di valori di verità.
+Poi per ogni rettangolo alternativo $w_i(n)$ facciamo una copia del diagramma in costruzione
+a cui però al posto del rettangolo $w_i$ sostituiamo il
+rettangolo alternativo $w_i(n)$. Otteniamo perciò diversi diagrammi
+e per ciascuno di essi continuiamo con la procedura che stiamo definendo.
+
+Se in un rettangolo con etichetta $w_i$ si assegna il valore $0$ ($1$) ad una sottoformula
+del tipo $\box \beta$ ($\diamond \beta$), allora bisogna aggiungere un nuovo
+rettangolo con una nuova etichetta $w_j$ che sia accessibile dal rettangolo con etichetta $w_i$
+e in questo nuovo rettangolo scriviamo la formula $\beta$ ($\neg \beta$).
+Su questo nuovo rettangolo si esegue di nuovo tutto il procedimento che stiamo descrivendo.
+
+Una volta che si si sono applicate tutte queste regole e non se ne possono applicare altre,
+diciamo che abbiamo ottenuto un sistema completo di T-diagrammi per la formula $\alpha$.
+
+Se in un rettangolo viene assegnata ad una sottoformula sia il valore $1$ che il valore $0$,
+diciamo che il rettangolo è esplicitamente inconsistente.
+
+Se tutti i rettangoli alternativi ad un rettangolo sono esplicitamente inconsistenti,
+allora il rettangolo è esplicitamente inconsistente.
+
+Il predecessore diretto di un rettangolo $w_i$ è il rettangolo che ha causato
+la creazione di $w_i$.
+
+Se un rettangolo è predecessore diretto di un rettangolo esplicitamente inconsistente,
+allora esso è esplicitamente inconsistente.
+
+Per le osservazioni precedenti otteniamo che una formula è T-valida
+se e solo se il diagramma con etichetta $w_1$ è esplicitamente inconsistente.
+
+Forniamo alcuni esempi di determinazioni di sistemi completi di T-diagrammi:
+
+\textbf{FORNIRLI}
+
+
+Adesso dobbiamo dimostrare che la procedura che abbiamo definito è effettivamente
+una procedura di decisione, vogliamo cioè dimostrare che per ogni formula di $L$
+ci permette di determinare in modo univoco e in un numero finito di passi
+se questa è T-valida o meno.
+
+Il fatto che il procedimento funzioni e che se il procedimento termina la risposta è univoca
+sono ovvi, dobbiamo solo mostrare che per costruire un sistema completo di T-diagrammi
+sono necessari solo un numero finito di passi:
+
+Iniziamo osservando che in un rettangolo $w_i$
+la determinazione dei valori di verità delle sottoformule della formula $\alpha$,
+nel caso in cui non ci siano ambiguità comporta solo un numero finito di passaggi.
+Se c'è qualche ambiguità bisogna usare la regola per introdurre i rettangoli alternativi.
+Il numero di possibili combinazioni di valori di verità è finito e quindi
+i rettangoli alternativi introdotti sono in numero finito.
+
+Notiamo ora che se è necessario introdurre un nuovo mondo $w_j$ accessibile da $w_i$,
+allora in questo mondo le formule avranno un numero strettamente inferiore di operatori
+modali rispetto al numero di operatori modali nelle formule di $w_i$, questo perché
+le formule scritte in $w_j$ si ottengono rimuovendo un operatore da una sottoformula
+della formula scritta in $w_i$.
+Dal momento che in $w_1$ c'è solo un numero finito di operatori
+modali, allora il numero di mondi da dover introdurre sarà necessariamente finito.
+
+Abbiamo perciò che il numero di rettangoli in un sistema completo di T-diagrammi è finito
+e perciò per ciascuno di essi le operazioni da compiere sono finite. In definitiva
+la procedura che abbiamo definito termina in un numero finito di passi.
+
+\subsection{Procedura di decisione per S4}
+Cerchiamo di adattare la procedura appena definita per decidere le formule S4-valide.
+Siccome un S4-modello ha una relazione riflessiva e transitiva, allora bisogna stare
+attenti che quando si introducano mondi nuovi le relazioni di accessibilità siano
+correttamente registrate in modo che se $w_3$ è accessibile da $w_2$ e $w_2$ è accessibile
+da $w_1$, allora $w_3$ risulti accessibile da $w_1$.
+Questa situazione ci porta delle complicazione, per illustrare bene il problema
+mostriamo cosa succede con la seguente formula:
+
+$$MLp \rightarrow LMp$$
+\textbf{fare il grafico}
+
+Il problema che riscontriamo è che essendo la relazione di accessibilità transitiva,
+quando in $w_i$ si ha che $\Box \alpha$ è vera, dobbiamo registrare in ogni altro mondo
+accessibile da $w_i$ che $\alpha$ è vera, e in particolare se c'è un mondo $w_j$
+accessibile da $w_i$ e un mondo $w_k$ accessibile da $w_j$, allora $w_k$ è accessibile
+da $w_i$ e quindi sia in $w_j$ che in $w_k$ dobbiamo registrare che $\alpha$ deve essere vera,
+ma ciò significa che ora nei mondi accessibili da un mondo $w_m$ non è più detto
+che il numero di operatori modali presenti nelle formule sia diminuito e quindi
+può capitare come nell'esempio precedente di avere un numero infinito di mondi.
+
+Introduciamo la seguente definizione:
+\begin{definition}
+diciamo che i mondi $w_1, ..., w_n$ formano una catena se:
+$w_{i+1}$ è accessibile da $w_i$ per ogni $i = 1, ..., n-1$
+\end{definition}
+
+Se in un rettangolo $w_{i+1}$ della catena ci sono delle condizioni introdotte
+a partire dal mondo $w_i$, allora quelle condizioni devono valere
+in ogni altro elemento successivo della catena.
+
+Per ovviare al problema che abbiamo riscontrato, osserviamo che
+in ogni rettangolo sono presenti solo
+sottoformule ben formate della formula $\alpha$ presente in $w_1$,
+siccome tutte le sottoformule possibili di $\alpha$ sono in numero finito,
+allora ad un certo punto, quando dovremo aggiungere un nuovo rettangolo $w_i$
+al termine di una catena, ci sarà sicuramente un rettangolo più in alto nella catena
+che contenga la formula e tutte le condizioni che vogliamo aggiungere $w_i$.
+Inoltre notiamo che anche se questo rettangolo contiene più condizioni di $w_i$,
+ciò non è un problema, perché essendo $w_i$ accessibile da questo rettangolo,
+quelle condizioni valgono anche in $w_i$, facendo parte della stessa catena.
+capiterà sicuramente che esista un altro rettangolo già introdotto
+con la stessa formula.
+
+I T-modelli in cui la relazione tra i rettangoli è transitiva e si usa la regola
+appena definita vengono detti S4-modelli.
+
+Con questa modifica possiamo dimostrare che il numero di rettangoli in un sistema
+completo di S4-diagrammi è finito:
+
+Una catena di rettangoli è finita, per quanto detto prima.
+Ogni catena inizia da $w_1$, siccome si introducono rettangoli
+solo in corrispondenza di operatori modali, e ogni rettangolo contiene solo un numero finito
+di operatori modali, allora il numero di catene necessarie è finito
+così come il numero di rettangoli.
+
+\subsection{Una procedura di decisione per S5}
+
+
+\subsection{Teorema di completezza per T}
+Data una formula $\alpha$, una volta costruito il suo sistema completo di T-diagrammi,
+associamo ad ogni rettango $w_i$ del sistema una formula $w_i'$ definita in questo modo:
+
+nel rettangolo $w_i$ c'è una formula $\beta$ che deve essere falsa ed eventualmente delle condizioni,
+cioè un numero finito di formule $\gamma_1, ...\gamma_n$ che devono essere vere, ereditate
+dal suo predecessore diretto, allora definiamo $w_i'$ come la formula
+$\beta \lor \neg \gamma_1 \lor ... \lor \neg \gamma_n$.
+
+\begin{flushleft}
+\textbf{Lemma}
+Dato un sistema completo di T-diagrammi e un rettangolo $w_i$,
+se $\beta$ è una sottoformula $w_i'$ e a $\beta$ è assegnato il valore di verità falso,
+
+allora $\vdash \beta \rightarrow w_i'$ in T
+
+Se invece a $\beta$ è associato il valore di verità vero,
+
+
+allora $\vdash \neg \beta \rightarrow w_i'$ in T
+
+\textit{Dim.}
+
+Supponiamo che a $\beta$ sia associato il valore di verità falso, l'altro caso è analogo,
+allora se $\delta_1, ..., \delta_n$ sono tutte le sottoformule ben formate di $w_i'$ è
+facile vedere che
+$$(\Box \delta_1 \rightarrow \delta_1) \rightarrow ... \rightarrow (\Box \delta_n \rightarrow \delta_n) \rightarrow (\beta \rightarrow w_i')$$
+è ottenuta da una famiglia di tautologie di $CP$, infatti l'unico modo per rendere
+falsa questa formula è assegnare a $\delta_k$ $1$ ogni volta che associamo a $\delta_k$ $1$,
+per $k = 1 ... n$, assegnare $1$ a $\beta$ e $0$ a $w_i'$.
+Ma sappiamo, per quanto dedotto dal T-diagramma che se $w_i'$ ha valore di verità $1$,
+allora $\beta$ deve avere valore di verità $0$.
+
+Quindi otteniamo l'asserto.
+
+\end{flushleft}
+
+
+\begin{flushleft}
+\textbf{Lemma}
+
+Dato un sistema completo di T-diagrammi e un rettangolo $w_i$,
+se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
+
+\textit{Dim.}
+
+Siccome $w_i$ è esplicitamente inconsistente, esiste una sottoformula $\beta$ di $w_i'$
+tale che ad essa è associata sia il valore di verità $0$ che il valore di verità $1$,
+allora per il lemma precedente si ha:
+$$\vdash \beta \rightarrow w_i'$$
+e
+$$\vdash \neg \beta \rightarrow w_i'$$
+
+È facile provare che
+$(\neg \beta \rightarrow \alpha) \rightarrow (\beta \rightarrow \alpha) \rightarrow \alpha$
+è una tautologia in $CP$ e quindi è un teorema in $CP$ e dunque è un teorema nel sistema T.
+
+Allora applicando due volte il modus ponens e sfruttando anche i teoremi che abbiamo mostrato poco sopra,
+otteniamo che $\vdash w_i'$.
+
+\end{flushleft}
+
+
+\begin{flushleft}
+\textbf{Lemma}
+
+Dato un sistema completo di T-diagrammi e un rettangolo $w_i$, se $\vdash w_i'$
+e $w_j$ è il suo predecessore diretto,
+allora $\vdash w_j'$
+
+\textit{Dim.}
 
 
 
-
-
-
-
+\end{flushleft}
 
 \end{document}
