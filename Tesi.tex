@@ -865,5 +865,36 @@ Il teorema che abbiamo appena dimostrato ci assicura che nei sistemi definiti no
 il collasso delle modalità e che quindi gli operatori modali introdotti non sono solo inutili
 orpelli che non aggiungono niente a $CP$.
 
+\subsection{Procedura di decisione e teorema di completezza per T}
+Ci occupiamo ora di definira una procedura di decisione per l'insieme delle formule T-valide.
+In questo capitolo non faremo uso dei connettivi non primitivi e quindi considereremo
+solo formule in cui compaiono in connettivi $\neg, \lor, \Box$.
+
+Per verificare la T-validità di una formula $\alpha$ dovremmo verificare che essa sia vera in tutti
+i mondi di tutti i T-modelli, mentre ciò che ci proponiamo di fare è dedurre quali sono le proprietà \textit{necessarie}
+che un T-modello in cui esista un mondo in cui $\alpha$ sia falsa deve avere. Se nella determinazione di tali proprietà
+giungiamo ad un'inconsistenza, cioè ci troviamo ad assegnare a una sottoformula di $\alpha$
+due valori di verità diversi, avremo dimostrato che non può esistere nessun T-modello
+in cui c'è un mondo in cui $\alpha$ sia falsa. Al contrario se non troveremo alcuna inconsistenza, saremo in grado
+di determinare un T-modello in cui esiste un mondo in cui $\alpha$ è falsa.
+
+Il fulcro della procedura che andremo a definire si basa sulle seguenti considerazioni
+circa la natura delle regole usate nella definizione della funzione di valutazione $V$:
+
+Affinché $\Box \alpha$ sia falsa in un mondo $w_1$, allora deve esistere
+un mondo $w_2$ accessibile da $w_1$ in cui $\alpha$ sia falsa.
+Al contrario, se $\Box \alpha$ deve essere vera in $w_1$, allora in ogni
+mondo $w_2$ accessibile da $w_1$, $\alpha$ deve essere falsa.
+Se poi $\neg \alpha$ è falsa (vera), allora $\alpha$ deve essere vera (falsa).
+Per $\lor$, invece, se $\alpha \lor \beta$ è vera, allora sia $\alpha$ che $\beta$ devono essere vere,
+mentre se $\alpha \lor \beta$ è falsa, abbiamo tre possibilità:
+solo $\alpha$ è falsa, solo $\beta$ è falsa, oppure sono entrambe false.
+
+
+
+
+
+
+
 
 \end{document}
