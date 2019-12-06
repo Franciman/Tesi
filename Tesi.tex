@@ -429,70 +429,70 @@ $\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più fo
 \begin{flushright}$\bullet$\end{flushright}
 \end{flushleft}
 
-\subsection{Un teorema di deduzione (DA AGGIUSTARE)}
-In questo paragrafo proviamo a derivare un teorema di deduzione per il Sistema $S4$.
-Non possiamo aspettarci che il teorema di deduzione per il calcolo proposizionale $CP$ valga,
-infatti la regola di deduzione di necessitazione ci porterebbe ad asserire che:
-$$ x \vdash \Box x \Rightarrow \vdash x \rightarrow \Box x $$
-E ciò vorrebbe dire che le modalità non aggiungono nulla al sistema del calcolo proposizionale.
-
-Se guardiamo attentamente la regola di necessitazione e la scriviamo in questo modo:
-$$x \vdash \Box x$$
-possiamo notare che l'ipotesi $x$ è sufficiente per dimostrare $\Box x$ che afferma molto più
-che semplicemente $x$.
-Notiamo anche che la regola di necessitazione ci permette di provare
-$$x \vdash \Box \Box x$$
-
-Quindi, far semplicemente passare la x da sinistra a destra, significherebbe affermare che
-da ipotesi più deboli si possono comunque dedurre le stesse conclusioni. Allora possiamo provare,
-nello spostare la x da sinistra a destra di $\vdash$, ad aggiungere un $\Box$.
-Questo può bastare in sistemi come $S4$ o più potenti, perché da $\Box x$ possiamo dedurre
-$\Box \Box x$, $\Box \Box \Box x$, ecc...
-Mentre nel sistema T questo non è vero e quindi dovremo risolvere diversamente.
-
-Recuperiamo quindi un teorema di deduzione, facendo la seguente modifica:
-$$\alpha \vdash \beta \Rightarrow \vdash \Box \alpha \rightarrow \beta$$
-Ora il precedente problema è facilmente risolvibile, infatti, la deduzione $x \vdash \Box x$
-diventa il teorema $\vdash \Box x \rightarrow \Box x$ banalmente valido.
-Otteniamo però anche il seguente teorema, $\vdash \Box x \rightarrow \Box \Box x$ che è l'assioma $S4$
-Ecco perché abbiamo supposto di trovarci nel sistema $S4$.
-
-Diamo una dimostrazione di
-
-\begin{flushleft}
-\textbf{Teorema}
-$\alpha \vdash \beta \Leftrightarrow \vdash \Box \alpha \rightarrow \beta$ in $S4$
-
-\textit{Dim.}
-Lasciata al lettore, è una banale modifica della dimostrazione nel caso del calcolo proposizionale.
-L'unica parte interessante è quella riguardante i teoremi ottenuti con la regola di necessitazione.
-In quel caso dobbiamo far uso dell'assioma $S4$ ed è tutto banale.
-\end{flushleft}
-
-
-
-\subsection{Modalità e funzioni modali}
-Rendiamo più formale il concetto di modalità.
-\textbf{Definizione}
-Una modalità è una successione di 0 o più di uno dei seguenti simboli: $\neg,\diamond,\Box$.
-
-Viene da domandarci, ora, quante sono le modalità distinte che ci sono in ognuno dei sistemi che abbiamo considerato.
-Si può dimostrare che nel Sistema $T$ ce ne sono infinite,
-mentre in $S4$ e $S5$ ce ne sono solo un numero finito.
-
-Parleremo più approfonditamente di tali questioni solo dopo aver introdotto una semantica
-per il nostro linguaggio.
-
-\begin{flushleft}
-\textbf{Definizione 1}
-
-Una funzione modale è una formula contenente almeno una funzione modale
-\end{flushleft}
-
-In $T$ ovviamente c'è un numero infinito di funzioni modali esprimibili.
-In $S5$ ce n'è un numero finito, mentre sorprendentemente,
-in $S4$ ce ne sono infinite, nonostante le modalità esprimibili siano in numero finito.
-
+%\subsection{Un teorema di deduzione (DA AGGIUSTARE)}
+%In questo paragrafo proviamo a derivare un teorema di deduzione per il Sistema $S4$.
+%Non possiamo aspettarci che il teorema di deduzione per il calcolo proposizionale $CP$ valga,
+%infatti la regola di deduzione di necessitazione ci porterebbe ad asserire che:
+%$$ x \vdash \Box x \Rightarrow \vdash x \rightarrow \Box x $$
+%E ciò vorrebbe dire che le modalità non aggiungono nulla al sistema del calcolo proposizionale.
+%
+%Se guardiamo attentamente la regola di necessitazione e la scriviamo in questo modo:
+%$$x \vdash \Box x$$
+%possiamo notare che l'ipotesi $x$ è sufficiente per dimostrare $\Box x$ che afferma molto più
+%che semplicemente $x$.
+%Notiamo anche che la regola di necessitazione ci permette di provare
+%$$x \vdash \Box \Box x$$
+%
+%Quindi, far semplicemente passare la x da sinistra a destra, significherebbe affermare che
+%da ipotesi più deboli si possono comunque dedurre le stesse conclusioni. Allora possiamo provare,
+%nello spostare la x da sinistra a destra di $\vdash$, ad aggiungere un $\Box$.
+%Questo può bastare in sistemi come $S4$ o più potenti, perché da $\Box x$ possiamo dedurre
+%$\Box \Box x$, $\Box \Box \Box x$, ecc...
+%Mentre nel sistema T questo non è vero e quindi dovremo risolvere diversamente.
+%
+%Recuperiamo quindi un teorema di deduzione, facendo la seguente modifica:
+%$$\alpha \vdash \beta \Rightarrow \vdash \Box \alpha \rightarrow \beta$$
+%Ora il precedente problema è facilmente risolvibile, infatti, la deduzione $x \vdash \Box x$
+%diventa il teorema $\vdash \Box x \rightarrow \Box x$ banalmente valido.
+%Otteniamo però anche il seguente teorema, $\vdash \Box x \rightarrow \Box \Box x$ che è l'assioma $S4$
+%Ecco perché abbiamo supposto di trovarci nel sistema $S4$.
+%
+%Diamo una dimostrazione di
+%
+%\begin{flushleft}
+%\textbf{Teorema}
+%$\alpha \vdash \beta \Leftrightarrow \vdash \Box \alpha \rightarrow \beta$ in $S4$
+%
+%\textit{Dim.}
+%Lasciata al lettore, è una banale modifica della dimostrazione nel caso del calcolo proposizionale.
+%L'unica parte interessante è quella riguardante i teoremi ottenuti con la regola di necessitazione.
+%In quel caso dobbiamo far uso dell'assioma $S4$ ed è tutto banale.
+%\end{flushleft}
+%
+%
+%
+%\subsection{Modalità e funzioni modali}
+%Rendiamo più formale il concetto di modalità.
+%\textbf{Definizione}
+%Una modalità è una successione di 0 o più di uno dei seguenti simboli: $\neg,\diamond,\Box$.
+%
+%Viene da domandarci, ora, quante sono le modalità distinte che ci sono in ognuno dei sistemi che abbiamo considerato.
+%Si può dimostrare che nel Sistema $T$ ce ne sono infinite,
+%mentre in $S4$ e $S5$ ce ne sono solo un numero finito.
+%
+%Parleremo più approfonditamente di tali questioni solo dopo aver introdotto una semantica
+%per il nostro linguaggio.
+%
+%\begin{flushleft}
+%\textbf{Definizione 1}
+%
+%Una funzione modale è una formula contenente almeno una funzione modale
+%\end{flushleft}
+%
+%In $T$ ovviamente c'è un numero infinito di funzioni modali esprimibili.
+%In $S5$ ce n'è un numero finito, mentre sorprendentemente,
+%in $S4$ ce ne sono infinite, nonostante le modalità esprimibili siano in numero finito.
+%
 \subsection{Una semantica per i sistemi di logica modale}
 Dopo aver definito il linguaggio comune a tutti i sistemi di logica modale introdotti,
 lo abbiamo usato unicamente come base di un calcolo che usa le regole di deduzione per costruire
