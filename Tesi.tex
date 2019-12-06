@@ -32,6 +32,13 @@
 
 \begin{document}
 \maketitle
+\section{Introduzione}
+In questa tesi ci occupiamo di usare i metodi della logica matematica
+per studiare e descrivere i ragionamenti che fanno uso delle nozioni
+di ``necessarietà'' e ``possibilità''. Nello specifico andremo a studiare
+e confrontare tre sistemi insieme alle loro semantiche di Kripke
+che formalizzano tali nozioni: T, S4 e S5;
+
 \section{Nozioni Preliminari}
 Premettiamo allo studio di sistemi di logica modale la definizione
 di sintassi e semantica di un sistema formale per il calcolo proposizionale,
@@ -1071,7 +1078,12 @@ solo in corrispondenza di operatori modali, e ogni rettangolo contiene solo un n
 di operatori modali, allora il numero di catene necessarie è finito
 così come il numero di rettangoli.
 
-\subsection{Una procedura di decisione per S5}
+\subsection{Procedura di decisione per S5}
+Un S5-diagramma è un S4-diagramma in cui, però, ogni rettangolo è accessibile
+da ogni altro rettangolo. Con un argomento molto simile a quello usato
+per dimostrare che la costruzione di un sistema completo di S4-diagrammi termina dopo
+un numero finito di passi, si può dimostrare lo stesso risultato per gli S5-diagrammi.
+Quindi anche per S5 c'è una procedura di decisione per le formule S5-valide.
 
 
 \subsection{Teorema di completezza per T}
@@ -1146,8 +1158,139 @@ allora $\vdash w_j'$
 
 \textit{Dim.}
 
+Se $w_i$ e $w_j$ sono lo stesso rettangolo, non c'è niente da dimostrare.
+Mentre se $w_i$ e $w_j$ sono due rettangoli diversi, siccome $w_i$ è costruito
+a partire da $w_j$ secondo le regole della procedura, allora in $w_i$ c'è
+una formula $\gamma$ a cui è assegnato il valore $0$ e tale che in $w_j$ c'è
+$\Box \gamma$ a cui è assegnato il valore $0$ e poi ci sono delle formule
+$\beta_1, ..., \beta_n$ a cui è assegnato il valore $1$ e tali che in $w_j$
+a $\Box \beta_1, ..., \Box \beta_n$ è assegnato il valore $1$ in $w_i$.
+Per questo motivo $w_j'$ è la formula: $\neg \beta_1 \lor ... \neg \beta_n \lor \gamma$.
 
+Quindi per ipotesi abbiamo:
+$$\vdash \neg \beta_1 \lor ... \neg \beta_n \lor \gamma$$
+per la regola di necessitazione, otteniamo:
+$$\vdash \Box(\neg \beta_1 \lor ... \neg \beta_n \lor \gamma)$$
+Applicando la definizione di $\rightarrow$:
+$$\vdash \Box(\beta_1 \rightarrow ... \beta_n \rightarrow \gamma)$$
+Per applicazioni ripetute dell'assioma $K$:
+$$\vdash (\Box \beta_1 \rightarrow ... \Box \beta_n \rightarrow \Box \gamma)$$
+E quindi per definizione di $\rightarrow$:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma)$$
+
+Siccome in $w_j'$ abbiamo assegnato a $\Box \beta_m$ il valore di verità $1$, per $m = 1...n$,
+per il lemma mostrato prima abbiamo che:
+$$\vdash \neg \Box \beta_1 \rightarrow w_j'$$
+$$...$$
+$$\vdash \neg \Box \beta_n \rightarrow w_j'$$
+
+Allora, usando un ragionamento valido in $CP$, otteniamo:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \rightarrow w_j'$$
+
+Dunque per Modus Ponens si ricava:
+$$\vdash w_j'$$
+cioè la tesi.
 
 \end{flushleft}
+
+Consideriamo ora il caso in cui un rettangolo contenga delle sottoformule
+a cui non è possibile dare un valore di verità univoco e per cui bisogna
+usare la regola dei rettangoli alternativi. Se nelle formule rimuoviamo
+tutte le occorrenze di connettivi non primitivi, sostituendoli con la loro definizione
+in termini di $\neg$ e $\lor$, allora otteniamo che l'unico connettivo
+per cui si può presentare una situazione di ambiguità e $\lor$ e per le sue sottoformule
+sono possibili tre assegnamenti diversi. Inoltre ricordiamo che un rettangolo a cui è stata applicata
+la regola dei rettangoli alternativi è esplicitamente inconsistente se tutti i
+rettangoli alternativi sono inconsistenti. Quindi dato un rettangolo
+a cui è applicata la regola dei rettangoli alternativi non perdiamo di generalità
+se assumiamo che i rettangoli alternativi siano tre. Allora dimostriamo il seguente lemma:
+
+\begin{flushleft}
+\textbf{Lemma}
+$$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
+
+\textit{Dim.}
+
+Siccome in $w_i$ c'è un'ambiguità sappiamo che c'è una sottoformula in $w_i'$
+del tipo $\beta \lor \gamma$ a cui è stato assegnato $1$, quindi vale:
+$$\vdash \neg (\beta \lor \gamma) \rightarrow w_i'$$
+
+In $w_i(1)$ a $\beta$ è associato $1$, a $\gamma$ $0$, quindi $w_i(1)'$ è $w_i' \lor \neg \beta \lor \gamma$.
+
+In $w_i(2)$ a $\beta$ è associato $0$, a $\gamma$ $1$, quindi $w_i(2)'$ è $w_i' \lor \beta \lor \neg \gamma$.
+
+In $w_i(3)$ a $\beta$ è associato $1$, a $\gamma$ $1$, quindi $w_i(3)'$ è $w_i' \lor \neg \beta \lor \neg \gamma$.
+
+Perciò, per ipotesi, abbiamo rispettivamente:
+
+$$\vdash w_i' \lor \neg \beta \lor \gamma$$
+$$\vdash w_i' \lor \beta \lor \neg \gamma$$
+$$\vdash w_i' \lor \neg \beta \lor \neg \gamma$$
+
+Ora usiamo la tautologia di $CP$:
+$$\vdash (\neg (\delta \lor \epsilon) \rightarrow \rho) \rightarrow
+         (\rho \lor \neg \delta \lor \neg \epsilon) \rightarrow (\rho \lor \delta \lor \neg \epsilon)
+           \rightarrow (\rho \lor \neg \delta \lor \epsilon) \rightarrow \rho$$
+
+Sostituendo al posto di $\rho$ la formula $w_i'$, al posto di $\delta$ la formula $\beta$
+e al posto di $\epsilon$ la formula $\gamma$.
+
+Dunque abbiamo, sfruttando anche la definizione di $w_i(1)'$, $w_i(3)'$, $w_i(3)'$:
+$$\vdash (\neg (\beta \lor \epsilon) \rightarrow w_i') \rightarrow
+         (w_i(1)' \rightarrow w_i(2)' \rightarrow w_i(3)' \rightarrow w_i')$$
+
+Allora applicando quattro volte il Modus Ponens, otteniamo $\vdash w_i'$
+\end{flushleft}
+
+Questi lemmi che abbiamo dimostrato ci permettono di concludere facilmente
+che se in un sistema completo di T-diagrammi per la formula c'è un rettangolo esplicitamente inconsistente,
+allora $\vdash w_1'$.
+
+Quindi se $\vDash \alpha$, allora il sistema completo di T-diagrammi per $\alpha$ è inconsistente
+e quindi $\vdash w_1'$, ma $w_1' = \alpha$, quindi $\vdash \alpha$.
+
+\subsection{Teoremi di completezza per S4 e S5}
+È possibile mostrare dei teoremi di completezza anche per S4 e S5 e una loro dimostrazione
+è reperibile su [Hughes-Cresswell]
+
+\section{Conclusioni}
+Abbiamo inizialmente introdotto tre sistemi di logica modale: T, S4 ed S5,
+dicendo che non era chiaro se ci fosse un sistema da preferire agli altri.
+Dopo aver introdotto delle semantiche di Kripke per essi, abbiamo mostrato
+come queste semantiche rispecchino perfettamente l'apparato deduttivo dei sistemi formali.
+Ora possiamo usare i concetti introdotti da queste semantiche per fare alcune riflessioni
+circa la natura dei tre sistemi introdotti. Infatti è emerso dallo studio che abbiamo condotto
+che i tre sistemi rappresentano connotazioni diverse del concetto di ``necessità''
+che abbiamo in mente.
+Ad esempio nel sistema S5, abbiamo visto grazie alla semantica, che è possibile
+determinare che una proposizione è necessaria solo quando questa è vera in tutti i mondi
+possibili. Mentre in S4 e in T, ciò non è detto, infatti in questi sistemi una proposizione
+è necessaria in un mondo quando è vera in tutti i mondi accessibili da quel mondo.
+Questa differenza di definizioni mette in mostra una proprietà importante della necessità,
+infatti non è detto che una persona sia in grado di concepire tutti i mondi possibili,
+ma la nostra capacità di concepire stati di cose diversi è sicuramente condizionata dal mondo
+in cui viviamo. Proprio su quest'osservazione possiamo indagare sulla la distinzione tra T e S4,
+infatti in S4 quando si concepisce un mondo alternativo è possibile concepire quel mondo
+come se ci vivessimo dentro, e quindi è per noi possibile concepire tutti i mondi che sarebbero
+concepibili se vivessimo in quel mondo. Al contrario in T non è così, concepire un mondo
+significa solo pensare ad un mondo alternativo, senza che questo influisca sulla nostra capacità
+di concepire mondi alterantivi.
+
+In definitiva ciò che viene messo in evidenza dalle semantiche di Kripke per questi sistemi è
+che il concetto di necessità è in un certo senso collegato al concetto di conoscenza, più
+è possibile conoscere mondi alternativi, più sarà forti saranno le proposizioni che possiamo
+affermare essere vere.
+
+Questo fatto ci spinge a pensare alla pluralità di sistemi modali possibili
+come a una fonte di ricchezza di sfumature del concetto di ``necessità'' e perciò non ha molto
+senso chiedersi quale sia il sistema formale migliore, mentre ha più senso usare tali sistemi
+come strumento per un'analisi più approfondita per distinguere le varie sfumature del concetto
+di ``necessità'' che si usano nei ragionamenti.
+Alcuni esempi di questo approccio sono forniti da Lemmon [Lemmon] e terminiamo riportandone qui alcuni:
+Se vogliamo interpretare $\Box \alpha$ come ``è analiticamente vero che $\alpha$'', allora il sistema
+formale S5 è quello corretto. Mentre se vogliamo interpretare $\Box \alpha$ come
+è ``informalmente dimostrabile in matematica che $\alpha$'', allora il sistema corretto è S4.
+
+
 
 \end{document}
