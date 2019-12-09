@@ -1,12 +1,14 @@
 \documentclass[a4paper, titlepage, 12pt]{report}
 \usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\newtheorem{axiom}{Assioma}
-\newtheorem{theorem}{Teorema}
-\newtheorem{lemma}{Lemma}
-\newtheorem{definition}{Definizione}
+\newtheorem{axiom}{Assioma}[chapter]
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{definition}{Definizione}[chapter]
 
 \title{I sistemi di logica modale T, S4, S5: Sintassi e Semantica}
 \date{}
@@ -31,16 +33,26 @@
     \end{proof}
     }
 
+\newenvironment{dedication}
+         {\vspace{6ex}\begin{quotation}\begin{center}\begin{em}}
+         {\par\end{em}\end{center}\end{quotation}}
+
 \begin{document}
 \maketitle
-\section{Introduzione}
-In questa tesi ci occupiamo di usare i metodi della logica matematica
+\begin{dedication}
+A tutti
+\end{dedication}
+\tableofcontents
+\chapter*{Introduzione}
+Lo scopo di questa tesi è usare i metodi della logica matematica
 per studiare e descrivere i ragionamenti che fanno uso delle nozioni
-di ``necessarietà'' e ``possibilità''. Nello specifico andremo a studiare
-e confrontare tre sistemi insieme alle loro semantiche di Kripke
-che formalizzano tali nozioni: T, S4 e S5;
+di \emph{necessarietà} e \emph{possibilità}. Nello specifico
+presenteremo alcuni sistemi formali atti a formalizzare tali nozioni,
+insieme alle loro semantiche nello stile di Kripke e ne esporremo alcune proprietà.
 
-\section{Nozioni Preliminari}
+
+
+\chapter{Logica Proposizionale Classica}
 Premettiamo allo studio di sistemi di logica modale la definizione
 di sintassi e semantica di un sistema formale per il calcolo proposizionale,
 che da ora in poi denoteremo con $CP$, da usare come base per la definizione
@@ -54,7 +66,7 @@ rendendo quindi la scrittura delle formule più chiara, ma allo stesso tempo ci 
 considerare solo i connettivi primitivi nello studio delle proprietà del sistema,
 semplificandoci il lavoro.
 
-\subsection{Il Linguaggio}
+\section{Il Linguaggio}
 Per definire il linguaggio di $CP$ avremo bisogno di un insieme di oggetti di base,
 chiamati variabili proposizionali. Senza soffermarci ulteriormente sulla natura di questi oggetti,
 possiamo tranquillamente assumere che esista un insieme $A$ non vuoto numberabile
@@ -92,7 +104,7 @@ Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$, allora:
 Al fine di rendere le formule che scriveremo più comprensibili, seguendo la prassi,
 ometteremo spesso le parentesi usando le convenzioni descritte in [Tortora; pag 46].
 
-\subsection{L'apparato deduttivo}
+\section{L'apparato deduttivo}
 Per la definizione dell'apparato deduttivo di $CP$ seguiamo quanto fatto in [Tortora].
 
 Vale la pena far notare che questa non è l'unica possibilità, ma ci sono tante altre scelte sia
@@ -208,7 +220,7 @@ $\bullet$
 \end{flushright}
 \end{flushleft}
 
-\subsection{Semantica di $CP$}
+\section{Semantica di $CP$}
 Ci proponiamo ora di fornire una semantica per $CP$.
 La semantica che intendiamo fornire per $CP$ è quella standard, in particolare
 seguiamo l'esposizione di [Tortora] per presentarla.
@@ -266,7 +278,7 @@ a $CP$ definendolo in termini di $\neg$ e $\lor$.
 Quindi anche se dalla presentazione non sembrerebbe, in realtà in $CP$ sono presenti
 tutti gli operatori vero-funzionali possibili.
 
-\subsection{Alcune proprietà importanti di $CP$}
+\section{Alcune proprietà importanti di $CP$}
 
 Terminiamo questo capitolo richiamando alcune proprietà di $CP$ fondamentali, omettendone
 le dimostrazioni. Un trattamento più approfondito di questi argomenti si può trovare in
@@ -289,7 +301,7 @@ l'insieme dei teoremi di $CP$ e l'insieme delle formule ben formate di $CP$ vali
 coincidono, quindi usando la procedura di decisione per le formule valide
 possiamo anche determinare le formule che sono teoremi.
 
-\section{Logica modale}
+\chapter{Logica modale}
 Ora che abbiamo definito un sistema formale per la logica proposizionale,
 lo estenderemo in vari modi.
 
@@ -351,18 +363,18 @@ $$\vdash \alpha \Rightarrow \vdash \Box \alpha$$
 Una volta definita la parte comune a tutti i sistemi a cui siamo interessati,
 passiamo ora ad esaminare per ogni sistema gli assiomi che lo caratterizzano.
 
-\subsection{Sistema T}
+\section{Sistema T}
 Il sistema T ha come assiomi tutti gli assiomi di $CP$ più:
 \begin{itemize}
 \item (K) $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
 \item (T) $\Box \alpha \rightarrow \alpha$
 \end{itemize}
 
-\subsection{Sistema S4}
+\section{Sistema S4}
 Il sistema S4 ha come assiomi tutti gli assiomi del Sistema T più il seguente assioma:
 $$(S4) \Box \alpha \rightarrow \Box \Box \alpha$$
 
-\subsection{Sistema S5}
+\section{Sistema S5}
 Il sistema S5 ha come assiomi tutti gli assiomi del Sistema T più:
 $$(S5) \diamond \alpha \rightarrow \Box \diamond \alpha$$
 
@@ -430,7 +442,7 @@ $\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più fo
 \begin{flushright}$\bullet$\end{flushright}
 \end{flushleft}
 
-%\subsection{Un teorema di deduzione (DA AGGIUSTARE)}
+%\section{Un teorema di deduzione (DA AGGIUSTARE)}
 %In questo paragrafo proviamo a derivare un teorema di deduzione per il Sistema $S4$.
 %Non possiamo aspettarci che il teorema di deduzione per il calcolo proposizionale $CP$ valga,
 %infatti la regola di deduzione di necessitazione ci porterebbe ad asserire che:
@@ -472,7 +484,7 @@ $\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più fo
 %
 %
 %
-%\subsection{Modalità e funzioni modali}
+%\section{Modalità e funzioni modali}
 %Rendiamo più formale il concetto di modalità.
 %\textbf{Definizione}
 %Una modalità è una successione di 0 o più di uno dei seguenti simboli: $\neg,\diamond,\Box$.
@@ -494,7 +506,7 @@ $\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più fo
 %In $S5$ ce n'è un numero finito, mentre sorprendentemente,
 %in $S4$ ce ne sono infinite, nonostante le modalità esprimibili siano in numero finito.
 %
-\subsection{Una semantica per i sistemi di logica modale}
+\section{Una semantica per i sistemi di logica modale}
 Dopo aver definito il linguaggio comune a tutti i sistemi di logica modale introdotti,
 lo abbiamo usato unicamente come base di un calcolo che usa le regole di deduzione per costruire
 dimostrazioni. Come ben sappiamo un linguaggio può anche essere usato per parlare di qualcosa,
@@ -527,7 +539,7 @@ si può accedere ad altri mondi, cioè sapere come sono fatte altre realtà alte
 Il mondo in cui si può accedere agli altri mondi sarà la base per distinguire
 tra i vari concetti di necessità e tra i vari sistemi formali che abbiamo definito prima.
 
-\subsection{Semantica per il Sistema T}
+\section{Semantica per il Sistema T}
 Definiamo un T-modello come una tripla $(W, R, I)$, in cui:
 \begin{itemize}
 \item $W$ è un insieme non vuoto i cui elementi saranno chiamati mondi;
@@ -657,7 +669,7 @@ $\bullet$
 \end{flushright}
 \end{flushleft}
 
-\subsection{Semantica per i sistemi S4 e S5}
+\section{Semantica per i sistemi S4 e S5}
 Con leggere modifiche alla definizione di T-modello possiamo costruire delle semantiche
 anche per i sistemi S4 e S5.
 
@@ -722,7 +734,7 @@ $\bullet$
 \end{flushright}
 \end{flushleft}
 
-\subsection{Proprietà dei sistemi T, S4, S5}
+\section{Proprietà dei sistemi T, S4, S5}
 I teoremi di adeguatezza che abbiamo dimostrato ci dicono che ogni teorema
 è anche una formula valida per i vari sistemi.
 Questo significa che il concetto di semantico di validità che abbiamo poco fa definita
@@ -874,7 +886,7 @@ Il teorema che abbiamo appena dimostrato ci assicura che nei sistemi definiti no
 il collasso delle modalità e che quindi gli operatori modali introdotti non sono solo inutili
 orpelli che non aggiungono niente a $CP$.
 
-\subsection{Procedura di decisione per T}
+\section{Procedura di decisione per T}
 Ci occupiamo ora di definira una procedura di decisione per l'insieme delle formule T-valide.
 
 Per verificare la T-validità di una formula $\alpha$ dovremmo verificare che essa sia vera in tutti
@@ -1023,7 +1035,7 @@ Abbiamo perciò che il numero di rettangoli in un sistema completo di T-diagramm
 e perciò per ciascuno di essi le operazioni da compiere sono finite. In definitiva
 la procedura che abbiamo definito termina in un numero finito di passi.
 
-\subsection{Procedura di decisione per S4}
+\section{Procedura di decisione per S4}
 Cerchiamo di adattare la procedura appena definita per decidere le formule S4-valide.
 Siccome un S4-modello ha una relazione riflessiva e transitiva, allora bisogna stare
 attenti che quando si introducano mondi nuovi le relazioni di accessibilità siano
@@ -1079,7 +1091,7 @@ solo in corrispondenza di operatori modali, e ogni rettangolo contiene solo un n
 di operatori modali, allora il numero di catene necessarie è finito
 così come il numero di rettangoli.
 
-\subsection{Procedura di decisione per S5}
+\section{Procedura di decisione per S5}
 Un S5-diagramma è un S4-diagramma in cui, però, ogni rettangolo è accessibile
 da ogni altro rettangolo. Con un argomento molto simile a quello usato
 per dimostrare che la costruzione di un sistema completo di S4-diagrammi termina dopo
@@ -1087,7 +1099,7 @@ un numero finito di passi, si può dimostrare lo stesso risultato per gli S5-dia
 Quindi anche per S5 c'è una procedura di decisione per le formule S5-valide.
 
 
-\subsection{Teorema di completezza per T}
+\section{Teorema di completezza per T}
 Data una formula $\alpha$, una volta costruito il suo sistema completo di T-diagrammi,
 associamo ad ogni rettango $w_i$ del sistema una formula $w_i'$ definita in questo modo:
 
@@ -1250,11 +1262,11 @@ allora $\vdash w_1'$.
 Quindi se $\vDash \alpha$, allora il sistema completo di T-diagrammi per $\alpha$ è inconsistente
 e quindi $\vdash w_1'$, ma $w_1' = \alpha$, quindi $\vdash \alpha$.
 
-\subsection{Teoremi di completezza per S4 e S5}
+\section{Teoremi di completezza per S4 e S5}
 È possibile mostrare dei teoremi di completezza anche per S4 e S5 e una loro dimostrazione
 è reperibile su [Hughes-Cresswell]
 
-\section{Conclusioni}
+\chapter{Conclusioni}
 Abbiamo inizialmente introdotto tre sistemi di logica modale: T, S4 ed S5,
 dicendo che non era chiaro se ci fosse un sistema da preferire agli altri.
 Dopo aver introdotto delle semantiche di Kripke per essi, abbiamo mostrato
