@@ -1,7 +1,7 @@
 \documentclass[a4paper, titlepage, 12pt]{report}
-\usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -24,13 +24,12 @@
 
 % Ambiente per le dimostrazioni formali formali
 \newenvironment{formal_proof}
-    {\begin{proof}
-
-    % \begin{tabular} {c c|c}
+    {
+    \begin{center}
+    \begin{tabular} {c c|c}
     }
-    {%\end{tabular}
-
-    \end{proof}
+    {\end{tabular}
+    \end{center}
     }
 
 \newenvironment{dedication}
@@ -57,38 +56,41 @@ Premettiamo allo studio di sistemi di logica modale la definizione
 di sintassi e semantica di un sistema formale per il calcolo proposizionale,
 che da ora in poi denoteremo con $CP$, da usare come base per la definizione
 dei sistemi formali successivi.
-È possibile presentare un tale sistema in vari modi, tutti pressoché equivalenti tra di loro.
-Noi seguiremo seguire la strada di [Hughes-Cresswell], definendo un linguaggio con un numero ristretto
+È possibile presentare un sistema di questo tipo in vari modi, tutti pressoché equivalenti tra di loro
+e la strada che intendiamo seguire è stata preferita alle altre solo
+perché riteniamo che sia quella che serve gli sviluppi successivi nel modo più semplice.
+
+\section{Il Linguaggio}
+Nel definire il linguaggio di $CP$ seguiamo l'approccio di \cite{IntroModale}
+definendo un linguaggio con un numero ristretto
 di connettivi primitivi e introducendo successivamente i connettivi mancanti definendoli a partire
 dai connettivi primitivi.
 Questa scelta ci permette di usare tutti i connettivi che siamo soliti adoperare,
-rendendo quindi la scrittura delle formule più chiara, ma allo stesso tempo ci permette anche di
-considerare solo i connettivi primitivi nello studio delle proprietà del sistema,
+rendendo quindi la scrittura delle formule più chiara, ma allo stesso tempo ci permette di
+considerare solo un numero esiguo di connettivi nello studio delle proprietà del sistema,
 semplificandoci il lavoro.
 
-\section{Il Linguaggio}
-Per definire il linguaggio di $CP$ avremo bisogno di un insieme di oggetti di base,
-chiamati variabili proposizionali. Senza soffermarci ulteriormente sulla natura di questi oggetti,
-possiamo tranquillamente assumere che esista un insieme $A$ non vuoto numberabile
-disgiunto da $\{\neg, \lor, (, )\}$.
+Supponiamo di avere un insieme $A$ non vuoto e numerabile disgiunto da $\{\neg, \lor, (, )\}$
+(ad esempio possiamo usare l'insieme dei numeri naturali $\mathbb{N}$) e che contenga
+come elementi degli oggetti che denotiamo con $p, q, r$.
 
 \begin{definition}
 Chiamiamo variabile proposizionale ogni elemento di $A$.
 \end{definition}
 
-Scegliamo come connettivi primitivi $\neg$ e $\lor$,
-a partire da essi sarà possibile definire tutti gli altri.
+Come connettivi primitivi scegliamo $\neg$ e $\lor$, a partire da essi sarà possibile definire tutti gli altri connettivi.
 L'alfabeto di $CP$ è dunque dato dall'insieme $\Sigma = A \cup \{\neg, \lor, (, )\}$.
 
 Chiamiamo $\Sigma^{*} = \bigcup_{n \in A} \Sigma^n$ l'insieme delle espressioni
-e definiamo l'insieme delle formule ben formate (fbf) $L_{CP} \subseteq \Sigma^{*}$ con la seguente definizione
-per induzione:
+e definiamo l'insieme delle formule ben formate (fbf) $L_{CP} \subseteq \Sigma^{*}$ come segue:
+\begin{definition}
+$L_{CP}$ è il più piccolo sottoinsieme di $\Sigma^{*}$ tale che:
 \begin{itemize}
 \item $x \in A \Rightarrow x \in L_{CP}$;
 \item $\alpha \in L_{CP} \Rightarrow \neg (\alpha) \in L_{CP}$;
 \item $\alpha \in L_{CP}$ e $\beta \in L_{CP} \Rightarrow (\alpha) \lor (\beta) \in L_{CP}$;
-\item Non ci sono altri elementi in $L_{CP}$.
 \end{itemize}
+\end{definition}
 
 Una volta definito il linguaggio, definiamo i connettivi che mancano a partire da $\neg$ e $\lor$
 come segue:
@@ -102,40 +104,57 @@ Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$, allora:
 \end{definition}
 
 Al fine di rendere le formule che scriveremo più comprensibili, seguendo la prassi,
-ometteremo spesso le parentesi usando le convenzioni descritte in [Tortora; pag 46].
+ometteremo spesso le parentesi usando le convenzioni descritte in \cite{TortoraConv}.
 
 \section{L'apparato deduttivo}
-Per la definizione dell'apparato deduttivo di $CP$ seguiamo quanto fatto in [Tortora].
+Anche per l'apparato deduttivo ci basiamo su \cite{IntroModale}, eccezion fatta
+per la lista di assiomi,
+questi ultimi sono presi dal sistema di calcolo proposizionale definito in \cite{Tortora}.
 
-Vale la pena far notare che questa non è l'unica possibilità, ma ci sono tante altre scelte sia
+Vale la pena far notare ancora una volta che questo modo di procedere non è l'unico
+possibile, ma ci sono tante altre scelte sia
 per quanto riguarda gli assiomi che le regole di deduzione, che sono altrettanto valide
 e che portano allo stesso risultato. La motivazione dietro la nostra scelta
 risiede semplicemente nel fatto che questo approccio è quello da noi ritenuto più familiare.
 
 \begin{definition}
-Gli assiomi di $CP$ sono ottenuti dai seguenti schemi
-sostituendo in modo uniforme formule ben formate al posto di $\alpha, \beta, \gamma$:
+Gli assiomi di $CP$ sono i seguenti:
 \begin{itemize}
-\item (HPD) $\alpha \rightarrow (\beta \rightarrow \alpha)$
-\item (HPMP) $(\gamma \rightarrow (\alpha \rightarrow \beta)) \rightarrow (\gamma \rightarrow \alpha) \rightarrow (\gamma \rightarrow \beta)$
-\item ($\lor$-I1) $\alpha \rightarrow (\alpha \lor \beta)$
-\item ($\lor$-I2) $\beta \rightarrow (\alpha \lor \beta)$
-\item ($\lor$-E) $(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \lor \beta \rightarrow \gamma)$
-\item ($\land$-I) $\alpha \rightarrow \beta \rightarrow \alpha \land \beta$
-\item ($\land$-E1) $\alpha \land \beta \rightarrow \alpha$
-\item ($\land$-E2) $\alpha \land \beta \rightarrow \beta$
-\item ($\neg$-I) $(\alpha \rightarrow \beta) \land (\alpha \rightarrow \neg \beta) \rightarrow \neg \alpha$
-\item (TER) $\alpha \lor \neg \alpha$
+\item (HPD) $p \rightarrow (q \rightarrow p)$
+\item (HPMP) $(r \rightarrow (p \rightarrow q)) \rightarrow (r \rightarrow p) \rightarrow (r \rightarrow q)$
+\item ($\lor$-I1) $p \rightarrow (p \lor q)$
+\item ($\lor$-I2) $q \rightarrow (p \lor q)$
+\item ($\lor$-E) $(p \rightarrow r) \rightarrow (q \rightarrow r) \rightarrow (p \lor q \rightarrow r)$
+\item ($\land$-I) $p \rightarrow q \rightarrow p \land q$
+\item ($\land$-E1) $p \land q \rightarrow p$
+\item ($\land$-E2) $p \land q \rightarrow q$
+\item ($\neg$-I) $(p \rightarrow q) \land (p \rightarrow \neg q) \rightarrow \neg p$
+\item (TER) $p \lor \neg p$
 \end{itemize}
 \end{definition}
 
-L'unica regola di deduzione di $CP$ è il \textit{Modus Ponens}:
-$$\frac{\alpha \rightarrow \beta \ \ \alpha}{\beta}$$
+Come regole di deduzione usiamo:
 
-Notiamo che gli assiomi che abbiamo scelto per $CP$ non sono in numero finito,
-ma sono infiniti. L'uso di schemi di assiomi porta a notevoli semplificazioni
-nella pratica; infatti ci permette di dimostrare in una sola volta famiglie di teoremi,
-senza dover ripetere volta per volta un procedimento che sarebbe essenzialmente sempre uguale.
+$$\frac{\alpha \rightarrow \beta \ \ \alpha}{\beta}$$
+comunemente chiamata \emph{Modus Ponens}
+
+e la regola di \emph{sostituzione} che afferma:
+\begin{quote}
+Se $\alpha$ è un teorema, e $\beta \in L_{CP}$, allora sostituendo
+in modo uniforme $\beta$ al posto di una variabile proposizionale $p$ di $\alpha$,
+la formula ben formata risultante è un teorema.
+\end{quote}
+
+Mentre il \emph{Modus Ponens} è una regola pressoché standard,
+la regola di \emph{sostituzione} non è molto comune. Abbiamo deciso di introdurla
+perché ci permette di dimostrare vari teoremi essenzialmente in un solo colpo,
+evitando di dover eseguire tante dimostrazioni che sarebbero essenzialmente sempre uguali.
+Un altro metodo equivalente sarebbe potuto essere quello di usare un insieme infinito
+di assiomi, facendo uso di schemi di assiomi, ma riteniamo che utilizzare un insieme
+finito di formule di $L_{CP}$ congiuntamente alla regola di \emph{sostituzione}
+ci permette di estendere più agevolmente $CP$ e rende più chiaro perché
+sostituzioni di formule del sistema esteso (possibilmente contenenti
+simboli estranei a $CP$) in teoremi di $CP$ ci forniscono ancora teoremi.
 
 Diamo ora le seguenti definizioni che introducono i concetti di dimostrazione e di
 deduzione, strettamente collegati tra loro.
@@ -145,8 +164,10 @@ Una dimostrazione è una sequenza finita $D$ di fbf tale che
 ogni termine $D_i$ della sequenza soddisfa almeno una delle seguenti condizioni
 \begin{itemize}
 \item $D_i$ è un assioma;
-\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \textit{Modus Ponens}
+\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \emph{Modus Ponens}
 da $D_h$ e $D_k$.
+\item esiste $D_h$, con $h < i$, tale che $D_i$ è ottenuto tramite
+la regola di \emph{sostituzione} a partire da $D_h$.
 \end{itemize}
 \end{definition}
 
@@ -160,8 +181,10 @@ di fbf tale che ogni termine $D_i$ della sequenza soddisfa almeno una delle segu
 \begin{itemize}
 \item $D_i \in \Gamma$;
 \item $D_i$ è un assioma;
-\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \textit{Modus Ponens}
+\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \emph{Modus Ponens}
 da $D_h$ e $D_k$.
+\item esiste $D_h$, con $h < i$, tale che $D_i$ è ottenuto tramite
+la regola di \emph{sostituzione} a partire da $D_h$.
 \end{itemize}
 \end{definition}
 
@@ -173,60 +196,56 @@ Nel seguito, scriveremo $\Gamma, \alpha \vdash \beta$
 per indicare $\Gamma \cup \{\alpha\} \vdash \beta$.
 
 Vale la pena ricordare il seguente teorema:
-\begin{flushleft}
-\textbf{Teorema di deduzione}
+\begin{theorem}[Teorema di deduzione]
+Se $\alpha, \beta \in L_{CP},$
 $$\Gamma, \alpha \vdash \beta \Leftrightarrow \Gamma \vdash \alpha \rightarrow \beta$$
-\textit{Dim.} [Tortora]
-\begin{flushright}
-$\bullet$
-\end{flushright}
-\end{flushleft}
-
+\end{theorem}
+\begin{proof}
+Una dimostrazione può essere trovata in \cite{Tortora}, e può essere facilmente
+adattata al sistema $CP$.
+\end{proof}
 
 Terminiamo questo paragrafo mostrando un esempio di dimostrazione di una famiglia
 di teoremi, che ci tornerà utile anche nel seguito.
 
-\begin{flushleft}
-\textbf{Teorema(Sillogismo)}
-Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$
-$$\vdash (\alpha \rightarrow \beta) \rightarrow
-        (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$$
+\begin{theorem}[Sillogismo]
+$$\vdash (p \rightarrow q) \rightarrow
+        (q \rightarrow r) \rightarrow (p \rightarrow r)$$
+\end{theorem}
 
-\textit{Dim.}
+\begin{proof}
 Semplifichiamo il lavoro dimostrando
-$$(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha \vdash \gamma$$
+$$(p \rightarrow q),(q \rightarrow r),p \vdash r$$
 in luogo di
-$$\vdash (\alpha \rightarrow \beta) \rightarrow
-        (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$$
+$$\vdash (p \rightarrow q) \rightarrow
+        (q \rightarrow r) \rightarrow (p \rightarrow r)$$
 e sfruttiamo poi il teorema di deduzione sopra menzionato.
 
-Una possibile deduzione per $\gamma$ a partire dalle ipotesi
-$\{(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha\}$ è la seguente.
-
-(1) $\alpha \rightarrow \beta$ ; ipotesi \\
-(2) $\alpha$ ; ipotesi \\
-(3) $\beta$ ; Modus Ponens di (1) e (2) \\
-(4) $\beta \rightarrow \gamma$ ; ipotesi \\
-(5) $\gamma$ ; Modus Ponens di (3) e (4)
+Una possibile deduzione per $r$ a partire dalle ipotesi
+$\{(p \rightarrow q),(q \rightarrow r),p\}$ è la seguente.
+\begin{formal_proof}
+(1) & $p \rightarrow q$ & ipotesi \\
+(2) & $p$ & ipotesi \\
+(3) & $q$ & Modus Ponens di (1) e (2) \\
+(4) & $q \rightarrow r$ & ipotesi \\
+(5) & $r$ & Modus Ponens di (3) e (4)
+\end{formal_proof}
 
 Possiamo dunque affermare:
-$$(\alpha \rightarrow \beta),(\beta \rightarrow \gamma),\alpha \vdash \gamma$$
+$$(p \rightarrow q),(q \rightarrow r),p \vdash r$$
 
 Infine, applicando tre volte il teorema di deduzione otteniamo:
-$$\vdash (\alpha \rightarrow \beta) \rightarrow (\beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \gamma)$$
-
-\begin{flushright}
-$\bullet$
-\end{flushright}
-\end{flushleft}
+$$\vdash (p \rightarrow q) \rightarrow (q \rightarrow r) \rightarrow (p \rightarrow r)$$
+\end{proof}
 
 \section{Semantica di $CP$}
 Ci proponiamo ora di fornire una semantica per $CP$.
 La semantica che intendiamo fornire per $CP$ è quella standard, in particolare
-seguiamo l'esposizione di [Tortora] per presentarla.
-L'idea è quella di associare ad ogni formula
-un valore di verità, interpretando le variabili proposizionali come proposizioni
-che descrivono fatti della \textit{realtà}, ad esempio ``Michele è altisonante'',
+seguiamo l'esposizione di \cite{Tortora} per presentarla.
+L'idea è quella di interpretare una formula come una proposizione
+a cui associare un valore di verità. Quindi vorremo interpretare
+le variabili proposizionali come proposizioni
+che descrivono fatti della \emph{realtà} (ad esempio ``Michele è altisonante''),
 il simbolo $\neg$ come il connettivo logico ``non'' dell'italiano
 e il simbolo $\lor$ come disgiunzione inclusiva, ossia quel connettivo
 logico che in italiano si rappresenta spesso come ``o..., o..., oppure entrambi''.
@@ -269,7 +288,7 @@ Sia $\alpha \in L_{CP}$, diremo che $\alpha$ è valida e scriveremo $\vDash \alp
 $V_I(\alpha) = 1$, per ogni interpretazione $I$.
 \end{definition}
 
-È noto, e una discussione approfondita di questo argomento si può trovare in [Mendelson],
+È noto, e una discussione approfondita di questo argomento si può trovare in \cite{MendelsonAdeq},
 che è possibile definire qualsiasi tipo di operatore vero-funzionale usando
 solo gli operatori di negazione e disgiunzione inclusiva.
 Quindi, analogamente a quanto fatto per i connettivi $\land, \rightarrow, \leftrightarrow$,
@@ -282,18 +301,18 @@ tutti gli operatori vero-funzionali possibili.
 
 Terminiamo questo capitolo richiamando alcune proprietà di $CP$ fondamentali, omettendone
 le dimostrazioni. Un trattamento più approfondito di questi argomenti si può trovare in
-[Tortora] o [Mendelson].
+\cite{Tortora} o \cite{Mendelson}.
 
-Esiste una procedura di decisione che data una qualsiasi formula ben formata di $CP$
-ci permette sempre di determinare in un numero finito di passi se questa è valida o no.
+Esiste una procedura di decisione che, data una qualsiasi formula ben formata di $CP$,
+ci permette sempre di determinare in un numero finito di passi se questa è valida o meno.
 
 Inoltre vale il seguente teorema che collega l'aspetto sintattico all'aspetto semantico
 di $CP$:
 
-\begin{flushleft}
-\textbf{Teorema di completezza}
+\begin{theorem}[Teorema di completezza]
+Se $\alpha \in L_{CP}$,
 $$\vdash \alpha \Leftrightarrow \vDash \alpha$$
-\end{flushleft}
+\end{theorem}
 
 Un corollario immediato del teorema di completezza è che anche l'insieme dei teoremi
 di $CP$ è un insieme decidibile, infatti secondo il teorema di completezza
@@ -301,7 +320,7 @@ l'insieme dei teoremi di $CP$ e l'insieme delle formule ben formate di $CP$ vali
 coincidono, quindi usando la procedura di decisione per le formule valide
 possiamo anche determinare le formule che sono teoremi.
 
-\chapter{Logica modale}
+\chapter{Logica Modale}
 Ora che abbiamo definito un sistema formale per la logica proposizionale,
 lo estenderemo in vari modi.
 
@@ -1304,6 +1323,13 @@ Se vogliamo interpretare $\Box \alpha$ come ``è analiticamente vero che $\alpha
 formale S5 è quello corretto. Mentre se vogliamo interpretare $\Box \alpha$ come
 è ``informalmente dimostrabile in matematica che $\alpha$'', allora il sistema corretto è S4.
 
-
+\begin{thebibliography}{5}
+\bibitem{IntroModale} G.E. Hughes, M.J. Cresswell, \textit{Introduzione alla logica modale},
+edizione a cura di C. Pizzi, [1973], Milano, Il Saggiatore, $1983^{2}$.
+\bibitem{MendelsonAdeq} E. Mendelson, \textit{Introduction to Mathematical Logic}, [1964], Londra, Chapman \& Hall, $1997^{4}$, pp. 27-29.
+\bibitem{Mendelson} E. Mendelson, \textit{Introduction to Mathematical Logic}, [1964], Londra, Chapman \& Hall, $1997^{4}$.
+\bibitem{Tortora} R. Tortora, \textit{Elementi di teoria degli insiemi}, Napoli, E.DI.S.U. - Napoli 1, 1989.
+\bibitem{TortoraConv} R. Tortora, \textit{Elementi di teoria degli insiemi}, Napoli, E.DI.S.U. - Napoli 1, 1989, p. 64.
+\end{thebibliography}
 
 \end{document}
