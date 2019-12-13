@@ -1,4 +1,5 @@
 \documentclass[a4paper, titlepage, 12pt]{report}
+\usepackage[nottoc, notlot, notlof]{tocbibind}
 \usepackage[italian]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -37,18 +38,22 @@
          {\par\end{em}\end{center}\end{quotation}}
 
 \begin{document}
-\maketitle
 \begin{dedication}
-A tutti
+Alla mia famiglia e ai miei amici
 \end{dedication}
 \tableofcontents
 \chapter*{Introduzione}
+\addcontentsline{toc}{chapter}{Introduzione}
 Lo scopo di questa tesi è usare i metodi della logica matematica
 per studiare e descrivere i ragionamenti che fanno uso delle nozioni
-di \emph{necessarietà} e \emph{possibilità}. Nello specifico
-presenteremo alcuni sistemi formali atti a formalizzare tali nozioni,
-insieme alle loro semantiche nello stile di Kripke e ne esporremo alcune proprietà.
-
+di \emph{necessità} e \emph{possibilità}. Nello specifico
+presenteremo tre dei più comuni sistemi di logica modale proposizionale:
+il sistema T, il sistema S4 e il sistema S5, mostrando alcune loro proprietà,
+le relazioni che intercorrono tra di essi e definendo una semantica nello
+stile di Kripke per ciascuno di essi. Useremo in particolare le semantiche introdotte
+per poter fare un'analisi più approfondita dei tre sistemi introdotti
+allo scopo di comprendere più a fondo quali siano le differenze tra di essi
+riguardo alla formalizzazione dei concetti di \emph{necessità} e \emph{possibilità}.
 
 
 \chapter{Logica Proposizionale Classica}
@@ -104,12 +109,12 @@ Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$, allora:
 \end{definition}
 
 Al fine di rendere le formule che scriveremo più comprensibili, seguendo la prassi,
-ometteremo spesso le parentesi usando le convenzioni descritte in \cite{TortoraConv}.
+ometteremo spesso le parentesi usando le convenzioni descritte in \cite{Tortora} a p. 64.
 
 \section{L'apparato deduttivo}
 Anche per l'apparato deduttivo ci basiamo su \cite{IntroModale}, eccezion fatta
 per la lista di assiomi,
-questi ultimi sono presi dal sistema di calcolo proposizionale definito in \cite{Tortora}.
+questi ultimi sono presi dal sistema di calcolo proposizionale definito in \cite{Kleene}.
 
 Vale la pena far notare ancora una volta che questo modo di procedere non è l'unico
 possibile, ma ci sono tante altre scelte sia
@@ -201,7 +206,7 @@ Se $\alpha, \beta \in L_{CP},$
 $$\Gamma, \alpha \vdash \beta \Leftrightarrow \Gamma \vdash \alpha \rightarrow \beta$$
 \end{theorem}
 \begin{proof}
-Una dimostrazione può essere trovata in \cite{Tortora}, e può essere facilmente
+Una dimostrazione può essere trovata in \cite{Mendelson}, e può essere facilmente
 adattata al sistema $CP$.
 \end{proof}
 
@@ -288,7 +293,8 @@ Sia $\alpha \in L_{CP}$, diremo che $\alpha$ è valida e scriveremo $\vDash \alp
 $V_I(\alpha) = 1$, per ogni interpretazione $I$.
 \end{definition}
 
-È noto, e una discussione approfondita di questo argomento si può trovare in \cite{MendelsonAdeq},
+È noto, e una discussione approfondita di questo argomento si può trovare in \cite{Mendelson}
+pp. 27--29,
 che è possibile definire qualsiasi tipo di operatore vero-funzionale usando
 solo gli operatori di negazione e disgiunzione inclusiva.
 Quindi, analogamente a quanto fatto per i connettivi $\land, \rightarrow, \leftrightarrow$,
@@ -326,27 +332,27 @@ lo estenderemo in vari modi.
 
 Il nostro obiettivo è avere un sistema formale nel quale possiamo definire e studiare
 le proprietà di due nuovi operatori unari che vorremmo avessero un comportamento che rispecchi
-i concetti di ``necessità'' e ``possibilità''.
+i concetti di \emph{necessità} e \emph{possibilità}.
 
 Prima di cominciare facciamo delle osservazioni importanti.
-Ricordiamo che un operatore verofunzionale è una funzione il cui risultato
+Ricordiamo che un operatore vero-funzionale è una funzione il cui risultato
 è univocamente determinato dal valore di verità dei parametri da cui dipende.
 Inoltre, si può dimostrare che nel calcolo proposizionale si possono esprimere
 tutti gli operatori verofunzionali possibili in termini di $\neg e \vee$.
 Quindi, se gli operatori che vogliamo aggiungere fossero verofunzionali, potremmo
 continuare il nostro studio usando $CP$ e non servirebbe altro.
-Notiamo, però, che gli operatori che vogliamo aggiungere non possono essere verofunzionali,
-infatti il valore di verità della frase ``è necessario che p'' non dipende \textit{solo}
-dal valore di verità che si associ, infatti, il fatto che p sia vera, non ci permette
+Notiamo, però, che gli operatori che vogliamo aggiungere non possono essere vero-funzionali,
+infatti il valore di verità della frase ``è necessario che p'' non dipende \emph{solo}
+dal valore di verità che si associa a p, infatti, il fatto che p sia vera, non ci permette
 di concludere che p sia necessariamente vera. Quindi per avere una speranza di formalizzare
 i concetti di necessità e possibilità siamo costretti ad estendere il sistema $CP$
 in maniera sostanziale.
 
 A tal proposito, non è esattamente chiaro come caratterizzare formalmente
-le nozioni di ``necessità'' e ``possibilità'', e anzi vedremo che queste potranno essere
-intese in modi diversi.
+le nozioni di \emph{necessità} e \emph{possibilità},
+e anzi vedremo che queste potranno essere intese in modi diversi.
 Questa ricchezza di significati si rifletterà in una varietà di sistemi formali più o meno potenti.
-Noi ci focalizzeremo in particolare su quattro sistemi formali:
+Noi ci focalizzeremo in particolare su tre sistemi formali:
 \begin{itemize}
 \item Sistema T
 \item Sistema S4
@@ -385,8 +391,8 @@ passiamo ora ad esaminare per ogni sistema gli assiomi che lo caratterizzano.
 \section{Sistema T}
 Il sistema T ha come assiomi tutti gli assiomi di $CP$ più:
 \begin{itemize}
-\item (K) $\Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
-\item (T) $\Box \alpha \rightarrow \alpha$
+\item (K) $\Box (p \rightarrow q) \rightarrow (\Box p \rightarrow \Box q)$
+\item (T) $\Box p \rightarrow p$
 \end{itemize}
 
 \section{Sistema S4}
@@ -410,20 +416,17 @@ sia di S4 che di S5.
 Ora, però mostreremo che anche S4 è meno forte di S5. A tal fine premettiamo alcuni risultati
 preliminari.
 
-\begin{flushleft}
-\textbf{Teorema}
+\begin{theorem}
 $\vdash \alpha \rightarrow \diamond \alpha$ in $T$
+\end{theorem}
 
-\textit{Dim.}
-
-(1) $\Box \neg \alpha \rightarrow \neg \alpha$ ; $T[\neg \alpha/\alpha]$ \\
-(2) $\alpha \rightarrow \neg \Box \neg \alpha$ ; Contrapposta di (1) \\
-(3) $\alpha \rightarrow \diamond \alpha$ ; Definizione di $\diamond$
-
-\begin{flushright}
-$\bullet$
-\end{flushright}
-\end{flushleft}
+\begin{proof}
+\begin{formal_proof}
+(1) & $\Box \neg \alpha \rightarrow \neg \alpha$ & $T[\neg \alpha/\alpha]$ \\
+(2) & $\alpha \rightarrow \neg \Box \neg \alpha$ & Contrapposta di (1) \\
+(3) & $\alpha \rightarrow \diamond \alpha$ & Definizione di $\diamond$
+\end{formal_proof}
+\end{proof}
 
 \begin{flushleft}
 \textbf{Lemma 1}
@@ -908,127 +911,119 @@ orpelli che non aggiungono niente a $CP$.
 \section{Procedura di decisione per T}
 Ci occupiamo ora di definira una procedura di decisione per l'insieme delle formule T-valide.
 
-Per verificare la T-validità di una formula $\alpha$ dovremmo verificare che essa sia vera in tutti
-i mondi di tutti i T-modelli, mentre ciò che ci proponiamo di fare è dedurre quali sono i valori di verità
-che le sottoformule di $\alpha$ devono assumere nei vari mondi affinché esista un T-modello
-in cui esista un mondo in cui $\alpha$ sia falsa.
-Se così facendo riusciamo ad assegnare per ogni mondo un valore di verità ad ogni variabile proposizionale
-senza cadere in contraddizione, ossia senza dover assegnare ad una sottoformula di $\alpha$ sia $1$ che $0$,
-allora ciò significa che non esiste alcun T-modello che falsifichi $\alpha$, visto che se un tale T-modello
-esistesse, necessariamente ci sarebbe una valutazione che associa
-alla stessa formula sia $1$ che $0$ ma ciò è impossibile per un T-modello.
-Al contrario se non incontriamo alcuna inconsistenza, saremo in grado
-di determinare un T-modello in cui esiste un mondo in cui $\alpha$ è falsa.
+Per verificare la T-validità di una formula $\alpha \in L$ avremmo bisogno di verificare che essa sia vera in tutti
+i mondi di tutti i possibili T-modelli, ciò che invece ci proponiamo di fare è
+provare a dimostrare che la formula non è T-valida e quindi costruire un T-modello
+falsificante per $\alpha$, ossia un T-modello in cui c'è un mondo in cui $\alpha$ sia falsa.
+Se ciò risulta impossibile avremo dimostrato che la $\alpha$ è T-valida.
 
-Presentiamo la procedura di decisione mostrando come applicarla a vari esempi che ne
-esemplificano bene tutte le regole:
-
-Per ogni mondo disegniamo un rettangolo che conterrà delle formule.
-Successivamente per indicare che un mondo $w_2$ è accessibile da un'altro mondo $w_1$,
-colleghiamo i due rettangoli con una freccia che va dal rettangolo del mondo $w_1$
-a quello del rettangolo del mondo $w_2$.
-
-Nel rettangolo del mondo $w_1$, quando scriviamo un valore di verità $v$ sotto ad una
-variabile proposizionale $p$ intendiamo indicare che nel modello che stiamo costruendo
-vale $I(p, w_1) = v$.
-Mentre se scriviamo un valore di verità $v$ sotto ad un connettivo, intendiamo indicare
-che per la formula $\alpha$ che ha come connettivo più esterno quel connettivo,
-vale $V(\alpha, w_1) = v$ nel modello che stiamo costruendo.
-
-Quindi se scriviamo
-$\underset{1}{q} \underset{1}{\rightarrow} \underset{1}{q}$ nel rettangolo di $w_1$
-intendiamo indicare che $I(q, w_1) = 1$ e che $V(q \rightarrow q, w_1) = 1$.
-
-Iniziamo considerando la formula
-$$\Box(p \rightarrow \Box(q \rightarrow r)) \rightarrow \diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
-Vogliamo che questa formula sia falsa nel primo mondo che introduciamo $w_1$.
-Quindi nel rettangolo per $w_1$ scriviamo dapprima:
-$$\Box(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
-Perciò per le regole di valutazione che abbiamo dato:
-$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
-Il fatto che $\diamond(q \rightarrow (\Box p \rightarrow \diamond r))$ sia falsa in $w_1$ ci porta a dire che:
-$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(q \underset{0}{\rightarrow} (\Box p \rightarrow \diamond r))$$
-E quindi:
-$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\Box p \underset{0}{\rightarrow} \diamond r))$$
-Continuando nell'argomento di $\diamond$ deduciamo che:
-$$\underset{1}{\Box}(p \rightarrow \Box(q \rightarrow r)) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\underset{1}{\Box} \underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\diamond} \underset{0}{r}))$$
-Abbiamo determinato un valore di verità per tutte le variabili proposizionali nella formula, non ci resta che vedere se c'è qualche inconsistenza nella valutazione.
-Se assegnamo alle variabili proposizionali dell'antecedente dell'implicazione più esterna i valori
-che abbiamo trovato otteniamo:
-$$\underset{1}{\Box}(\underset{1}{p} \rightarrow \Box(\underset{1}{q} \rightarrow \underset{0}{r})) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\underset{1}{\Box} \underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\diamond} \underset{0}{r}))$$
-Perciò:
-$$\underset{1}{\Box}(\underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\Box}(\underset{1}{q} \underset{0}{\rightarrow} \underset{0}{r})) \underset{0}{\rightarrow} \underset{0}\diamond(\underset{1}{q} \underset{0}{\rightarrow} (\underset{1}{\Box} \underset{1}{p} \underset{0}{\rightarrow} \underset{0}{\diamond} \underset{0}{r}))$$
-
-Ma abbiamo un'inconsistenza, perché abbiamo:
-$$\underset{1}{\Box}(\underset{1}{p} \underset{0}{\rightarrow}\underset{0}{\Box}(\underset{1}{q} \underset{0}{\rightarrow} \underset{0}{r}))$$
-cioè in un primo momento abbiamo dedotto che in $w_1$ questa formula deve essere vera in $w_1$,
-ma per le assegnazioni che abbiamo trovato per le variabili $p, q, r$, essa risulta essere falsa.
-
-Abbiamo perciò ottenuto che la seguente formula è T-valida:
-$$\Box(p \rightarrow \Box(q \rightarrow r)) \rightarrow \diamond(q \rightarrow (\Box p \rightarrow \diamond r))$$
-
-In questo caso siamo riusciti a decidere circa la validità della formula fornitaci
-senza dover introdurre nuovi mondi, ma ciò avviene solo di rado.
-
-E allora descriviamo la procedura di decisione come segue:
-
-Si inizia disegnado un rettangolo  con etichetta $w_1$ dentro cui scriviamo la formula $\alpha$
-di cui si vuole controllare la validità, seguendo il procedimento delineato sopra
-si iniziano a desumere dei valori di verità da assegnare alle sottoformule ben formate di $\alpha$
-in modo che $\alpha$ risulti falsa.
-
-Ogni rettangolo è accessibile a se stesso.
-
-Se in un rettangolo con etichetta $w_i$ si assegna il valore $1$ ($0$) ad una sottoformula
-del tipo $\Box \beta$ ($\diamond \beta$), allora in tutti i rettangoli accessibili da $w_i$ si dovrà
-associare a $\beta$ il valore di verità $1$ ($0$) e per ricordarcelo scriviamo questa condizione
-vicino ad ogni rettangolo in cui essa vale.
-
-Se in un rettangolo con etichetta $w_i$ c'è una formula $\beta$
-in cui ci sono delle sottoformule per cui univoco il valore di verità da associare loro,
-come può succedere quando $\gamma \lor \delta$ deve essere vera: In questo caso abbiamo
-tre possibili assegnamenti:
-$\gamma$ vera e $\delta$ vera, $\gamma$ vera e $\delta$ falsa, $\gamma$ falsa, $\delta$ vera.
-Allora procediamo creando più versioni alternative dello stesso rettangolo indicate con $w_i(n)$,
-e facciamo in modo che in ognuno di essi alle sottoformule con valori ambigui siano assegnati
-tutti le possibili combinazioni di valori di verità.
-Poi per ogni rettangolo alternativo $w_i(n)$ facciamo una copia del diagramma in costruzione
-a cui però al posto del rettangolo $w_i$ sostituiamo il
-rettangolo alternativo $w_i(n)$. Otteniamo perciò diversi diagrammi
-e per ciascuno di essi continuiamo con la procedura che stiamo definendo.
-
-Se in un rettangolo con etichetta $w_i$ si assegna il valore $0$ ($1$) ad una sottoformula
-del tipo $\Box \beta$ ($\diamond \beta$), allora bisogna aggiungere un nuovo
-rettangolo con una nuova etichetta $w_j$ che sia accessibile dal rettangolo con etichetta $w_i$
-e in questo nuovo rettangolo scriviamo la formula $\beta$ ($\neg \beta$).
-Su questo nuovo rettangolo si esegue di nuovo tutto il procedimento che stiamo descrivendo.
-
-Una volta che si si sono applicate tutte queste regole e non se ne possono applicare altre,
-diciamo che abbiamo ottenuto un sistema completo di T-diagrammi per la formula $\alpha$.
-
-Se in un rettangolo viene assegnata ad una sottoformula sia il valore $1$ che il valore $0$,
-diciamo che il rettangolo è esplicitamente inconsistente.
-
-Se tutti i rettangoli alternativi ad un rettangolo sono esplicitamente inconsistenti,
-allora il rettangolo è esplicitamente inconsistente.
-
-Il predecessore diretto di un rettangolo $w_i$ è il rettangolo che ha causato
-la creazione di $w_i$.
-
-Se un rettangolo è predecessore diretto di un rettangolo esplicitamente inconsistente,
-allora esso è esplicitamente inconsistente.
-
-Per le osservazioni precedenti otteniamo che una formula è T-valida
-se e solo se il diagramma con etichetta $w_1$ è esplicitamente inconsistente.
-
-Forniamo alcuni esempi di determinazioni di sistemi completi di T-diagrammi:
-
-\textbf{FORNIRLI}
+Per rendere il lavoro più semplice, invece che costruire un T-modello
+tramite la determinazione diretta della terna $(W, R, I)$, procediamo alla costruzione
+progressiva di un diagramma che rappresenti i vari mondi, le relazioni di accessibilità
+stabilite tra essi e i valori di verità associati alle formule in ciascun mondo.
+I mondi vengono rappresentati da rettangoli (che avranno lo stesso nome dei mondi
+da loro rappresentati) dentro i quali
+vengono scrivere delle formule a cui vengono associati
+dei valori di verità a seconda di come si vuole vengano interpretate nel mondo
+corrispondente a quel rettangolo. La relazione di accessibilità è rappresentata
+tramite frecce che collegano i rettangoli in modo che se $w_1$ è accessibile da $w_2$,
+allora c'è una frecca che parte dal rettangolo di $w_2$ ed è diretta verso il rettangolo
+di $w_1$.
 
 
-Adesso dobbiamo dimostrare che la procedura che abbiamo definito è effettivamente
+Allora procediamo come segue:
+Data la formula $\alpha \in L$, iniziamo introducendo un rettangolo $w_1$ e
+al suo interno scriviamo $\alpha$ e le assegniamo il valore $0$ scrivendo uno zero
+sotto al suo operatore principale.
+
+Dato un qualsiasi rettangolo $w_i$, questo conterrà un numero finito di formule
+$\beta_1, ..., \beta_n$
+e a ciascuna di essa è associato un valore di verità, allora proviamo
+a determinare un assegnamento di valori di verità per le variabili proposizionali
+che occorrono nelle formule del rettangolo $w_i$
+in modo che tutte le $\beta_1, ..., \beta_n$
+abbiano contemporanemanete il valore di verità che le era stato associato.
+Per farlo sfruttiamo la definizione di $V$ e la struttura delle varie formule.
+
+Rappresentiamo graficamente questi passaggi scrivendo sotto all'operatore principale
+di ogni sottoformula $\gamma_{i,j}$ di ogni formula $\beta_i$
+il valore di verità associato a $\gamma_{i,j}$.
+
+Diamo un esempio di questo procedimento provando a trovare un assegnamento
+di valori di verità che falsifichi $p \rightarrow q$:
+
+Siccome vogliamo che la formula sia falsa, iniziamo scrivendo $0$ sotto l'operatore principale $\rightarrow$:
+$$p \underset{0}{\rightarrow} q$$
+
+Ora, dalla definizione di $\rightarrow$ e dalla definizione di $V$
+deduciamo che affinché la formula sia falsa, c'è bisogno
+che a $p$ sia assegnato $1$ e a $q$ $0$, e quindi scriviamo:
+
+$$\underset{1}{p} \underset{1}{\rightarrow} \underset{0}{q}$$
+
+Se nel fare ciò si arriva a dover associare alla stessa sottoformula
+due valori di verità diversi, allora arrestiamo il processo e sottolineiamo
+la sottoformula incriminata.
+
+\textbf{Fornire un altro esempio}
+
+Durante questo procedimento possono presentari vari casi particolari:
+Può capitare che nel rettangolo $w_i$ l'operatore principale di una sottoformula $\beta$ sia tale che le regole di $V$
+non ci permettono di determinare univocamente dei valori di verità per le sue sottoformule.
+Ad esempio ciò succede se vogliamo che $\gamma \lor \delta$ sia vera, in questo caso abbiamo tre possibili
+assegnamenti:
+\begin{itemize}
+    \item $\gamma$ vera  e $\delta$ falsa
+    \item $\gamma$ vera  e $\delta$ vera
+    \item $\gamma$ falsa e $\delta$ vera
+\end{itemize}
+
+In eventualità come questa facciamo tante copie del diagramma (che chiameremo versioni alternative)
+quante sono i possibili assegnamenti di verità e di volta in volta, sostituiamo al rettangolo $w_i$ contenente le ambiguità,
+un rettangolo $w_i(n)$ detto rettangolo alternativo di $w_i$ in cui alle sottoformule
+con valore ambiguo viene associato ciascuno dei possibili assegnamenti.
+E infine poniamo un $\dagger$ sotto all'operatore principale di $\beta$ nel rettangolo $w_i$.
+Per ciascun diagramma continuiamo questo procedimento separatamente.
+
+Quindi nel caso precedente avremmo tre rettangoli: $w_i(1), w_i(2), w_i(3)$.
+Nel primo alle sottoformule $\gamma$ e $\delta$ saranno assegnati rispettivamente i valori $1$ e $0$,
+nel secondo i valori $1$ e $1$ e nel terzo i valori $0$ e $1$.
+
+Se invece ci ritroviamo a dover assegnare ad una formula del tipo $\Box \beta$
+il valore di verità $0$ nel rettangolo $w_i$, allora disegniamo un asterisco sotto al simbolo $\Box$
+e introduciamo un nuovo rettangolo $w_j$ accessibile da $w_i$ (cioè disegniamo una freccia diretta verso $w_j$ che congiunge $w_i$ a $w_j$)
+e in $w_j$ scriviamo la formula $\beta$ e le associamo il valore $0$, così che sia giustificato
+l'assegnamento del valore $0$ alla formula $\Box \beta$.
+Il rettangolo $w_i$ viene detto \emph{predecessore diretto} del rettangolo $w_j$.
+
+Infine se dobbiamo assegnare ad una formula del tipo $\Box \beta$
+il valore di verità $1$ nel rettangolo $w_i$, allora disegniamo un asterisco sopra al simbolo $\Box$
+e in ogni rettangolo $w_j$ (diverso da $w_i$)  accessibile da $w_i$ scriviamo la formula $\beta$ e le associamo il valore $1$,
+così che risulti giustificato l'assegnamento del valore $1$ alla formula $\Box \beta$,
+mentre in $w_i$ associamo a $\beta$ il valore $1$.
+
+Ogni volta che introduciamo un nuovo rettangolo ripetiamo per esso la procedura.
+
+Un diagramma costruito secondo le regole appena descritte è detto T-diagramma.
+
+Inoltre un insieme di T-diagrammi a cui non si può applicare più nessuna regola è detto
+un sistema completo di T-diagrammi.
+
+Se in un rettangolo è necessario assegnare ad una sottoformula due valori di verità diversi,
+allora diciamo che il rettangolo è esplicitamente inconsistente.
+Se un rettangolo esplicitamente inconsistente $w_j$ è accessibile da un rettangolo $w_i$,
+allora $w_i$ è esplicitamente inconsistente.
+
+Se un rettangolo ha dei rettangoli alternativi e questi sono tutti esplicitamente inconsistenti,
+allora anch'esso è esplicitamente inconsistente.
+
+Per il modo in cui viene costruito un sistema completo di T-diagrammi, è facile dedurre che
+$\alpha \in L$ è T-valida se e solo se nel suo sistema completo di T-diagrammi, il rettangolo
+$w_1$ è esplicitamente inconsistente.
+
+Non ci resta che dimostrare che la procedura che abbiamo definito è effettivamente
 una procedura di decisione, vogliamo cioè dimostrare che per ogni formula di $L$
-ci permette di determinare in modo univoco e in un numero finito di passi
+essa ci permette di determinare in modo univoco e in un numero finito di passi
 se questa è T-valida o meno.
 
 Il fatto che il procedimento funzioni e che se il procedimento termina la risposta è univoca
@@ -1045,21 +1040,25 @@ i rettangoli alternativi introdotti sono in numero finito.
 Notiamo ora che se è necessario introdurre un nuovo mondo $w_j$ accessibile da $w_i$,
 allora in questo mondo le formule avranno un numero strettamente inferiore di operatori
 modali rispetto al numero di operatori modali nelle formule di $w_i$, questo perché
-le formule scritte in $w_j$ si ottengono rimuovendo un operatore da una sottoformula
+le formule scritte in $w_j$ si tutte ottengono rimuovendo un operatore da una sottoformula
 della formula scritta in $w_i$.
 Dal momento che in $w_1$ c'è solo un numero finito di operatori
 modali, allora il numero di mondi da dover introdurre sarà necessariamente finito.
 
 Abbiamo perciò che il numero di rettangoli in un sistema completo di T-diagrammi è finito
-e perciò per ciascuno di essi le operazioni da compiere sono finite. In definitiva
+e che per ciascuno di essi le operazioni da compiere sono finite. In definitiva
 la procedura che abbiamo definito termina in un numero finito di passi.
+
+\textbf{Mettere foto esempi}
+
 
 \section{Procedura di decisione per S4}
 Cerchiamo di adattare la procedura appena definita per decidere le formule S4-valide.
-Siccome un S4-modello ha una relazione riflessiva e transitiva, allora bisogna stare
-attenti che quando si introducano mondi nuovi le relazioni di accessibilità siano
+Siccome un S4-modello ha una relazione di accessibilità riflessiva e transitiva, allora bisogna stare
+attenti che qualora si introducano mondi nuovi le relazioni di accessibilità siano
 correttamente registrate in modo che se $w_3$ è accessibile da $w_2$ e $w_2$ è accessibile
-da $w_1$, allora $w_3$ risulti accessibile da $w_1$.
+da $w_1$, allora $w_3$ risulti accessibile da $w_1$ e quindi bisogna aggiungere il giusto
+numero di di frecce per far si che la transitività della relazione di accessibilità sia rispettata
 Questa situazione ci porta delle complicazione, per illustrare bene il problema
 mostriamo cosa succede con la seguente formula:
 
@@ -1098,8 +1097,11 @@ quelle condizioni valgono anche in $w_i$, facendo parte della stessa catena.
 capiterà sicuramente che esista un altro rettangolo già introdotto
 con la stessa formula.
 
-I T-modelli in cui la relazione tra i rettangoli è transitiva e si usa la regola
-appena definita vengono detti S4-modelli.
+I T-diagrammi in cui la relazione tra i rettangoli è transitiva e si usa la regola
+appena definita vengono detti S4-diagrammi. Se poi questi particolari T-diagrammi
+sono un sistema completo di T-diagrammi, allora si dirà che sono un sistema
+completo di S4-diagrammi.
+
 
 Con questa modifica possiamo dimostrare che il numero di rettangoli in un sistema
 completo di S4-diagrammi è finito:
@@ -1125,12 +1127,13 @@ associamo ad ogni rettango $w_i$ del sistema una formula $w_i'$ definita in ques
 nel rettangolo $w_i$ c'è una formula $\beta$ che deve essere falsa ed eventualmente delle condizioni,
 cioè un numero finito di formule $\gamma_1, ...\gamma_n$ che devono essere vere, ereditate
 dal suo predecessore diretto, allora definiamo $w_i'$ come la formula
-$\beta \lor \neg \gamma_1 \lor ... \lor \neg \gamma_n$.
+$\beta \lor \neg \gamma_1 \lor ... \lor \neg \gamma_n$, con $n \geq 0$.
 
 \begin{flushleft}
-\textbf{Lemma}
-Dato un sistema completo di T-diagrammi e un rettangolo $w_i$,
-se $\beta$ è una sottoformula $w_i'$ e a $\beta$ è assegnato il valore di verità falso,
+\textbf{Lemma 1}
+Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo,
+se $\beta$ è una sottoformula di $w_i'$ e a $\beta$ è assegnato univocamente il valore di verità falso
+nel rettangolo $w_i$,
 
 allora $\vdash \beta \rightarrow w_i'$ in T
 
@@ -1145,10 +1148,11 @@ Supponiamo che a $\beta$ sia associato il valore di verità falso, l'altro caso 
 allora se $\delta_1, ..., \delta_n$ sono tutte le sottoformule ben formate di $w_i'$ è
 facile vedere che
 $$(\Box \delta_1 \rightarrow \delta_1) \rightarrow ... \rightarrow (\Box \delta_n \rightarrow \delta_n) \rightarrow (\beta \rightarrow w_i')$$
-è ottenuta da una famiglia di tautologie di $CP$, infatti l'unico modo per rendere
+è ottenuta per sostituzione da una tautologia di $CP$, infatti l'unico modo per rendere
 falsa questa formula è assegnare a $\delta_k$ $1$ ogni volta che associamo a $\delta_k$ $1$,
 per $k = 1 ... n$, assegnare $1$ a $\beta$ e $0$ a $w_i'$.
-Ma sappiamo, per quanto dedotto dal T-diagramma che se $w_i'$ ha valore di verità $1$,
+Ma sappiamo, per quanto dedotto dal T-diagramma, e per il fatto,
+che se $w_i'$ ha valore di verità $1$,
 allora $\beta$ deve avere valore di verità $0$.
 
 Quindi otteniamo l'asserto.
@@ -1159,7 +1163,8 @@ Quindi otteniamo l'asserto.
 \begin{flushleft}
 \textbf{Lemma}
 
-Dato un sistema completo di T-diagrammi e un rettangolo $w_i$,
+Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
+non ci sono operatori contrassegnati con $\dagger$,
 se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
 
 \textit{Dim.}
@@ -1185,7 +1190,8 @@ otteniamo che $\vdash w_i'$.
 \textbf{Lemma}
 
 Dato un sistema completo di T-diagrammi e un rettangolo $w_i$, se $\vdash w_i'$
-e $w_j$ è il suo predecessore diretto,
+e $w_j$ è il suo predecessore diretto e in $w_j$ non ci sono connettivi contrassegnati
+con $\dagger$,
 allora $\vdash w_j'$
 
 \textit{Dim.}
@@ -1281,11 +1287,162 @@ allora $\vdash w_1'$.
 Quindi se $\vDash \alpha$, allora il sistema completo di T-diagrammi per $\alpha$ è inconsistente
 e quindi $\vdash w_1'$, ma $w_1' = \alpha$, quindi $\vdash \alpha$.
 
-\section{Teoremi di completezza per S4 e S5}
-È possibile mostrare dei teoremi di completezza anche per S4 e S5 e una loro dimostrazione
-è reperibile su [Hughes-Cresswell]
+\section{Teorema di completezza per S4}
+Mostriamo ora il teorema di completezza per il sistema S4.
+Data una formula $\alpha$, una volta costruito il suo sistema completo di 4-diagrammi,
+associamo ad ogni rettango $w_i$ del sistema una formula $w_i''$ definita in questo modo:
 
-\chapter{Conclusioni}
+nel rettangolo $w_i$ c'è una formula $\beta$ che deve essere falsa ed eventualmente delle condizioni,
+cioè un numero finito di formule $\gamma_1, ...\gamma_n$ che devono essere vere, ereditate
+dal suo predecessore diretto, allora definiamo $w_i''$ come la formula
+$\beta \lor \neg \Box \gamma_1 \lor ... \lor \neg \Box \gamma_n$, con $n \geq 0$.
+
+\begin{flushleft}
+\textbf{Lemma}
+Dato un sistema completo di S4-diagrammi e sia $w_i$ un suo rettangolo,
+
+allora $\vdash w_i' \rightarrow w_i''$ in T
+
+\textit{Dim.}
+
+La dimostrazione è semplice e si basa sul fatto che vale:
+$\vdash \neg \alpha \rightarrow \neg \Box \alpha$ in T
+
+\end{flushleft}
+
+Da questo lemma e dal lemma precedente per T ricaviamo che se un rettangolo $w_i$
+di un sistema completo di S4-diagrammi è esplicitamente inconsitente
+allora $\vdash w_i''$
+
+Mostriamo ora:
+
+\begin{flushleft}
+\textbf{Lemma}
+
+Dato un sistema completo di S4-diagrammi e un rettangolo $w_i$, se $\vdash w_i''$
+e $w_j$ è il suo predecessore diretto e in $w_j$ non ci sono connettivi contrassegnati
+con $\dagger$,
+allora $\vdash w_j''$
+
+\textit{Dim.}
+
+Se $w_i$ e $w_j$ sono lo stesso rettangolo, non c'è niente da dimostrare.
+Mentre se $w_i$ e $w_j$ sono due rettangoli diversi, siccome $w_i$ è costruito
+a partire da $w_j$ secondo le regole della procedura, allora in $w_i$ c'è
+una formula $\gamma$ a cui è assegnato il valore $0$ e tale che in $w_j$ c'è
+$\Box \gamma$ a cui è assegnato il valore $0$ e poi ci sono delle formule
+$\beta_1, ..., \beta_k$, con $k \geq 0$ a cui è assegnato il valore $1$ e tali che in $w_j$
+a $\Box \beta_1, ..., \Box \beta_n$ è assegnato il valore $1$ in $w_i$,
+e infine ci sono delle formule $\beta_{k+1}, ..., \beta_{n}$, con $n \geq 0$,  ereditate da qualche
+altro rettangolo nella catena a cui appartengono sia $w_j$ che $w_i$.
+
+Quindi per il lemma visto nel paragrafo precedente, abbiamo:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_k \lor \Box \gamma) \rightarrow w_j'$$
+Usando il lemma precedente e il teorema di sillogismo otteniamo:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_k \lor \Box \gamma) \rightarrow w_j''$$
+
+Se $n > 0$, siccome $\beta_{k+1}, ..., \beta_{n}$ sono ereditate sia da $w_i$ che da $w_j$,
+allora $w_j''$ sarà del tipo $\delta \lor \neg \Box \beta_{k+1} \lor ... \lor \Box \beta_{n}$, per qualche $\delta \in L$,
+Quindi poiché $p \rightarrow (p \lor q)$ è una tautologia di $CP$ e quindi un teorema, otteniamo:
+$\vdash \neg \Box \beta_{k+1} \lor ... \lor \Box \beta_{n} \rightarrow w_j''$.
+
+e quindi usando un'altra tautologia di $CP$: $(p \rightarrow r) \rightarrow (q \rightarrow r) \rightarrow (p \lor q) \rightarrow r$
+e usando due volte il modus ponens, otteniamo:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \rightarrow w_j''$$
+
+Poiché $\vdash w_i''$, si ha:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \gamma)$$
+Per necessitazione, definizione di $\rightarrow$ e per l'assioma $K$ otteniamo:
+$$\vdash (\neg \Box \Box \beta_1 \lor ... \neg \Box \Box \beta_n \lor \Box \gamma)$$
+Ora sfruttando il fatto che in S4 si ha: $\Box \Box p \leftrightarrow \Box p$, otteniamo:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma)$$
+Dunque poiché come abbiamo visto:
+$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \rightarrow w_j''$$
+Per modus ponens:
+$$\vdash w_j''$$
+
+\end{flushleft}
+
+Infine, con qualche piccola accortezza si può giungere anche qui a dimostrare il lemma:
+\begin{flushleft}
+\textbf{Lemma}
+$$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
+\end{flushleft}
+
+E perciò come prima otteniamo il nostro teorema di completezza.
+
+\section{Teorema di completezza per S5}
+Per il sistema S5 possiamo sfruttare quanto fatto finora per il sistema S4,
+l'unico inconveniente è che $w_1''$ non è la formula che ci aspettiamo,
+infatti poiché la relazione di accessibilità deve essere anche riflessiva,
+allora $w_1''$ sarà del tipo: $\alpha \lor \neg \Box \beta_1 \lor ... \lor \neg \Box \beta_n$,
+con $n \ge 0$.
+Nel caso in cui $n > 0$, dobbiamo aggiungere dei passaggi per poter ottenere $\vdash \alpha$.
+Se $n > 0$, allora nel rettangolo $w_1$ c'è una formula $\beta_1$ che è stata scritta
+perché c'è un rettangolo $w_j$,
+in cui c'è una sottoformula del tipo $\Box \beta_1$
+a cui è stata assegnato il valore di verità $1$ e dunque a $\beta_1$ è assegnato il valore di verità $1$
+La formula $w_j''$ associata a $w_j$ è del tipo $\gamma \lor \neg \Box \delta_1 \lor ... \lor \neg \Box \delta_k$, con $k \ge 0$,
+e per come sono costruiti gli S5-diagrammi, $\Box \beta_1$ può essere o una sottoformula di $\gamma$
+o una sottoformula di qualche $\delta_i$, con $i < n$
+
+Se $\Box \beta_1$ è una sottoformula di $\gamma$, allora per un argomento simile al lemma $1$ abbiamo che:
+$$\vdash \neg \Box \beta_1 \rightarrow \gamma$$
+e quindi per necessitazione e grazie all'assioma $K$:
+$$\vdash \Box \neg \Box \beta_1 \rightarrow \Box \gamma$$
+
+Ma per l'assioma S5:
+$$\vdash \neg \Box \beta_1 \rightarrow \Box \neg \Box \beta_1$$
+Quindi per sillogismo:
+$$\vdash \neg \Box \beta_1 \rightarrow \Box \gamma$$
+
+Ma per come sono costruiti gli S5-diagrammi, o $w_j$ è $w_1$ e $\gamma$ è $\alpha$,
+oppure $w_j$ ha un predecessore diretto
+che chiamiamo $w_l$ e in $w_l$ a $\Box \gamma$ è associato il valore di verità $0$.
+
+Se $\Box \beta_1$ è una sottoformula di $\delta_i$, con $i < n$,
+allora, per un argomento simile al lemma $1$
+$$ \vdash \neg \Box \beta_1 \rightarrow \neg \delta_i$$
+e poiché
+$$ \vdash \neg \delta_i \rightarrow \neg \Box \delta_i$$
+e per sillogismo:
+$$ \vdash \neg \Box \beta_1 \rightarrow \neg \Box \delta_i$$
+
+Ma per come sono costruiti gli S5-diagrammi, c'è un rettangolo $w_l$ in cui a $\Box \delta_i$
+è stato associato $1$.
+
+Se abbiamo ottenuto $\neg \Box \beta_1 \rightarrow \alpha$, ci fermiamo,
+altrimenti, usando la formula, che chiameremo $\sigma$, implicata da $\neg \Box \beta_1$
+($\Box \gamma$ o $\neg \Box \delta_i$, a seconda dei casi) reiteriamo questo procedimento
+e otteniamo che è un teorema di S5 che $\sigma$ uno dei disgiunti della formula $w_l''$, e quindi
+per sillogismo $\neg \Box \beta_1$ implica uno dei disgiunti della formula $w_l''$
+Osserviamo, però, che ad ogni iterazione di questo procedimento la lunghezza
+della formula implicata da $\neg \Box \beta_1$ aumenta sempre di più, inoltre ogni formula
+è sempre una delle formule scritta nell'S5-diagramma che sono in numero finito,
+quindi non è possibile dover iterare questo procedimento all'infinito, ma prima o poi
+bisognerà arrivare in un numero finito di passi alla formula $\alpha$ che è la formula
+più lunga di tutte nell'S5-diagramma.
+
+Abbiamo perciò dimostrato che $\vdash \neg \Box \beta_1 \rightarrow \alpha$,
+è possibile fare lo stesso per tutti gli altri $\beta_i$, con $i = 2, ..., n$.
+Dunque abbiamo
+$$\vdash \neg \Box \beta_1 \rightarrow \alpha$$
+$...$
+$$\vdash \neg \Box \beta_n \rightarrow \alpha$$
+
+e inoltre:
+
+$$\vdash \neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \alpha$$
+
+Dunque sfruttando svariate volte la tautologia di $CP$:
+$$(p \rightarrow r) \rightarrow (p \lor q) \rightarrow (r \lor q)$$
+e il modus ponens, otteniamo:
+$$\vdash \alpha \lor ... \lor \alpha$$
+che è facile far vedere che ci porta a poter affermare che
+$$\vdash \alpha$$
+
+\chapter*{Conclusioni}
+\addcontentsline{toc}{chapter}{Conclusioni}
 Abbiamo inizialmente introdotto tre sistemi di logica modale: T, S4 ed S5,
 dicendo che non era chiaro se ci fosse un sistema da preferire agli altri.
 Dopo aver introdotto delle semantiche di Kripke per essi, abbiamo mostrato
@@ -1323,13 +1480,16 @@ Se vogliamo interpretare $\Box \alpha$ come ``è analiticamente vero che $\alpha
 formale S5 è quello corretto. Mentre se vogliamo interpretare $\Box \alpha$ come
 è ``informalmente dimostrabile in matematica che $\alpha$'', allora il sistema corretto è S4.
 
+\chapter*{Ringraziamenti}
+\addcontentsline{toc}{chapter}{Ringraziamenti}
+Ringrazio solo me stesso e nessun altro.
+
 \begin{thebibliography}{5}
 \bibitem{IntroModale} G.E. Hughes, M.J. Cresswell, \textit{Introduzione alla logica modale},
 edizione a cura di C. Pizzi, [1973], Milano, Il Saggiatore, $1983^{2}$.
-\bibitem{MendelsonAdeq} E. Mendelson, \textit{Introduction to Mathematical Logic}, [1964], Londra, Chapman \& Hall, $1997^{4}$, pp. 27-29.
+\bibitem{Kleene} S.C. Kleene, \textit{Mathematical Logic}, New York, J. Wiley \& Sons, 1967.
 \bibitem{Mendelson} E. Mendelson, \textit{Introduction to Mathematical Logic}, [1964], Londra, Chapman \& Hall, $1997^{4}$.
 \bibitem{Tortora} R. Tortora, \textit{Elementi di teoria degli insiemi}, Napoli, E.DI.S.U. - Napoli 1, 1989.
-\bibitem{TortoraConv} R. Tortora, \textit{Elementi di teoria degli insiemi}, Napoli, E.DI.S.U. - Napoli 1, 1989, p. 64.
 \end{thebibliography}
 
 \end{document}
