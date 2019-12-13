@@ -9,6 +9,7 @@
 \newtheorem{axiom}{Assioma}[chapter]
 \newtheorem{theorem}{Teorema}[chapter]
 \newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollario}{Corollario}[chapter]
 \newtheorem{definition}{Definizione}[chapter]
 
 \title{I sistemi di logica modale T, S4, S5: Sintassi e Semantica}
@@ -44,17 +45,27 @@ Alla mia famiglia e ai miei amici
 \tableofcontents
 \chapter*{Introduzione}
 \addcontentsline{toc}{chapter}{Introduzione}
-Lo scopo di questa tesi è usare i metodi della logica matematica
-per studiare e descrivere i ragionamenti che fanno uso delle nozioni
-di \emph{necessità} e \emph{possibilità}. Nello specifico
-presenteremo tre dei più comuni sistemi di logica modale proposizionale:
-il sistema T, il sistema S4 e il sistema S5, mostrando alcune loro proprietà,
-le relazioni che intercorrono tra di essi e definendo una semantica nello
-stile di Kripke per ciascuno di essi. Useremo in particolare le semantiche introdotte
-per poter fare un'analisi più approfondita dei tre sistemi introdotti
-allo scopo di comprendere più a fondo quali siano le differenze tra di essi
-riguardo alla formalizzazione dei concetti di \emph{necessità} e \emph{possibilità}.
-
+Lo scopo di questa tesi è di applicare i metodi della logica matematica
+alla studio della logica modale che si occupa dei
+ragionamenti che fanno uso delle nozioni
+di \emph{necessità} e \emph{possibilità}.
+Nel primo capitolo introduciamo un sistema formale per il calcolo
+proposizionale da usare come base per gli sviluppi successivi,
+presentandone apparato deduttivo, semantica e ricordandone
+alcune delle proprietà più importanti come il teorema di completezza.
+Nel secondo capitolo presentiamo tre dei più comuni sistemi formali
+per la logica modale: T, S4 e S5 come estensione del calcolo proposizionale
+definito nel primo capitolo,
+Nel terzo capitolo ci occupiamo di introdurre una semantica nello stile
+di Kripke insieme ad un teorema di adeguatezza per ciascuno dei sistemi e
+con questi strumenti procediamo poi ad un'analisi approfondita di alcune proprietà
+dei sistemi T, S4, S5, mostrando le differenze e i punti in comune tra essi
+e chiarendo in che senso ciascun sistema formalizza i concetti di
+\emph{necessità} e \emph{possibilità}.
+Infine, nel quarto capitolo mostriamo per ciascun sistema una procedura di decisione
+per le formule valide e terminiamo il lavoro iniziato con la dimostrazione
+del teorema di adeguatezza nel terzo capitolo, dimostrando il teorema
+di completezza per ciascun sistema.
 
 \chapter{Logica Proposizionale Classica}
 Premettiamo allo studio di sistemi di logica modale la definizione
@@ -138,16 +149,30 @@ Gli assiomi di $CP$ sono i seguenti:
 \end{itemize}
 \end{definition}
 
-Come regole di deduzione usiamo:
+Usiamo due regole di deduzione:
 
+La prima è la seguente:
 $$\frac{\alpha \rightarrow \beta \ \ \alpha}{\beta}$$
 comunemente chiamata \emph{Modus Ponens}
 
-e la regola di \emph{sostituzione} che afferma:
+mentre per enunciare la seconda dobbiamo prima dare la seguente definizione:
+\begin{definition}
+Se $\alpha \in L_{CP}, x \in A,$ e $\beta \in L_{CP}$, allora la formula
+ottenuta sostituendo uniformemente $\beta$ al posto di $x$ in $\alpha$
+e che indichiamo con $\alpha[x/\beta]$ è definita come segue:
+\begin{itemize}
+\item Se $\alpha = x$, allora $\alpha[x/\beta] = \beta$,
+\item Se $\alpha \in A \setminus \{x\}$, allora $\alpha[x/\beta] = \alpha$,
+\item Se $\alpha = \neg (\gamma)$, allora $\alpha[x/\beta] = \neg (\gamma[x/\beta])$,
+\item Se $\alpha = (\gamma) \lor (\delta)$,
+      allora $\alpha[x/\beta] = (\gamma[x/\beta]) \lor (\delta[x/\gamma])$
+\end{itemize}
+\end{definition}
+
+Possiamo ora enunciare la regola di \emph{sostituzione} nel seguente modo:
 \begin{quote}
-Se $\alpha$ è un teorema, e $\beta \in L_{CP}$, allora sostituendo
-in modo uniforme $\beta$ al posto di una variabile proposizionale $p$ di $\alpha$,
-la formula ben formata risultante è un teorema.
+Se $\alpha$ è un teorema, $\beta \in L_{CP}$, e
+$x \in A$, allora la formula $\alpha[x/\beta]$ è un teorema
 \end{quote}
 
 Mentre il \emph{Modus Ponens} è una regola pressoché standard,
@@ -213,7 +238,7 @@ adattata al sistema $CP$.
 Terminiamo questo paragrafo mostrando un esempio di dimostrazione di una famiglia
 di teoremi, che ci tornerà utile anche nel seguito.
 
-\begin{theorem}[Sillogismo]
+\begin{theorem}[Sillogismo] \label{sillogismo}
 $$\vdash (p \rightarrow q) \rightarrow
         (q \rightarrow r) \rightarrow (p \rightarrow r)$$
 \end{theorem}
@@ -326,7 +351,8 @@ l'insieme dei teoremi di $CP$ e l'insieme delle formule ben formate di $CP$ vali
 coincidono, quindi usando la procedura di decisione per le formule valide
 possiamo anche determinare le formule che sono teoremi.
 
-\chapter{Logica Modale}
+\chapter{I Sistemi di Logica Modale}
+
 Ora che abbiamo definito un sistema formale per la logica proposizionale,
 lo estenderemo in vari modi.
 
@@ -339,7 +365,7 @@ Ricordiamo che un operatore vero-funzionale è una funzione il cui risultato
 è univocamente determinato dal valore di verità dei parametri da cui dipende.
 Inoltre, si può dimostrare che nel calcolo proposizionale si possono esprimere
 tutti gli operatori verofunzionali possibili in termini di $\neg e \vee$.
-Quindi, se gli operatori che vogliamo aggiungere fossero verofunzionali, potremmo
+Quindi, se gli operatori che vogliamo aggiungere fossero vero-funzionali, potremmo
 continuare il nostro studio usando $CP$ e non servirebbe altro.
 Notiamo, però, che gli operatori che vogliamo aggiungere non possono essere vero-funzionali,
 infatti il valore di verità della frase ``è necessario che p'' non dipende \emph{solo}
@@ -352,7 +378,7 @@ A tal proposito, non è esattamente chiaro come caratterizzare formalmente
 le nozioni di \emph{necessità} e \emph{possibilità},
 e anzi vedremo che queste potranno essere intese in modi diversi.
 Questa ricchezza di significati si rifletterà in una varietà di sistemi formali più o meno potenti.
-Noi ci focalizzeremo in particolare su tre sistemi formali:
+Noi ci focalizzeremo in particolare su tre dei sistemi formali definiti in \cite{IntroModale}:
 \begin{itemize}
 \item Sistema T
 \item Sistema S4
@@ -364,7 +390,7 @@ Quindi iniziamo definendo la parte comune di tutti i sistemi formali, ovvero il 
 e le regole di deduzione.
 
 L'alfabeto dei sistemi è ottenuto dall'alfabeto del sistema $CP$ aggiungendo il simbolo $\Box$,
-che vorremo far corrispondere alla nozione di ``necessità''.
+che vorremo far corrispondere alla nozione di \emph{necessità}.
 
 Per quanto riguarda le formule ben formate, la definizione induttiva che genera l'insieme $L$
 delle formule ben formate è ottenuta dalle regole usate per definire $L$ in $CP$ più
@@ -374,32 +400,73 @@ la seguente regola aggiuntiva:
 \end{itemize}
 
 Diamo la seguente definizione, il cui intento è esprimere l'altro operatore
-che ci interessa, quello corrispondente alla nozione di ``possibilità'', in termini di $\Box$.
+che ci interessa, quello corrispondente alla nozione di \emph{possibilità},
+in termini di $\Box$.
 
 \begin{definition}
 Se $\alpha \in L$:
 $$\diamond (\alpha) := \neg \Box \neg (\alpha)$$
 \end{definition}
 
-Infine, per quanto riguarda le regole di deduzione, alle due di $CP$ aggiungiamo
-una nuova regola, detta \textbf{Regola di necessitazione}:
-$$\vdash \alpha \Rightarrow \vdash \Box \alpha$$
+Infine, per quanto riguarda le regole di deduzione,
+usiamo il \emph{Modus Ponens} e la regola di \emph{sostituzione}
+come per $CP$. Per la regola di sostituzione bisogna però fare attenzione,
+infatti la nozione di sostituzione uniforme di formule al posto di variabili
+proposizionali va aggiornata e quindi per le formule di $L$ definiamo:
+
+\begin{definition}
+Se $\alpha \in L, x \in A,$ e $\beta \in L$, allora la formula
+ottenuta sostituendo uniformemente $\beta$ al posto di $x$ in $\alpha$
+e che indichiamo con $\alpha[x/\beta]$ è definita come segue:
+\begin{itemize}
+\item Se $\alpha = x$, allora $\alpha[x/\beta] = \beta$,
+\item Se $\alpha \in A \setminus \{x\}$, allora $\alpha[x/\beta] = \alpha$,
+\item Se $\alpha = \neg (\gamma)$, allora $\alpha[x/\beta] = \neg (\gamma[x/\beta])$,
+\item Se $\alpha = \Box (\gamma)$, allora $\alpha[x/\beta] = \Box (\gamma[x/\beta])$,
+\item Se $\alpha = (\gamma) \lor (\delta)$,
+      allora $\alpha[x/\beta] = (\gamma[x/\beta]) \lor (\delta[x/\gamma])$
+\end{itemize}
+\end{definition}
+
+Osserviamo che la nuova definizione è un'estensione della definizione data per le
+formule di $CP$ e quindi ogni sostituzione uniforme in $CP$ è anche una sostituzione
+uniforme nei nuovi sistemi che stiamo definendo.
+
+Quindi enunciamo la regola di \emph{sostituzione} come segue:
+\begin{quote}
+Se $\alpha$ è un teorema, $\beta \in L$, e
+$x \in A$, allora la formula $\alpha[x/\beta]$ è un teorema
+\end{quote}
+
+A queste due regole ne aggiungiamo una completamente nuova,
+detta \emph{Regola di necessitazione}:
+$$\frac{\alpha}{\Box \alpha}$$
+
+Vale la pena soffermarsi brevemente sulla regola di necessitazione, 
+infatti interpretando $\Box$ come ``è necessario che'' la regola di necessitazione
+sembra affermare che da $\alpha$ si possa dedurre che $\alpha$ sia necessaria e quindi
+che da ipotesi deboli si possa arrivare ad una conclusione più forte.
+Invece mettiamo in evidenza che ciò che effettivamente la regola di necessitazione
+afferma è che se $\alpha$ è un teorema, allora da essa possiamo dedurre $\Box \alpha$,
+quindi non è assolutamente possibile applicare la regola di necessitazione
+a qualsiasi formula, ma solo alle formule che sono teoremi, e in un certo senso
+ciò che questa regola afferma è che dire che $\alpha$ è un teorema
+è sufficiente per dedurre che $\alpha$
+sia necessaria, conclusione che ora ci sembra più sensata.
+
 
 Una volta definita la parte comune a tutti i sistemi a cui siamo interessati,
 passiamo ora ad esaminare per ogni sistema gli assiomi che lo caratterizzano.
 
-\section{Sistema T}
 Il sistema T ha come assiomi tutti gli assiomi di $CP$ più:
 \begin{itemize}
 \item (K) $\Box (p \rightarrow q) \rightarrow (\Box p \rightarrow \Box q)$
 \item (T) $\Box p \rightarrow p$
 \end{itemize}
 
-\section{Sistema S4}
 Il sistema S4 ha come assiomi tutti gli assiomi del Sistema T più il seguente assioma:
 $$(S4) \Box \alpha \rightarrow \Box \Box \alpha$$
 
-\section{Sistema S5}
 Il sistema S5 ha come assiomi tutti gli assiomi del Sistema T più:
 $$(S5) \diamond \alpha \rightarrow \Box \diamond \alpha$$
 
@@ -413,10 +480,11 @@ sono teoremi anche del secondo.
 
 Ovviamente, per come abbiamo costruito i nostri sistemi formali, il Sistema T è meno forte
 sia di S4 che di S5.
+Inoltre il sistema $CP$ è meno forte sia di T che di S4 che di S5.
 Ora, però mostreremo che anche S4 è meno forte di S5. A tal fine premettiamo alcuni risultati
 preliminari.
 
-\begin{theorem}
+\begin{theorem} \label{DualeT}
 $\vdash \alpha \rightarrow \diamond \alpha$ in $T$
 \end{theorem}
 
@@ -428,107 +496,43 @@ $\vdash \alpha \rightarrow \diamond \alpha$ in $T$
 \end{formal_proof}
 \end{proof}
 
-\begin{flushleft}
-\textbf{Lemma 1}
+\begin{lemma} \label{Diamond-Box-Box}
 $\vdash \diamond \Box x \rightarrow \Box x$ in $S5$
+\end{lemma}
 
-\textit{Dim.}
+\begin{proof}
+\begin{formal_proof}
+(1) & $\diamond \neg x \rightarrow \Box \diamond \neg x$ & $S5[\neg x/\alpha]$ \\
+(2) & $\neg \Box \diamond \neg x \rightarrow \neg \diamond \neg x$ & contrapposta di (1) \\
+(3) & $\diamond \neg \diamond \neg x \rightarrow \neg \diamond \neg x$ & definizione di $\diamond$ \\
+(4) & $\diamond \Box x \rightarrow \Box x$ & definizione di $\diamond$ e $\Box$
+\end{formal_proof}
+\end{proof}
 
-(1) $\diamond \neg x \rightarrow \Box \diamond \neg x$ ; $S5[\neg x/\alpha]$ \\
-(2) $\neg \Box \diamond \neg x \rightarrow \neg \diamond \neg x$ ; contrapposta di (1) \\
-(3) $\diamond \neg \diamond \neg x \rightarrow \neg \diamond \neg x$ ; definizione di $\diamond$ \\
-(4) $\diamond \Box x \rightarrow \Box x$ ; definizione di $\diamond$ e $\Box$
-
-\begin{flushright}
-$\bullet$
-\end{flushright}
-\end{flushleft}
-
-\begin{flushleft}
-\textbf{Teorema 1}
+\begin{theorem}
 $\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più forte del Sistema S4.
+\end{theorem}
 
-\textit{Dim.}
+\begin{proof}
+\begin{formal_proof}
 
-(1) $\Box x \rightarrow \diamond \Box x$ ; Teorema \\
-(2) $(\Box x \rightarrow \diamond \Box x) \rightarrow (\diamond \Box x \rightarrow \Box\diamond\Box x) \rightarrow (\Box x \rightarrow \Box \diamond \Box x)$ ; Teorema \\
-(3) $\diamond x \rightarrow \Box \diamond x$ ; Assioma S5 \\
-(4) $\Box x \rightarrow \Box \diamond \Box x$ ; Due volte Modus Ponens usando (1) (2) e (3) \\
-(5) $\diamond \Box x \rightarrow \Box x$ ; Lemma 1 \\
-(4) $\Box (\diamond \Box x \rightarrow \Box x)$ ; Necessitazione (5) \\
-(5) $\Box(\diamond\Box x \rightarrow \Box x) \rightarrow \Box \diamond \Box x \rightarrow \Box \Box x$ ; Assioma K \\
-(6) $\Box\diamond\Box x \rightarrow \Box\Box x$ ; Modus Ponens (4) e (5) \\
-(7) $(\Box x \rightarrow \diamond \Box x) \rightarrow (\Box\diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ ; Teorema \\
-(8) $\Box x \rightarrow \Box \Box x$ ; Due volte Modus Ponens usando (1) (5) e (6)
+(1) & $\Box x \rightarrow \diamond \Box x$ & Teorema \ref{DualeT} \\
+(2) & $(\Box x \rightarrow \diamond \Box x) \rightarrow (\diamond \Box x \rightarrow \Box\diamond\Box x) \rightarrow (\Box x \rightarrow \Box \diamond \Box x)$ & Sostituzioni di Teorema \ref{sillogismo} \\
+(3) & $\diamond x \rightarrow \Box \diamond x$ & Assioma S5 \\
+(4) & $(\diamond \Box x \rightarrow \Box \diamond x) \rightarrow \Box x \rightarrow \Box \diamond \Box x$ & Modus Ponens di (1) (2) \\
+(5) & $\Box x \rightarrow \Box \diamond \Box x$ & Modus Ponens (3) e (4) \\
+(6) & $\diamond \Box x \rightarrow \Box x$ & Lemma \ref{Diamond-Box-Box} \\
+(7) & $\Box (\diamond \Box x \rightarrow \Box x)$ & Necessitazione (5) \\
+(8) & $\Box(\diamond\Box x \rightarrow \Box x) \rightarrow \Box \diamond \Box x \rightarrow \Box \Box x$ & Assioma K \\
+(9) & $\Box\diamond\Box x \rightarrow \Box\Box x$ & Modus Ponens (4) e (5) \\
+(10) & $(\Box x \rightarrow \diamond \Box x) \rightarrow (\Box\diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ & Sostituzioni di Teorema \ref{sillogismo} \\
+(11) & $(\Box\diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ & Modus Ponens di (1) e (10)\\
+(12) & $\Box x \rightarrow \Box \Box x$ & Modus Ponens  (9) e (11)
 
-\begin{flushright}$\bullet$\end{flushright}
-\end{flushleft}
+\end{formal_proof}
+\end{proof}
 
-%\section{Un teorema di deduzione (DA AGGIUSTARE)}
-%In questo paragrafo proviamo a derivare un teorema di deduzione per il Sistema $S4$.
-%Non possiamo aspettarci che il teorema di deduzione per il calcolo proposizionale $CP$ valga,
-%infatti la regola di deduzione di necessitazione ci porterebbe ad asserire che:
-%$$ x \vdash \Box x \Rightarrow \vdash x \rightarrow \Box x $$
-%E ciò vorrebbe dire che le modalità non aggiungono nulla al sistema del calcolo proposizionale.
-%
-%Se guardiamo attentamente la regola di necessitazione e la scriviamo in questo modo:
-%$$x \vdash \Box x$$
-%possiamo notare che l'ipotesi $x$ è sufficiente per dimostrare $\Box x$ che afferma molto più
-%che semplicemente $x$.
-%Notiamo anche che la regola di necessitazione ci permette di provare
-%$$x \vdash \Box \Box x$$
-%
-%Quindi, far semplicemente passare la x da sinistra a destra, significherebbe affermare che
-%da ipotesi più deboli si possono comunque dedurre le stesse conclusioni. Allora possiamo provare,
-%nello spostare la x da sinistra a destra di $\vdash$, ad aggiungere un $\Box$.
-%Questo può bastare in sistemi come $S4$ o più potenti, perché da $\Box x$ possiamo dedurre
-%$\Box \Box x$, $\Box \Box \Box x$, ecc...
-%Mentre nel sistema T questo non è vero e quindi dovremo risolvere diversamente.
-%
-%Recuperiamo quindi un teorema di deduzione, facendo la seguente modifica:
-%$$\alpha \vdash \beta \Rightarrow \vdash \Box \alpha \rightarrow \beta$$
-%Ora il precedente problema è facilmente risolvibile, infatti, la deduzione $x \vdash \Box x$
-%diventa il teorema $\vdash \Box x \rightarrow \Box x$ banalmente valido.
-%Otteniamo però anche il seguente teorema, $\vdash \Box x \rightarrow \Box \Box x$ che è l'assioma $S4$
-%Ecco perché abbiamo supposto di trovarci nel sistema $S4$.
-%
-%Diamo una dimostrazione di
-%
-%\begin{flushleft}
-%\textbf{Teorema}
-%$\alpha \vdash \beta \Leftrightarrow \vdash \Box \alpha \rightarrow \beta$ in $S4$
-%
-%\textit{Dim.}
-%Lasciata al lettore, è una banale modifica della dimostrazione nel caso del calcolo proposizionale.
-%L'unica parte interessante è quella riguardante i teoremi ottenuti con la regola di necessitazione.
-%In quel caso dobbiamo far uso dell'assioma $S4$ ed è tutto banale.
-%\end{flushleft}
-%
-%
-%
-%\section{Modalità e funzioni modali}
-%Rendiamo più formale il concetto di modalità.
-%\textbf{Definizione}
-%Una modalità è una successione di 0 o più di uno dei seguenti simboli: $\neg,\diamond,\Box$.
-%
-%Viene da domandarci, ora, quante sono le modalità distinte che ci sono in ognuno dei sistemi che abbiamo considerato.
-%Si può dimostrare che nel Sistema $T$ ce ne sono infinite,
-%mentre in $S4$ e $S5$ ce ne sono solo un numero finito.
-%
-%Parleremo più approfonditamente di tali questioni solo dopo aver introdotto una semantica
-%per il nostro linguaggio.
-%
-%\begin{flushleft}
-%\textbf{Definizione 1}
-%
-%Una funzione modale è una formula contenente almeno una funzione modale
-%\end{flushleft}
-%
-%In $T$ ovviamente c'è un numero infinito di funzioni modali esprimibili.
-%In $S5$ ce n'è un numero finito, mentre sorprendentemente,
-%in $S4$ ce ne sono infinite, nonostante le modalità esprimibili siano in numero finito.
-%
-\section{Una semantica per i sistemi di logica modale}
+\chapter{Una semantica per i sistemi di logica modale}
 Dopo aver definito il linguaggio comune a tutti i sistemi di logica modale introdotti,
 lo abbiamo usato unicamente come base di un calcolo che usa le regole di deduzione per costruire
 dimostrazioni. Come ben sappiamo un linguaggio può anche essere usato per parlare di qualcosa,
@@ -544,13 +548,10 @@ sia a determinare alcune proprietà del sistema formale. E nel nostro caso ci ai
 a comprendere meglio quali siano le nozioni di modali rappresentate in ciascuno dei sistemi
 che abbiamo definito e come differiscono tra di loro.
 
-
-Come abbiamo fatto per l'apparato deduttivo, prima di dare una semantica ai nostri sistemi,
-partiamo ricordando come è fatta la semantica classica per $CP$.
-
-Per i nostri sistemi di logica modale possiamo pensare di fare qualcosa di simile,
-però non possiamo aspettarci che $V_I$ per formule del tipo $\Box \alpha$ si basi solo
-sul valore di $V_I(\alpha)$.
+Per i nostri sistemi di logica modale possiamo pensare di fare qualcosa di simile
+a quanto fatto per $CP$, però poiché $\Box$, come abbiamo visto, non può essere
+un operatore vero-funzionale, non possiamo aspettarci di poter definire $V_I$ per formule
+del tipo $\Box \alpha$ basandoci unicamente sul valore di $V_I(\alpha)$.
 
 La semantica che useremo è in gran parte dovuta a Saul A. Kripke (vale la pena notare
 che pubblicò un teorema di completezza per i sistemi di logica modale all'età di 17 anni)
@@ -602,13 +603,19 @@ Diciamo che una formula $\alpha$ è T-valida e scriviamo $\vDash \alpha$
 se per ogni T-modello $(w, W, R, I)$ $\forall w \in W. V(\alpha, w) = 1$.
 
 Ci occupiamo adesso di mostrare che tutti i teoremi del sistema T sono formule valide
-nella semantica che abbiamo fornito.
+nella semantica che abbiamo fornito. Un risultato di questo tipo nel quale
+ci si assicura che ogni teorema di un sistema formale è anche una formula
+valida in una sua semantica viene chiamato
+\emph{teorema di adeguatezza} e può essere visto come una conferma
+importante che la semantica scelta sia una buona scelta per l'interpretazione
+del sistema formale.
+Procediamo dunque all'enuciazione e alla dimostrazione del:
 
-\begin{flushleft}
-\textbf{Teorema di adeguatezza per T}
-$\vdash \alpha \Rightarrow \vDash \alpha$ in $T$
+\begin{theorem}[Teorema di adeguatezza per T]
+$\forall \alpha \in L. \vdash \alpha \Rightarrow \vDash \alpha$ in $T$
+\end{theorem}
 
-\textit{Dim.}
+\begin{proof}
 
 Premettiamo alla dimostrazione vera e propria le seguenti osservazioni:
 
@@ -655,13 +662,12 @@ e perciò $V(\Box \beta, w) = 1$, il che è assurdo.
 Quindi se $V(\Box(\alpha \rightarrow \beta), w) = 1$, deve essere $V(\Box \alpha \rightarrow \Box \beta, w) = 1$,
 e quindi per l'arbitrarietà di $w$ e del T-modello otteniamo l'asserto.
 
-Ci resta da verificare la T-validità degli assiomi derivanti dagli schemi di assiomi ereditati da $CP$.
-Gli assiomi di $CP$ sono ottenuti sostituendo in modo uniforme le metavariabili con
-formule del linguaggio $L_{CP}$.
+Ci resta da verificare la T-validità degli assiomi ereditati da $CP$.
 Per il teorema di completezza per $CP$, tutti gli assiomi sono formule valide per $CP$,
-questo significa che fissata un'interpretazione $I$ per $CP$,
-non importa quale sia il valore di verità delle formule sostituite nello schema,
-l'assioma risultante sarà sempre vero.
+e poiché per la definizione di $V$ per i T-modelli coincide con la definizione di
+$V_I$ nella semantica di $CP$ per quanto riguarda le formule contenenti solo
+variabili proposizionali e i connettivi comuni a $T$ e $CP$, è facile
+verificare che gli assiomi derivati da $CP$ sono anche T-validi.
 
 Quindi, poiché, una volta forniti i valori di verità per $\alpha$ e $\beta$,
 le regole per determinare i valori di verità delle formule $\neg \alpha$ e $\alpha \lor \beta$
@@ -672,12 +678,44 @@ gli schemi di assiomi ereditati da $CP$ contengono solo $\neg$ e $\lor$ come con
 possiamo dedurre che tutte le possibili sostituzioni uniformi di formule di $L$
 negli schemi di assiomi derivati da $CP$ forniscono formule ancora valide.
 
-Ora dimostriamo che il \textit{Modus Ponens} conserva la validità:
+Ora dimostriamo che il \emph{Modus Ponens} conserva la validità:
 
 Se $\alpha \rightarrow \beta$ e $\alpha$ sono T-valide, allora fissato un T-modello $(W, R, I)$,
 $\forall w \in W. V(\alpha \rightarrow \beta, w) = 1$ e $V(\alpha, w) = 1$.
 Allora per l'osservazione che abbiamo fatto prima otteniamo che:
 $\forall w \in W. V(\beta, w) = 1$. Per l'arbitrarietà del T-modello otteniamo l'asserto.
+
+Poi dimostriamo che la regola di \emph{sostituzione} conserva la validità:
+Se $\alpha$ è T-valida, $x$ è una variabile proposizionale occorrente in $\alpha$
+e $\beta \in L$, dato un T-modello $(W, R, I)$ definiamo
+la funzione $I' : A \times W \to \{0, 1\}$ in questo modo:
+\begin{itemize}
+    \item $I'(x, w) = V(\beta, w), \forall w \in W$
+    \item $I'(y, w) = I(y, w), \forall w \in W, \forall y \in A \setminus \{x\}$
+\end{itemize}
+Poiché $\alpha$ è T-valida, dato il T-modello $(W, R, I')$, vale
+$V(\alpha, w) = 1, \forall w \in W$.
+Mostriamo, allora, per induzione sulla lunghezza di $\alpha$ che
+vale $V(\alpha[x/\beta], w) = V'(\alpha, w), \forall w \in W$:
+\begin{itemize}
+\item Se $\alpha = x \in A$, allora $V'(x, w) = I'(x, w) = I(\beta, w)$
+      e quindi l'asserto;
+\item Se $\alpha = y \in A \setminus \{x\}$, allora l'asserto è banale;
+\item Se $\alpha = \neg \gamma$, allora per ipotesi induttiva,
+      $V'(\gamma, w) = V(\gamma[x/\beta], w), \forall w \in W$ e quindi l'asserto;
+\item Se $\alpha = \gamma \lor \delta$, allora per ipotesi induttiva,
+      $V'(\gamma, w) = V(\gamma[x/\beta], w), \forall w \in W$,
+      $V'(\delta, w) = V(\delta[x/\beta], w), \forall w \in W$
+      e quindi l'asserto;
+
+\item Se $\alpha = \Box \gamma$, allora per ipotesi induttiva,
+      $V'(\gamma, w) = V(\gamma[\gamma[x/\beta], w), \forall w \in W$,
+      quindi l'asserto.
+
+\end{itemize}
+
+Ora, poiché $\alpha$ è T-valida, allora $V(\alpha[x/\beta], w) = V'(\alpha, w) = 1, \forall w \in W$,
+e per l'arbitrarietà del T-modello, otteniamo che $\alpha[x/\beta]$ è una formula T-valida.
 
 Infine dimostriamo che la regola di necessitazione conserva la validità:
 Fissato un T-modello $(W, R, I)$ e un mondo $w \in W$,
@@ -685,14 +723,11 @@ se $\alpha$ è T-valida, allora $\forall w' \in W.V(\alpha, w') = 1$,
 quindi in particolare si ha: $\forall w' \in W. wRw' \Rightarrow V(\alpha, w') = 1$.
 Quindi $V(\Box \alpha, w) = 1$ e per l'arbitrarietà di $w$ e del T-modello otteniamo l'asserto.
 
-
-\begin{flushright}
-$\bullet$
-\end{flushright}
-\end{flushleft}
+\end{proof}
 
 \section{Semantica per i sistemi S4 e S5}
-Con leggere modifiche alla definizione di T-modello possiamo costruire delle semantiche
+Con leggere modifiche sulle condizioni da richiedere
+per la relazione di accessibilità dei T-modello possiamo costruire delle semantiche
 anche per i sistemi S4 e S5.
 
 \begin{definition}
@@ -705,11 +740,13 @@ Un S5-modello è un T-modello $(W, R, I)$ in cui $R$ è la relazione di equivale
 vale a dire che si ha: $\forall w_1, w_2 \in W. w_1 R w_2$.
 \end{definition}
 
-\begin{flushleft}
-\textbf{Teorema di adeguatezza per S4}
-$\vdash \alpha \Rightarrow \vDash \alpha$ in $S4$
+Anche per S4 e S5 proviamo un teorema di adeguatezza
 
-\textit{Dim.}
+\begin{theorem}[Teorema di adeguatezza per S4]
+$\vdash \alpha \Rightarrow \vDash \alpha$ in $S4$
+\end{theorem}
+
+\begin{proof}
 Siccome un S4-modello è anche un T-modello e poiché ogni teorema del Sistema T
 è anche un teorema del Sistema S4, possiamo sfruttare il teorema di adeguatezza per T
 e dimostrare qui solo che l'assioma $S4$ è una formula valida:
@@ -722,19 +759,14 @@ $\forall w_2 \in W. w_1Rw_2 \Rightarrow V(\alpha, w_2) = 1$, quindi $V(\Box \alp
 e perciò $\forall w_1 \in W. wRw_1 \Rightarrow V(\Box \alpha, w_1) = 1$,
 dunque $V(\Box \Box \alpha, w) = 1$.
 Per l'arbitrarietà di $w$ e dell'S4-modello abbiamo la tesi.
+\end{proof}
 
 
-\begin{flushright}
-$\bullet$
-\end{flushright}
-\end{flushleft}
-
-
-\begin{flushleft}
-\textbf{Teorema di adeguatezza per S4}
+\begin{theorem}[Teorema di adeguatezza per S5]
 $\vdash \alpha \Rightarrow \vDash \alpha$ in $S5$
+\end{theorem}
 
-\textit{Dim.}
+\begin{proof}
 Siccome un S5-modello è anche un T-modello e poiché ogni teorema del Sistema T
 è anche un teorema del Sistema S5, possiamo sfruttare il teorema di adeguatezza per T
 e dimostrare qui solo che l'assioma $S5$ è una formula valida:
@@ -750,11 +782,7 @@ $\exists w_1 \in W. w_2Rw_1$ e $V(\alpha, w_1) = 1$, cioè $V(\diamond \alpha, w
 Ciò ci permette di affermare che $\forall w_2 \in W. wRw_2 \Rightarrow V(\diamond \alpha, w_2) = 1$
 e quindi $V(\Box \diamond \alpha, w) = 1$.
 Per l'arbitrarietà di $w$ e dell'S5-modello otteniamo la tesi.
-
-\begin{flushright}
-$\bullet$
-\end{flushright}
-\end{flushleft}
+\end{proof}
 
 \section{Proprietà dei sistemi T, S4, S5}
 I teoremi di adeguatezza che abbiamo dimostrato ci dicono che ogni teorema
@@ -766,12 +794,11 @@ la bontà delle semantiche.
 Il teorema di adeguatezza ci permette di dimostrare varie importanti proprietà tramite
 strumenti semantici e che sarebbero difficili da dimostrare usando solo l'apparato deduttivo.
 
-\begin{flushleft}
-\textbf{Teorema}
+\begin{theorem}
 S4 e T sono due sistemi distinti, ovvero l'assioma S4 non è una tesi del sistema T.
+\end{theorem}
 
-\textit{Dim.}
-
+\begin{proof}
 In virtù del teorema di adeguatezza se troviamo un T-modello nel quale l'assioma S4
 sia falso, potremo dedurre che S4 non può essere un teorema del sistema T.
 
@@ -802,25 +829,22 @@ non è dimostrabile.
 Nel sistema S4 invece è un'istanza dell'assioma (S4) e quindi è banalmente dimostrabile.
 Possiamo perciò concludere che i sistemi S4 e T non hanno gli stessi teoremi e quindi non
 sono lo stesso sistema formale.
+\end{proof}
 
-
-\end{flushleft}
-
-\begin{flushleft}
-\textbf{Corollario}
+\begin{corollario}
 S5 e T sono due sistemi distinti
+\end{corollario}
 
-\textit{Dim.}
-
+\begin{proof}
 Abbiamo dimostrato in precedenza che l'assioma (S4) è una tesi di S5 e quindi
 per il teorema precedente, S5 ha più tesi di T.
-\end{flushleft}
+\end{proof}
 
-\begin{flushleft}
-\textbf{Teorema}
+\begin{theorem}
 S5 e S4 sono due sistemi distinti, ovvero l'assioma S5 non è una tesi del sistema S4.
+\end{theorem}
 
-\textit{Dim.}
+\begin{proof}
 
 In virtù del teorema di adeguatezza se troviamo un S4-modello nel quale l'assioma S5
 sia falso, potremo dedurre che S5 non può essere un teorema del sistema S4.
@@ -854,18 +878,18 @@ Possiamo perciò concludere che i sistemi S5 e S4 non hanno gli stessi teoremi e
 sono lo stesso sistema formale.
 
 
-\end{flushleft}
+\end{proof}
 
 In definitiva abbiamo dimostrato che i sistemi T, S4 e S5 sono tre sistemi distinti
 e questo significa che presentano tre nozioni diverse di ``necessità'' e ``possibilità''.
 
 Forniamo, infine quest'ultima dimostrazione:
 
-\begin{flushleft}
-\textbf{Teorema}
+\begin{theorem}
 Esiste $\alpha \in L$, tale che $\alpha \rightarrow \Box \alpha$ non è una tesi di T (e quindi nemmeno di S4 e S5)
+\end{theorem}
 
-\textit{Dim.}
+\begin{proof}
 
 Costruiamo un T-modello in cui $\alpha \rightarrow \Box \alpha$ è falsa.
 
@@ -894,19 +918,21 @@ Quindi $\diamond p \rightarrow \Box\diamond p$ non è una formula valida per il 
 non è dimostrabile.
 Abbiamo ottenuto così la tesi.
 
-\end{flushleft}
+\end{proof}
 
 Nei sistemi di logica modale in cui per ogni
 $\alpha \in L$ vale $\alpha \leftrightarrow \Box \alpha$ si dice che avviene il collasso
 delle modalità. Questi sistemi sono solo una versione barocca, con simboli inutili,
 di un sistema formale per il calcolo proposizionale:
-gli operatori modali sono inutili, infatti la formula
+i connettivi $\Box$ e $\diamond$ sono inutili, infatti la formula
 precedente ci dice che affermare $\Box \alpha$ è esattamente lo stesso che affermare $\alpha$
 e quindi non aggiungono niente di nuovo.
 
 Il teorema che abbiamo appena dimostrato ci assicura che nei sistemi definiti non avviene
-il collasso delle modalità e che quindi gli operatori modali introdotti non sono solo inutili
+il collasso delle modalità e che quindi i nuovi connettivi introdotti non sono solo inutili
 orpelli che non aggiungono niente a $CP$.
+
+\chapter{Procedure di decisione e teorema di completezza}
 
 \section{Procedura di decisione per T}
 Ci occupiamo ora di definira una procedura di decisione per l'insieme delle formule T-valide.
