@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows, positioning}
+\begin{document}
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+              {$\underset{1}{\stackrel{*}{\Box}}
+              \underset{*}{\underset{1}{\Diamond}} p
+              \underset{0}{\rightarrow}
+              \underset{0}{\stackrel{*}{\Diamond}}
+              \underset{*}{\underset{0}{\Box}} p$};
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+        \node[world] (w_2) [below left=of w_1]
+              {$\begin{array}{c|c|c}
+                  \underset{1}{p} &
+                \underset{1}{\Diamond}\underset{1}{p} &
+                \underset{*}{\underset{0}{\Box}}\underset{1}{p}
+              \end{array}$};
+
+        \node[black, left] at (w_2.west) {$w_2$};
+
+        \node[world] (w_3) [below right=of w_1]
+              {$\begin{array}{c|c|c}
+                  \underset{0}{p} &
+                  \underset{*}{\underset{1}{\Diamond}}\underset{0}{p} &
+                  \underset{0}{\Box}\underset{0}{p}
+              \end{array}$};
+
+        \node[black, right] at (w_3.east) {$w_3$};
+
+
+        \node[world] (w_4) [below=of w_2]
+            {$\begin{array}{c|c|c}
+                \underset{0}{p} &
+                \underset{*}{\underset{1}{\Diamond}} \underset{0}{p} &
+                \underset{0}{\Box}\underset{0}{p}
+            \end{array}$};
+
+        \node[black, left] at (w_4.west) {$w_4$};
+
+
+        \node[world] (w_5) [below=of w_3]
+              {$\begin{array}{c|c|c}
+                  \underset{1}{p} &
+                \underset{1}{\Diamond}\underset{1}{p} &
+                \underset{*}{\underset{0}{\Box}}\underset{1}{p}
+              \end{array}$};
+
+        \node[black, right] at (w_5.east) {$w_5$};
+
+
+         \draw[->] (w_1) to[bend left = 30] (w_2.east);
+         \draw[->] (w_1) to[bend right = 20] (w_3.west);
+
+         \draw[->] (w_1) to[bend left = 20] (w_4.east);
+         \draw[->] (w_2) -- (w_4);
+         \draw[->] (w_4) -- (w_2);
+
+         \draw[->] (w_1) to[bend right = 20] (w_5.west);
+         \draw[->] (w_3) -- (w_5);
+         \draw[->] (w_5) -- (w_3);
+
+
+    \end{tikzpicture}
+\end{document}
