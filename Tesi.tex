@@ -529,16 +529,16 @@ $\vdash \Box p \rightarrow \Box \Box p$ in $S5$, ovvero il Sistema S5 è più fo
 \begin{proof}
 \begin{formal_proof}
 
-(1) & $\Box p \rightarrow \diamond \Box p$ & Teorema \ref{DualeT}[p/$\Box p$] \\
-(2) & $(\Box p \rightarrow \diamond \Box p) \rightarrow (\diamond \Box p \rightarrow \Box\diamond\Box p) \rightarrow (\Box p \rightarrow \Box \diamond \Box p)$ & Sostituzione di Teorema \ref{sillogismo} \\
+(1) & $\Box p \rightarrow \diamond \Box p$ & Th. \ref{DualeT}[p/$\Box p$] \\
+(2) & $(\Box p \rightarrow \diamond \Box p) \rightarrow (\diamond \Box p \rightarrow \Box\diamond\Box p) \rightarrow (\Box p \rightarrow \Box \diamond \Box p)$ & Th. \ref{sillogismo}[$p$/$\Box p$][$q$/$\diamond\Box p$][$r$/$\Box\diamond\Box p$] \\
 (3) & $\diamond \Box p \rightarrow \Box \diamond \Box p$ & S5[p/$\Box p$] \\
 (4) & $(\diamond \Box p \rightarrow \Box \diamond \Box p) \rightarrow \Box p \rightarrow \Box \diamond \Box p$ & Modus Ponens da (1) e (2) \\
 (5) & $\Box p \rightarrow \Box \diamond \Box p$ & Modus Ponens da (3) e (4) \\
 (6) & $\diamond \Box p \rightarrow \Box p$ & Lemma \ref{Diamond-Box-Box} \\
-(7) & $\Box (\diamond \Box p \rightarrow \Box p)$ & Necessitazione (6) \\
+(7) & $\Box (\diamond \Box p \rightarrow \Box p)$ & Necessitazione da (6) \\
 (8) & $\Box(\diamond\Box p \rightarrow \Box p) \rightarrow \Box \diamond \Box p \rightarrow \Box \Box p$ & K[$p$/$\diamond\Box p$][$q$/$\Box p$] \\
 (9) & $\Box\diamond\Box p \rightarrow \Box\Box p$ & Modus Ponens da (7) e (8) \\
-(10) & $(\Box p \rightarrow \Box \diamond \Box p) \rightarrow (\Box\diamond\Box p \rightarrow \Box\Box p) \rightarrow (\Box p \rightarrow \Box\Box p)$ & Sostituzione di Teorema \ref{sillogismo} \\
+(10) & $(\Box p \rightarrow \Box \diamond \Box p) \rightarrow (\Box\diamond\Box p \rightarrow \Box\Box p) \rightarrow (\Box p \rightarrow \Box\Box p)$ & Th. \ref{sillogismo}[$p$/$\Box p$][$q$/$\Box \diamond \Box p$][$r$/$\Box\Box p$] \\
 (11) & $(\Box\diamond\Box p \rightarrow \Box\Box p) \rightarrow (\Box p \rightarrow \Box\Box p)$ & Modus Ponens da (5) e (10)\\
 (12) & $\Box p \rightarrow \Box \Box p$ & Modus Ponens da (9) e (11)
 
