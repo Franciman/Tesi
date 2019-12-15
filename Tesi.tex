@@ -87,14 +87,14 @@ considerare solo un numero esiguo di connettivi nello studio delle proprietà de
 semplificandoci il lavoro.
 
 Supponiamo di avere un insieme $A$ non vuoto e numerabile disgiunto da $\{\neg, \lor, (, )\}$
-(ad esempio possiamo usare l'insieme dei numeri naturali $\mathbb{N}$) e che contenga
-come elementi degli oggetti che denotiamo con $p, q, r$.
+e che contenga almeno tre elementi che denotiamo con $p, q, r$
+(ad esempio possiamo usare l'insieme dei numeri naturali $\mathbb{N}$).
 
 \begin{definition}
 Chiamiamo variabile proposizionale ogni elemento di $A$.
 \end{definition}
 
-Come connettivi primitivi scegliamo $\neg$ e $\lor$, a partire da essi sarà possibile definire tutti gli altri connettivi.
+Come connettivi primitivi scegliamo $\neg$ e $\lor$, a partire da essi è possibile definire tutti gli altri connettivi.
 L'alfabeto di $CP$ è dunque dato dall'insieme $\Sigma = A \cup \{\neg, \lor, (, )\}$.
 
 Chiamiamo $\Sigma^{*} = \bigcup_{n \in A} \Sigma^n$ l'insieme delle espressioni
@@ -123,7 +123,7 @@ Al fine di rendere le formule che scriveremo più comprensibili, seguendo la pra
 ometteremo spesso le parentesi usando le convenzioni descritte in \cite{Tortora} a p. 64.
 
 \section{L'apparato deduttivo}
-Anche per l'apparato deduttivo ci basiamo su \cite{IntroModale}, eccezion fatta
+Anche per l'apparato deduttivo ci basiamo su \cite{IntroModale}, eccezion fatta che
 per la lista di assiomi,
 questi ultimi sono presi dal sistema di calcolo proposizionale definito in \cite{Kleene}.
 
@@ -151,52 +151,61 @@ Gli assiomi di $CP$ sono i seguenti:
 
 Usiamo due regole di deduzione:
 
-La prima è la seguente:
-$$\frac{\alpha \rightarrow \beta \ \ \alpha}{\beta}$$
-comunemente chiamata \emph{Modus Ponens}
+La prima regola di deduzione di $CP$ è il \emph{Modus Ponens}, che è l'insieme
+di tutte le terne ordinate $<\alpha \rightarrow \beta$, $\alpha$, $\beta>$,
+al variare di $\alpha$ e $\beta$ in $L_{CP}$.
 
-mentre per enunciare la seconda dobbiamo prima dare la seguente definizione:
+Le fbf $\alpha \rightarrow \beta$ e $\alpha$ vengono dette premesse e la formula $\beta$
+viene detta conseguenza nell'applicazione del \emph{Modus Ponens}.
+Si dice anche che $\beta$ si deduce da $\alpha \rightarrow \beta$ e da $\alpha$
+per \emph{Modus Ponens}.
+Inoltre una tale terna si rappresenta usualmente nella forma grafica qui di seguito indicata:
+
+$$\frac{\alpha \rightarrow \beta \ \ \alpha}{\beta}$$
+
+
+Per enunciare la seconda dobbiamo prima dare la seguente definizione:
 \begin{definition}
 Se $\alpha \in L_{CP}, x \in A,$ e $\beta \in L_{CP}$, allora la formula
 ottenuta sostituendo uniformemente $\beta$ al posto di $x$ in $\alpha$
-e che indichiamo con $\alpha[x/\beta]$ è definita come segue:
+e che indichiamo con $\alpha[x/\beta]_{CP}$ è definita come segue:
 \begin{itemize}
-\item Se $\alpha = x$, allora $\alpha[x/\beta] = \beta$,
-\item Se $\alpha \in A \setminus \{x\}$, allora $\alpha[x/\beta] = \alpha$,
-\item Se $\alpha = \neg (\gamma)$, allora $\alpha[x/\beta] = \neg (\gamma[x/\beta])$,
+\item Se $\alpha = x$, allora $\alpha[x/\beta]_{CP} = \beta$,
+\item Se $\alpha \in A \setminus \{x\}$, allora $\alpha[x/\beta]_{CP} = \alpha$,
+\item Se $\alpha = \neg (\gamma)$, allora $\alpha[x/\beta]_{CP} = \neg (\gamma[x/\beta]_{CP})$,
 \item Se $\alpha = (\gamma) \lor (\delta)$,
-      allora $\alpha[x/\beta] = (\gamma[x/\beta]) \lor (\delta[x/\gamma])$
+      allora $\alpha[x/\beta]_{CP} = (\gamma[x/\beta]_{CP}) \lor (\delta[x/\gamma]_{CP})$
 \end{itemize}
 \end{definition}
 
-Possiamo ora enunciare la regola di \emph{sostituzione} nel seguente modo:
-\begin{quote}
-Se $\alpha$ è un teorema, $\beta \in L_{CP}$, e
-$x \in A$, allora la formula $\alpha[x/\beta]$ è un teorema
-\end{quote}
+Quindi definiamo la regola di \emph{sostituzione} come l'insieme
+di tutte le coppie ordinate $<\alpha, \alpha[x/\beta]_{CP}>$, al variare di
+$\alpha$ e $\beta$ in $L_{CP}$ e di $x$ in $A$.
+La fbf $\alpha$ si dice premessa e la formula $\alpha[x/\beta]_{CP}$ viene detta conseguenza
+nell'applicazione della regola di \emph{sostituzione}.
+Si dice anche che $\alpha[x/\beta]_{CP}$ si deduce da $\alpha$ per \emph{sostituzione}.
 
-Mentre il \emph{Modus Ponens} è una regola pressoché standard,
-la regola di \emph{sostituzione} non è molto comune. Abbiamo deciso di introdurla
+Al contrario del \emph{Modus Ponens},
+la regola di \emph{sostituzione} non è indispensabile. Abbiamo deciso di introdurla
 perché ci permette di dimostrare vari teoremi essenzialmente in un solo colpo,
 evitando di dover eseguire tante dimostrazioni che sarebbero essenzialmente sempre uguali.
-Un altro metodo equivalente sarebbe potuto essere quello di usare un insieme infinito
+Un altro metodo che ci consente di ottenere lo stesso risultato
+è quello di usare un insieme infinito
 di assiomi, facendo uso di schemi di assiomi, ma riteniamo che utilizzare un insieme
 finito di formule di $L_{CP}$ congiuntamente alla regola di \emph{sostituzione}
-ci permette di estendere più agevolmente $CP$ e rende più chiaro perché
-sostituzioni di formule del sistema esteso (possibilmente contenenti
-simboli estranei a $CP$) in teoremi di $CP$ ci forniscono ancora teoremi.
+ci permetta di estendere più agevolmente $CP$.
 
 Diamo ora le seguenti definizioni che introducono i concetti di dimostrazione e di
 deduzione, strettamente collegati tra loro.
 
 \begin{definition}
 Una dimostrazione è una sequenza finita $D$ di fbf tale che
-ogni termine $D_i$ della sequenza soddisfa almeno una delle seguenti condizioni
+ogni termine $D_i$ della sequenza soddisfa una delle seguenti condizioni
 \begin{itemize}
 \item $D_i$ è un assioma;
 \item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \emph{Modus Ponens}
 da $D_h$ e $D_k$.
-\item esiste $D_h$, con $h < i$, tale che $D_i$ è ottenuto tramite
+\item esiste $D_h$, con $h < i$, tale che $D_i$ è derivato tramite
 la regola di \emph{sostituzione} a partire da $D_h$.
 \end{itemize}
 \end{definition}
@@ -207,7 +216,7 @@ diciamo che esiste una dimostrazione di $\alpha$ e scriviamo $\vdash \alpha$.
 
 \begin{definition}
 Se $\Gamma \subseteq L_{CP}$, una deduzione a partire dalle ipotesi $\Gamma$ è una sequenza finita $D$
-di fbf tale che ogni termine $D_i$ della sequenza soddisfa almeno una delle seguenti condizioni
+di fbf tale che ogni termine $D_i$ della sequenza soddisfa una delle seguenti condizioni
 \begin{itemize}
 \item $D_i \in \Gamma$;
 \item $D_i$ è un assioma;
@@ -226,7 +235,7 @@ Nel seguito, scriveremo $\Gamma, \alpha \vdash \beta$
 per indicare $\Gamma \cup \{\alpha\} \vdash \beta$.
 
 Vale la pena ricordare il seguente teorema:
-\begin{theorem}[Teorema di deduzione]
+\begin{theorem}[Teorema di Deduzione]
 Se $\alpha, \beta \in L_{CP},$
 $$\Gamma, \alpha \vdash \beta \Leftrightarrow \Gamma \vdash \alpha \rightarrow \beta$$
 \end{theorem}
@@ -249,48 +258,33 @@ $$(p \rightarrow q),(q \rightarrow r),p \vdash r$$
 in luogo di
 $$\vdash (p \rightarrow q) \rightarrow
         (q \rightarrow r) \rightarrow (p \rightarrow r)$$
-e sfruttiamo poi il teorema di deduzione sopra menzionato.
+e sfruttiamo poi il Teorema di Deduzione sopra menzionato.
 
 Una possibile deduzione per $r$ a partire dalle ipotesi
 $\{(p \rightarrow q),(q \rightarrow r),p\}$ è la seguente.
 \begin{formal_proof}
 (1) & $p \rightarrow q$ & ipotesi \\
 (2) & $p$ & ipotesi \\
-(3) & $q$ & Modus Ponens di (1) e (2) \\
+(3) & $q$ & Modus Ponens da (1) e (2) \\
 (4) & $q \rightarrow r$ & ipotesi \\
-(5) & $r$ & Modus Ponens di (3) e (4)
+(5) & $r$ & Modus Ponens da (3) e (4)
 \end{formal_proof}
 
 Possiamo dunque affermare:
 $$(p \rightarrow q),(q \rightarrow r),p \vdash r$$
 
-Infine, applicando tre volte il teorema di deduzione otteniamo:
+Infine, applicando tre volte il Teorema di Deduzione otteniamo:
 $$\vdash (p \rightarrow q) \rightarrow (q \rightarrow r) \rightarrow (p \rightarrow r)$$
 \end{proof}
 
-\section{Semantica di $CP$}
+\section{Semantica di $CP$} \label{SemanticaCP}
 Ci proponiamo ora di fornire una semantica per $CP$.
 La semantica che intendiamo fornire per $CP$ è quella standard, in particolare
 seguiamo l'esposizione di \cite{Tortora} per presentarla.
-L'idea è quella di interpretare una formula come una proposizione
-a cui associare un valore di verità. Quindi vorremo interpretare
-le variabili proposizionali come proposizioni
-che descrivono fatti della \emph{realtà} (ad esempio ``Michele è altisonante''),
-il simbolo $\neg$ come il connettivo logico ``non'' dell'italiano
-e il simbolo $\lor$ come disgiunzione inclusiva, ossia quel connettivo
-logico che in italiano si rappresenta spesso come ``o..., o..., oppure entrambi''.
-Per fare ciò dovremmo definire cosa si intende per proposizione,
-ma possiamo omettere questo passaggio, a dire il vero un po' problematico.
-Infatti, osserviamo che, associando ad ogni variabile proposizionale un valore di verità,
-siamo in grado di associare un valore di verità ad ogni formula ben formata.
-Infatti, il valore di verità di ``non $\alpha$'' dipende solo dal valore di verità
-di $\alpha$ e allo stesso modo il valore di verità di
-``o $\alpha$, o $\beta$, oppure entrambi``
-dipende solo dal valore di verità di $\alpha$ e $\beta$.
 
-Connettivi che hanno questa peculiarità vengono detti operatori vero-funzionali.
-
-Passiamo ora alla formalizzazione di queste idee e diamo le seguenti definizioni:
+\begin{definition}
+Chiamiamo valori di verità gli elementi dell'insieme $\{0, 1\}$
+\end{definition}
 
 \begin{definition}
 Chiamiamo interpretazione una funzione $I: A \to \{0, 1\}$
@@ -312,6 +306,12 @@ vere e di tutte le proposizioni false.
 Usiamo poi i valori assegnati dall'interpretazione per determinare il valore di verità delle formule
 in base alla semantica che abbiamo assegnato a ciascun connettivo (che sono codificate nelle regole
 che abbiamo usato per definire la funzione $V_I$).
+
+Osserviamo che ciascuno dei connettivi $\neg$ e $\lor$
+è interpretato come una funzione il cui risultato
+dipende unicamente dal valore di verità dei suoi argomenti.
+Connettivi che possono essere interpretati in questo modo
+vengono detti \emph{operatori vero-funzionali}.
 
 \begin{definition}
 Sia $\alpha \in L_{CP}$, diremo che $\alpha$ è valida e scriveremo $\vDash \alpha$ se
@@ -340,12 +340,12 @@ ci permette sempre di determinare in un numero finito di passi se questa è vali
 Inoltre vale il seguente teorema che collega l'aspetto sintattico all'aspetto semantico
 di $CP$:
 
-\begin{theorem}[Teorema di completezza]
+\begin{theorem}[Teorema di Completezza]
 Se $\alpha \in L_{CP}$,
 $$\vdash \alpha \Leftrightarrow \vDash \alpha$$
 \end{theorem}
 
-Un corollario immediato del teorema di completezza è che anche l'insieme dei teoremi
+Un corollario immediato del Teorema di Completezza è che anche l'insieme dei teoremi
 di $CP$ è un insieme decidibile, infatti secondo il teorema di completezza
 l'insieme dei teoremi di $CP$ e l'insieme delle formule ben formate di $CP$ valide
 coincidono, quindi usando la procedura di decisione per le formule valide
@@ -361,15 +361,15 @@ le proprietà di due nuovi operatori unari che vorremmo avessero un comportament
 i concetti di \emph{necessità} e \emph{possibilità}.
 
 Prima di cominciare facciamo delle osservazioni importanti.
-Ricordiamo che un operatore vero-funzionale è una funzione il cui risultato
-è univocamente determinato dal valore di verità dei parametri da cui dipende.
-Inoltre, si può dimostrare che nel calcolo proposizionale si possono esprimere
-tutti gli operatori verofunzionali possibili in termini di $\neg e \vee$.
-Quindi, se gli operatori che vogliamo aggiungere fossero vero-funzionali, potremmo
+Ricordiamo che un operatore vero-funzionale è un connettivo
+interpretabile come una funzione il cui risultato
+è univocamente determinato dal valore di verità dei suoi argomenti.
+Quindi, se gli operatori che vogliamo aggiungere fossero vero-funzionali,
+per quanto detto nel paragrafo \ref{SemanticaCP} potremmo
 continuare il nostro studio usando $CP$ e non servirebbe altro.
-Notiamo, però, che gli operatori che vogliamo aggiungere non possono essere vero-funzionali,
+Notiamo, però, che i connettivi che vogliamo aggiungere non possono essere vero-funzionali,
 infatti il valore di verità della frase ``è necessario che p'' non dipende \emph{solo}
-dal valore di verità che si associa a p, infatti, il fatto che p sia vera, non ci permette
+dal valore di verità che si associa a p. Infatti, il fatto che p sia vera, non ci permette
 di concludere che p sia necessariamente vera. Quindi per avere una speranza di formalizzare
 i concetti di necessità e possibilità siamo costretti ad estendere il sistema $CP$
 in maniera sostanziale.
@@ -377,7 +377,7 @@ in maniera sostanziale.
 A tal proposito, non è esattamente chiaro come caratterizzare formalmente
 le nozioni di \emph{necessità} e \emph{possibilità},
 e anzi vedremo che queste potranno essere intese in modi diversi.
-Questa ricchezza di significati si rifletterà in una varietà di sistemi formali più o meno potenti.
+Questa ricchezza di significati si riflette in una varietà di sistemi formali più o meno potenti.
 Noi ci focalizzeremo in particolare su tre dei sistemi formali definiti in \cite{IntroModale}:
 \begin{itemize}
 \item Sistema T
@@ -390,7 +390,7 @@ Quindi iniziamo definendo la parte comune di tutti i sistemi formali, ovvero il 
 e le regole di deduzione.
 
 L'alfabeto dei sistemi è ottenuto dall'alfabeto del sistema $CP$ aggiungendo il simbolo $\Box$,
-che vorremo far corrispondere alla nozione di \emph{necessità}.
+che corrisponde alla nozione di \emph{necessità}.
 
 Per quanto riguarda le formule ben formate, la definizione induttiva che genera l'insieme $L$
 delle formule ben formate è ottenuta dalle regole usate per definire $L$ in $CP$ più
@@ -398,6 +398,8 @@ la seguente regola aggiuntiva:
 \begin{itemize}
 \item Se $\alpha \in L$, allora $\Box (\alpha) \in L$
 \end{itemize}
+
+La formula $\Box (\alpha)$ si legge: ``È necessario (che) $\alpha$''.
 
 Diamo la seguente definizione, il cui intento è esprimere l'altro operatore
 che ci interessa, quello corrispondente alla nozione di \emph{possibilità},
@@ -432,14 +434,25 @@ Osserviamo che la nuova definizione è un'estensione della definizione data per 
 formule di $CP$ e quindi ogni sostituzione uniforme in $CP$ è anche una sostituzione
 uniforme nei nuovi sistemi che stiamo definendo.
 
-Quindi enunciamo la regola di \emph{sostituzione} come segue:
-\begin{quote}
-Se $\alpha$ è un teorema, $\beta \in L$, e
-$x \in A$, allora la formula $\alpha[x/\beta]$ è un teorema
-\end{quote}
+Quindi definiamo la regola di \emph{sostituzione} come l'insieme
+di tutte le coppie ordinate $<\alpha, \alpha[x/\beta]>$, al variare di
+$\alpha$ e $\beta$ in $L$ e di $x$ in $A$.
+La fbf $\alpha$ si dice premessa e la formula $\alpha[x/\beta]$ viene detta conseguenza
+nell'applicazione della regola di \emph{sostituzione}.
+Si dice anche che $\alpha[x/\beta]$ si deduce da $\alpha$ per \emph{sostituzione}.
 
-A queste due regole ne aggiungiamo una completamente nuova,
-detta \emph{Regola di necessitazione}:
+
+A queste due regole ne aggiungiamo una nuova, detta regola di \emph{necessitazione},
+essa è l'insieme
+di tutte le coppie ordinate $<\alpha, \Box \alpha>$,
+al variare di $\alpha$ in $L$.
+
+La fbf $\alpha$ viene detta premessa e la formula $\Box \alpha$
+viene detta conseguenza nell'applicazione della regola di \emph{necessitazione}.
+Si dice anche che $\Box \alpha$ si deduce da $\alpha$
+per \emph{necessitazione}.
+Inoltre una tale coppia si rappresenta usualmente nella forma grafica qui di seguito indicata:
+
 $$\frac{\alpha}{\Box \alpha}$$
 
 Vale la pena soffermarsi brevemente sulla regola di necessitazione, 
@@ -465,16 +478,16 @@ Il sistema T ha come assiomi tutti gli assiomi di $CP$ più:
 \end{itemize}
 
 Il sistema S4 ha come assiomi tutti gli assiomi del Sistema T più il seguente assioma:
-$$(S4) \Box \alpha \rightarrow \Box \Box \alpha$$
+$$(S4) \Box p \rightarrow \Box \Box p$$
 
 Il sistema S5 ha come assiomi tutti gli assiomi del Sistema T più:
-$$(S5) \diamond \alpha \rightarrow \Box \diamond \alpha$$
+$$(S5) \diamond p \rightarrow \Box \diamond p$$
 
 
 Ora che abbiamo definito il linguaggio e l'apparato deduttivo di tutti i sistemi
 che ci interessano, facciamo delle osservazioni su di essi.
 \begin{definition}
-Diremo che un sistema formale è meno forte di un altro se tutte i teoremi del primo
+Diremo che un sistema formale è meno forte di un altro se tutti i teoremi del primo
 sono teoremi anche del secondo.
 \end{definition}
 
@@ -485,59 +498,59 @@ Ora, però mostreremo che anche S4 è meno forte di S5. A tal fine premettiamo a
 preliminari.
 
 \begin{theorem} \label{DualeT}
-$\vdash \alpha \rightarrow \diamond \alpha$ in $T$
+$\vdash p \rightarrow \diamond p$ in $T$
 \end{theorem}
 
 \begin{proof}
 \begin{formal_proof}
-(1) & $\Box \neg \alpha \rightarrow \neg \alpha$ & $T[\neg \alpha/\alpha]$ \\
-(2) & $\alpha \rightarrow \neg \Box \neg \alpha$ & Contrapposta di (1) \\
-(3) & $\alpha \rightarrow \diamond \alpha$ & Definizione di $\diamond$
+(1) & $\Box \neg p \rightarrow \neg p$ & $T[p/\neg p]$ \\
+(2) & $p \rightarrow \neg \Box \neg p$ & Contrapposta di (1) \\
+(3) & $p \rightarrow \diamond p$ & Definizione di $\diamond$
 \end{formal_proof}
 \end{proof}
 
 \begin{lemma} \label{Diamond-Box-Box}
-$\vdash \diamond \Box x \rightarrow \Box x$ in $S5$
+$\vdash \diamond \Box p \rightarrow \Box p$ in $S5$
 \end{lemma}
 
 \begin{proof}
 \begin{formal_proof}
-(1) & $\diamond \neg x \rightarrow \Box \diamond \neg x$ & $S5[\neg x/\alpha]$ \\
-(2) & $\neg \Box \diamond \neg x \rightarrow \neg \diamond \neg x$ & contrapposta di (1) \\
-(3) & $\diamond \neg \diamond \neg x \rightarrow \neg \diamond \neg x$ & definizione di $\diamond$ \\
-(4) & $\diamond \Box x \rightarrow \Box x$ & definizione di $\diamond$ e $\Box$
+(1) & $\diamond \neg p \rightarrow \Box \diamond \neg p$ & $S5[p/\neg p]$ \\
+(2) & $\neg \Box \diamond \neg p \rightarrow \neg \diamond \neg p$ & contrapposta di (1) \\
+(3) & $\diamond \neg \diamond \neg p \rightarrow \neg \diamond \neg p$ & definizione di $\diamond$ \\
+(4) & $\diamond \Box p \rightarrow \Box p$ & definizione di $\diamond$ e $\Box$
 \end{formal_proof}
 \end{proof}
 
 \begin{theorem}
-$\vdash \Box x \rightarrow \Box \Box x$ in $S5$, ovvero il Sistema S5 è più forte del Sistema S4.
+$\vdash \Box p \rightarrow \Box \Box p$ in $S5$, ovvero il Sistema S5 è più forte del Sistema S4.
 \end{theorem}
 
 \begin{proof}
 \begin{formal_proof}
 
-(1) & $\Box x \rightarrow \diamond \Box x$ & Teorema \ref{DualeT} \\
-(2) & $(\Box x \rightarrow \diamond \Box x) \rightarrow (\diamond \Box x \rightarrow \Box\diamond\Box x) \rightarrow (\Box x \rightarrow \Box \diamond \Box x)$ & Sostituzioni di Teorema \ref{sillogismo} \\
-(3) & $\diamond x \rightarrow \Box \diamond x$ & Assioma S5 \\
-(4) & $(\diamond \Box x \rightarrow \Box \diamond x) \rightarrow \Box x \rightarrow \Box \diamond \Box x$ & Modus Ponens di (1) (2) \\
-(5) & $\Box x \rightarrow \Box \diamond \Box x$ & Modus Ponens (3) e (4) \\
-(6) & $\diamond \Box x \rightarrow \Box x$ & Lemma \ref{Diamond-Box-Box} \\
-(7) & $\Box (\diamond \Box x \rightarrow \Box x)$ & Necessitazione (5) \\
-(8) & $\Box(\diamond\Box x \rightarrow \Box x) \rightarrow \Box \diamond \Box x \rightarrow \Box \Box x$ & Assioma K \\
-(9) & $\Box\diamond\Box x \rightarrow \Box\Box x$ & Modus Ponens (4) e (5) \\
-(10) & $(\Box x \rightarrow \diamond \Box x) \rightarrow (\Box\diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ & Sostituzioni di Teorema \ref{sillogismo} \\
-(11) & $(\Box\diamond\Box x \rightarrow \Box\Box x) \rightarrow (\Box x \rightarrow \Box\Box x)$ & Modus Ponens di (1) e (10)\\
-(12) & $\Box x \rightarrow \Box \Box x$ & Modus Ponens  (9) e (11)
+(1) & $\Box p \rightarrow \diamond \Box p$ & Teorema \ref{DualeT}[p/$\Box p$] \\
+(2) & $(\Box p \rightarrow \diamond \Box p) \rightarrow (\diamond \Box p \rightarrow \Box\diamond\Box p) \rightarrow (\Box p \rightarrow \Box \diamond \Box p)$ & Sostituzione di Teorema \ref{sillogismo} \\
+(3) & $\diamond \Box p \rightarrow \Box \diamond \Box p$ & S5[p/$\Box p$] \\
+(4) & $(\diamond \Box p \rightarrow \Box \diamond \Box p) \rightarrow \Box p \rightarrow \Box \diamond \Box p$ & Modus Ponens da (1) e (2) \\
+(5) & $\Box p \rightarrow \Box \diamond \Box p$ & Modus Ponens da (3) e (4) \\
+(6) & $\diamond \Box p \rightarrow \Box p$ & Lemma \ref{Diamond-Box-Box} \\
+(7) & $\Box (\diamond \Box p \rightarrow \Box p)$ & Necessitazione (6) \\
+(8) & $\Box(\diamond\Box p \rightarrow \Box p) \rightarrow \Box \diamond \Box p \rightarrow \Box \Box p$ & K[$p$/$\diamond\Box p$][$q$/$\Box p$] \\
+(9) & $\Box\diamond\Box p \rightarrow \Box\Box p$ & Modus Ponens da (7) e (8) \\
+(10) & $(\Box p \rightarrow \Box \diamond \Box p) \rightarrow (\Box\diamond\Box p \rightarrow \Box\Box p) \rightarrow (\Box p \rightarrow \Box\Box p)$ & Sostituzione di Teorema \ref{sillogismo} \\
+(11) & $(\Box\diamond\Box p \rightarrow \Box\Box p) \rightarrow (\Box p \rightarrow \Box\Box p)$ & Modus Ponens da (5) e (10)\\
+(12) & $\Box p \rightarrow \Box \Box p$ & Modus Ponens da (9) e (11)
 
 \end{formal_proof}
 \end{proof}
 
 \chapter{Una semantica per i sistemi di logica modale}
 Dopo aver definito il linguaggio comune a tutti i sistemi di logica modale introdotti,
-lo abbiamo usato unicamente come base di un calcolo che usa le regole di deduzione per costruire
+lo abbiamo usato finora come base di un calcolo che usa le regole di deduzione per costruire
 dimostrazioni. Come ben sappiamo un linguaggio può anche essere usato per parlare di qualcosa,
 di oggetti esterni al sistema formale.
-Fare ciò significa associare ad ogni formula ben formata del linguaggio un oggetto
+Fare ciò significa associare ad ogni formula ben formata del linguaggio un'affermazione
 che rappresenti il suo significato.
 Quando seguiamo questo procedimento diciamo che abbiamo fornito una semantica per il linguaggio.
 
@@ -545,13 +558,14 @@ Definire semantiche per i sistemi formali ci aiuta sia a confrontare sistemi for
 con strutture maggiormente conosciute e ad assicurarci
 che alcune costruzioni corrispondano alla nostra intuizione,
 sia a determinare alcune proprietà del sistema formale. E nel nostro caso ci aiuterà anche
-a comprendere meglio quali siano le nozioni di modali rappresentate in ciascuno dei sistemi
+a comprendere meglio quali siano le nozioni modali rappresentate in ciascuno dei sistemi
 che abbiamo definito e come differiscono tra di loro.
 
 Per i nostri sistemi di logica modale possiamo pensare di fare qualcosa di simile
 a quanto fatto per $CP$, però poiché $\Box$, come abbiamo visto, non può essere
-un operatore vero-funzionale, non possiamo aspettarci di poter definire $V_I$ per formule
-del tipo $\Box \alpha$ basandoci unicamente sul valore di $V_I(\alpha)$.
+un operatore vero-funzionale, non possiamo aspettarci di poter definire la
+funzione di valutazione per formule
+del tipo $\Box \alpha$ basandoci unicamente sul valore di verità di $\alpha$.
 
 La semantica che useremo è in gran parte dovuta a Saul A. Kripke (vale la pena notare
 che pubblicò un teorema di completezza per i sistemi di logica modale all'età di 17 anni)
@@ -559,7 +573,7 @@ e si basa su un concetto già introdotto da Leibniz, quello dei mondi possibili.
 Quindi non supponiamo più che esista un'unica realtà, ma che esistono tanti mondi possibili,
 e in più, e questa è una delle idee chiave della semantica di Kripke, da alcuni mondi
 si può accedere ad altri mondi, cioè sapere come sono fatte altre realtà alternative.
-Il mondo in cui si può accedere agli altri mondi sarà la base per distinguire
+Il modo con cui si può accedere agli altri mondi sarà la base per distinguire
 tra i vari concetti di necessità e tra i vari sistemi formali che abbiamo definito prima.
 
 \section{Semantica per il Sistema T}
@@ -571,7 +585,7 @@ Definiamo un T-modello come una tripla $(W, R, I)$, in cui:
 \end{itemize}
 
 L'insieme $W$ è l'insieme di tutti i mondi.
-$I$ ci fornisce per ogni mondo la lista di proposizione vere
+$I$ ci fornisce, per ogni mondo, la lista delle proposizioni vere
 e quella delle proposizioni false, analogamente al suo corrispettivo nella semantica per $CP$.
 $R$, infine, è la \textit{relazione di accessibilità},
 essa ci permette di determinare a quali mondi si può accedere da un determinato mondo.
@@ -597,7 +611,7 @@ a cui siamo interessati.
 
 La novità è la quarta regola, quella riguardante la semantica di $\Box$.
 Questa regola afferma che nel mondo $w$, $\alpha$ è necessariamente vera se e solo se
-è $\alpha$ vera in tutti i mondi accessibili da $w$.
+$\alpha$ è vera in tutti i mondi accessibili da $w$.
 
 Diciamo che una formula $\alpha$ è T-valida e scriviamo $\vDash \alpha$
 se per ogni T-modello $(w, W, R, I)$ $\forall w \in W. V(\alpha, w) = 1$.
