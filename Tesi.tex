@@ -975,7 +975,7 @@ e a ciascuna di essa è associato un valore di verità, allora proviamo
 a determinare un assegnamento di valori di verità per le variabili proposizionali
 che occorrono nelle formule del rettangolo $w_i$
 in modo che tutte le $\beta_1, ..., \beta_n$
-abbiano contemporanemanete il valore di verità che le era stato associato.
+abbiano contemporanemanete il valore di verità che le è stato associato.
 Per farlo sfruttiamo la definizione di $V$ e la struttura delle varie formule.
 
 Rappresentiamo graficamente questi passaggi scrivendo sotto all'operatore principale
@@ -994,9 +994,9 @@ che a $p$ sia assegnato $1$ e a $q$ $0$, e quindi scriviamo:
 
 $$\underset{1}{p} \underset{1}{\rightarrow} \underset{0}{q}$$
 
-Se nel fare ciò si arriva a dover associare alla stessa sottoformula
-due valori di verità diversi, allora arrestiamo il processo e sottolineiamo
-la sottoformula incriminata.
+Se nel fare ciò si arriva a dover associare alla stessa sottoformula $\delta$
+due valori di verità diversi, allora arrestiamo il procedimento ed evidenziamo
+$\delta$ tracciando una riga sotto di essa.
 
 Durante questo procedimento possono presentari vari casi particolari:
 Può capitare che nel rettangolo $w_i$ l'operatore principale di una sottoformula $\beta$ sia tale che le regole di $V$
@@ -1015,6 +1015,12 @@ un rettangolo $w_i(n)$ detto rettangolo alternativo di $w_i$ in cui alle sottofo
 con valore ambiguo viene associato ciascuno dei possibili assegnamenti.
 E infine poniamo un $\dagger$ sotto all'operatore principale di $\beta$ nel rettangolo $w_i$.
 Per ciascun diagramma continuiamo questo procedimento separatamente.
+Se in un rettangolo ci sono più operatori che presentano questo problema,
+applichiamo quanto detto solo all'operatore che compare più a sinistra nella formula.
+Per ciascun rettangolo alternativo prodotto poi, sarà necessario ripetere
+questo procedimento, costruendo altri rettangoli alternativi e continuando così
+finché non ci sono più ambiguità.
+
 
 Quindi nel caso precedente avremmo tre rettangoli: $w_i(1), w_i(2), w_i(3)$.
 Nel primo alle sottoformule $\gamma$ e $\delta$ saranno assegnati rispettivamente i valori $1$ e $0$,
@@ -1033,6 +1039,7 @@ il valore di verità $1$ nel rettangolo $w_i$, allora disegniamo un asterisco so
 e in ogni rettangolo $w_j$ (diverso da $w_i$)  accessibile da $w_i$ scriviamo la formula $\beta$ e le associamo il valore $1$,
 così che risulti giustificato l'assegnamento del valore $1$ alla formula $\Box \beta$,
 mentre in $w_i$ associamo a $\beta$ il valore $1$.
+Le formule presenti in un rettangolo a causa questa regola vengono anche dette \emph{condizioni}.
 
 Ogni volta che introduciamo un nuovo rettangolo ripetiamo per esso la procedura.
 
@@ -1241,9 +1248,11 @@ Cerchiamo di adattare la procedura appena definita per decidere le formule S4-va
 Siccome un S4-modello ha una relazione di accessibilità riflessiva e transitiva, allora bisogna stare
 attenti che qualora si introducano mondi nuovi le relazioni di accessibilità siano
 correttamente registrate in modo che se, ad esempio, $w_3$ è accessibile da $w_2$ e $w_2$ è accessibile
-da $w_1$, allora $w_3$ deve risultare accessibile da $w_1$ e quindi bisogna aggiungere il giusto
-numero di di frecce per far si che la transitività della relazione di accessibilità sia rispettata
-Questa situazione ci porta delle complicazione, per illustrare bene il problema
+da $w_1$, allora $w_3$ deve risultare accessibile da $w_1$
+e quindi bisogna aggiungere il giusto
+numero di di frecce per far si che la transitività della relazione di accessibilità
+sia rispettata
+Questa situazione ci porta delle complicazioni, per illustrare bene il problema
 mostriamo cosa succede con la seguente formula:
 
 $$\diamond \Box p \rightarrow \Box \Diamond p$$
@@ -1365,14 +1374,16 @@ in ogni altro elemento successivo della catena.
 
 Per ovviare al problema che abbiamo riscontrato, osserviamo che
 in ogni rettangolo sono presenti solo
-sottoformule ben formate della formula $\alpha$ presente in $w_1$,
-siccome tutte le sottoformule possibili di $\alpha$ sono in numero finito,
+sottoformule ben formate della formula $\alpha$ presente in $w_1$.
+Siccome tutte le sottoformule possibili di $\alpha$ sono in numero finito,
 allora ad un certo punto, quando dovremo aggiungere un nuovo rettangolo $w_i$
-al termine di una catena, ci sarà sicuramente un rettangolo più in alto nella catena
-che contenga la formula e tutte le condizioni che vogliamo aggiungere $w_i$.
-Inoltre notiamo che anche se questo rettangolo contiene più condizioni di $w_i$,
-ciò non è un problema, perché essendo $w_i$ accessibile da questo rettangolo,
-quelle condizioni valgono anche in $w_i$, facendo parte della stessa catena.
+al termine di una catena, ci sarà sicuramente un rettangolo $w_j$ più in alto nella catena
+che contenga tutte le formule scritte in $w_i$ e con assegnato lo stesso
+valore di verità che esse hanno in $w_i$.
+Inoltre notiamo che se $w_j$ contenesse più condizioni di $w_i$,
+ciò non sarebbe un problema, perché essendo $w_i$ accessibile da $w_j$ ed
+essendo la relazione di accessibilità transitiva,
+tutte le condizioni valide in $w_j$ devono valere anche in $w_i$.
 
 
 I T-diagrammi in cui la relazione tra i rettangoli è transitiva e si usa la regola
@@ -1448,7 +1459,7 @@ invisible/.style={rectangle}]
 \end{tikzpicture}
 
 Possiamo dimostrare che ora il numero di rettangoli in un sistema
-completo di S4-diagrammi è finito:
+completo di S4-diagrammi è finito.
 
 Una catena di rettangoli è finita, per quanto detto prima.
 Ogni catena inizia da $w_1$, siccome si introducono rettangoli
@@ -1630,158 +1641,162 @@ allora $\vdash w_1'$.
 Quindi se $\vDash \alpha$, allora il sistema completo di T-diagrammi per $\alpha$ è inconsistente
 e quindi $\vdash w_1'$, ma $w_1' = \alpha$, quindi $\vdash \alpha$.
 
-\section{Teorema di completezza per S4}
-Mostriamo ora il teorema di completezza per il sistema S4.
-Data una formula $\alpha$, una volta costruito il suo sistema completo di 4-diagrammi,
-associamo ad ogni rettango $w_i$ del sistema una formula $w_i''$ definita in questo modo:
+\section{Teoremi di completezza per S4 e S5}
+È possibile mostrare dei teoremi di completezza anche per i Sistemi $S4$ e $S5$
+e una loro dimostrazione è reperibile su \cite{IntroModale}.
 
-nel rettangolo $w_i$ c'è una formula $\beta$ che deve essere falsa ed eventualmente delle condizioni,
-cioè un numero finito di formule $\gamma_1, ...\gamma_n$ che devono essere vere, ereditate
-dal suo predecessore diretto, allora definiamo $w_i''$ come la formula
-$\beta \lor \neg \Box \gamma_1 \lor ... \lor \neg \Box \gamma_n$, con $n \geq 0$.
+% \section{Teorema di completezza per S4}
+% Mostriamo ora il teorema di completezza per il sistema S4.
+% Data una formula $\alpha$, una volta costruito il suo sistema completo di 4-diagrammi,
+% associamo ad ogni rettango $w_i$ del sistema una formula $w_i''$ definita in questo modo:
 
-\begin{lemma}
-Dato un sistema completo di S4-diagrammi e sia $w_i$ un suo rettangolo,
+% nel rettangolo $w_i$ c'è una formula $\beta$ che deve essere falsa ed eventualmente delle condizioni,
+% cioè un numero finito di formule $\gamma_1, ...\gamma_n$ che devono essere vere, ereditate
+% dal suo predecessore diretto, allora definiamo $w_i''$ come la formula
+% $\beta \lor \neg \Box \gamma_1 \lor ... \lor \neg \Box \gamma_n$, con $n \geq 0$.
 
-allora $\vdash w_i' \rightarrow w_i''$ in T
-\end{lemma}
+% \begin{lemma}
+% Dato un sistema completo di S4-diagrammi e sia $w_i$ un suo rettangolo,
 
-\begin{proof}
+% allora $\vdash w_i' \rightarrow w_i''$ in T
+% \end{lemma}
 
-La dimostrazione è semplice e si basa sul fatto che vale:
-$\vdash \neg \alpha \rightarrow \neg \Box \alpha$ in T
+% \begin{proof}
 
-\end{proof}
+% La dimostrazione è semplice e si basa sul fatto che vale:
+% $\vdash \neg \alpha \rightarrow \neg \Box \alpha$ in T
 
-Da questo lemma e dal lemma precedente per T ricaviamo che se un rettangolo $w_i$
-di un sistema completo di S4-diagrammi è esplicitamente inconsitente
-allora $\vdash w_i''$
+% \end{proof}
 
-Mostriamo ora:
+% Da questo lemma e dal lemma precedente per T ricaviamo che se un rettangolo $w_i$
+% di un sistema completo di S4-diagrammi è esplicitamente inconsitente
+% allora $\vdash w_i''$
 
-\begin{lemma}
-Dato un sistema completo di S4-diagrammi e un rettangolo $w_i$, se $\vdash w_i''$
-e $w_j$ è il suo predecessore diretto e in $w_j$ non ci sono connettivi contrassegnati
-con $\dagger$,
-allora $\vdash w_j''$
-\end{lemma}
+% Mostriamo ora:
 
-\begin{proof}
+% \begin{lemma}
+% Dato un sistema completo di S4-diagrammi e un rettangolo $w_i$, se $\vdash w_i''$
+% e $w_j$ è il suo predecessore diretto e in $w_j$ non ci sono connettivi contrassegnati
+% con $\dagger$,
+% allora $\vdash w_j''$
+% \end{lemma}
 
-Se $w_i$ e $w_j$ sono lo stesso rettangolo, non c'è niente da dimostrare.
-Mentre se $w_i$ e $w_j$ sono due rettangoli diversi, siccome $w_i$ è costruito
-a partire da $w_j$ secondo le regole della procedura, allora in $w_i$ c'è
-una formula $\gamma$ a cui è assegnato il valore $0$ e tale che in $w_j$ c'è
-$\Box \gamma$ a cui è assegnato il valore $0$ e poi ci sono delle formule
-$\beta_1, ..., \beta_k$, con $k \geq 0$ a cui è assegnato il valore $1$ e tali che in $w_j$
-a $\Box \beta_1, ..., \Box \beta_n$ è assegnato il valore $1$ in $w_i$,
-e infine ci sono delle formule $\beta_{k+1}, ..., \beta_{n}$, con $n \geq 0$,  ereditate da qualche
-altro rettangolo nella catena a cui appartengono sia $w_j$ che $w_i$.
+% \begin{proof}
 
-Quindi per il lemma visto nel paragrafo precedente, abbiamo:
-$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_k \lor \Box \gamma) \rightarrow w_j'$$
-Usando il lemma precedente e il teorema di sillogismo otteniamo:
-$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_k \lor \Box \gamma) \rightarrow w_j''$$
+% Se $w_i$ e $w_j$ sono lo stesso rettangolo, non c'è niente da dimostrare.
+% Mentre se $w_i$ e $w_j$ sono due rettangoli diversi, siccome $w_i$ è costruito
+% a partire da $w_j$ secondo le regole della procedura, allora in $w_i$ c'è
+% una formula $\gamma$ a cui è assegnato il valore $0$ e tale che in $w_j$ c'è
+% $\Box \gamma$ a cui è assegnato il valore $0$ e poi ci sono delle formule
+% $\beta_1, ..., \beta_k$, con $k \geq 0$ a cui è assegnato il valore $1$ e tali che in $w_j$
+% a $\Box \beta_1, ..., \Box \beta_n$ è assegnato il valore $1$ in $w_i$,
+% e infine ci sono delle formule $\beta_{k+1}, ..., \beta_{n}$, con $n \geq 0$,  ereditate da qualche
+% altro rettangolo nella catena a cui appartengono sia $w_j$ che $w_i$.
 
-Se $n > 0$, siccome $\beta_{k+1}, ..., \beta_{n}$ sono ereditate sia da $w_i$ che da $w_j$,
-allora $w_j''$ sarà del tipo $\delta \lor \neg \Box \beta_{k+1} \lor ... \lor \Box \beta_{n}$, per qualche $\delta \in L$,
-Quindi poiché $p \rightarrow (p \lor q)$ è una tautologia di $CP$ e quindi un teorema, otteniamo:
-$\vdash \neg \Box \beta_{k+1} \lor ... \lor \Box \beta_{n} \rightarrow w_j''$.
+% Quindi per il lemma visto nel paragrafo precedente, abbiamo:
+% $$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_k \lor \Box \gamma) \rightarrow w_j'$$
+% Usando il lemma precedente e il teorema di sillogismo otteniamo:
+% $$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_k \lor \Box \gamma) \rightarrow w_j''$$
 
-e quindi usando un'altra tautologia di $CP$: $(p \rightarrow r) \rightarrow (q \rightarrow r) \rightarrow (p \lor q) \rightarrow r$
-e usando due volte il modus ponens, otteniamo:
-$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \rightarrow w_j''$$
+% Se $n > 0$, siccome $\beta_{k+1}, ..., \beta_{n}$ sono ereditate sia da $w_i$ che da $w_j$,
+% allora $w_j''$ sarà del tipo $\delta \lor \neg \Box \beta_{k+1} \lor ... \lor \Box \beta_{n}$, per qualche $\delta \in L$,
+% Quindi poiché $p \rightarrow (p \lor q)$ è una tautologia di $CP$ e quindi un teorema, otteniamo:
+% $\vdash \neg \Box \beta_{k+1} \lor ... \lor \Box \beta_{n} \rightarrow w_j''$.
 
-Poiché $\vdash w_i''$, si ha:
-$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \gamma)$$
-Per necessitazione, definizione di $\rightarrow$ e per l'assioma $K$ otteniamo:
-$$\vdash (\neg \Box \Box \beta_1 \lor ... \neg \Box \Box \beta_n \lor \Box \gamma)$$
-Ora sfruttando il fatto che in S4 si ha: $\Box \Box p \leftrightarrow \Box p$, otteniamo:
-$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma)$$
-Dunque poiché come abbiamo visto:
-$$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \rightarrow w_j''$$
-Per modus ponens:
-$$\vdash w_j''$$
+% e quindi usando un'altra tautologia di $CP$: $(p \rightarrow r) \rightarrow (q \rightarrow r) \rightarrow (p \lor q) \rightarrow r$
+% e usando due volte il modus ponens, otteniamo:
+% $$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \rightarrow w_j''$$
 
-\end{proof}
+% Poiché $\vdash w_i''$, si ha:
+% $$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \gamma)$$
+% Per necessitazione, definizione di $\rightarrow$ e per l'assioma $K$ otteniamo:
+% $$\vdash (\neg \Box \Box \beta_1 \lor ... \neg \Box \Box \beta_n \lor \Box \gamma)$$
+% Ora sfruttando il fatto che in S4 si ha: $\Box \Box p \leftrightarrow \Box p$, otteniamo:
+% $$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma)$$
+% Dunque poiché come abbiamo visto:
+% $$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \rightarrow w_j''$$
+% Per modus ponens:
+% $$\vdash w_j''$$
 
-Infine, con qualche piccola modifica rispetto
-alla dimostrazione usata per il Sistema T si può giungere anche qui a dimostrare il lemma:
-\begin{lemma}
-$$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
-\end{lemma}
+% \end{proof}
 
-E perciò come prima otteniamo il nostro teorema di completezza.
+% Infine, con qualche piccola modifica rispetto
+% alla dimostrazione usata per il Sistema T si può giungere anche qui a dimostrare il lemma:
+% \begin{lemma}
+% $$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
+% \end{lemma}
 
-\section{Teorema di completezza per S5}
-Per il sistema S5 possiamo sfruttare quanto fatto finora per il sistema S4,
-l'unico inconveniente è che $w_1''$ non è la formula che ci aspettiamo,
-infatti poiché la relazione di accessibilità deve essere anche riflessiva,
-allora $w_1''$ sarà del tipo: $\alpha \lor \neg \Box \beta_1 \lor ... \lor \neg \Box \beta_n$,
-con $n \ge 0$.
-Nel caso in cui $n > 0$, dobbiamo aggiungere dei passaggi per poter ottenere $\vdash \alpha$.
-Se $n > 0$, allora nel rettangolo $w_1$ c'è una formula $\beta_1$ che è stata scritta
-perché c'è un rettangolo $w_j$,
-in cui c'è una sottoformula del tipo $\Box \beta_1$
-a cui è stata assegnato il valore di verità $1$ e dunque a $\beta_1$ è assegnato il valore di verità $1$
-La formula $w_j''$ associata a $w_j$ è del tipo $\gamma \lor \neg \Box \delta_1 \lor ... \lor \neg \Box \delta_k$, con $k \ge 0$,
-e per come sono costruiti gli S5-diagrammi, $\Box \beta_1$ può essere o una sottoformula di $\gamma$
-o una sottoformula di qualche $\delta_i$, con $i < n$
+% E perciò come prima otteniamo il nostro teorema di completezza.
 
-Se $\Box \beta_1$ è una sottoformula di $\gamma$, allora per un argomento simile al lemma $1$ abbiamo che:
-$$\vdash \neg \Box \beta_1 \rightarrow \gamma$$
-e quindi per necessitazione e grazie all'assioma $K$:
-$$\vdash \Box \neg \Box \beta_1 \rightarrow \Box \gamma$$
+% \section{Teorema di completezza per S5}
+% Per il sistema S5 possiamo sfruttare quanto fatto finora per il sistema S4,
+% l'unico inconveniente è che $w_1''$ non è la formula che ci aspettiamo,
+% infatti poiché la relazione di accessibilità deve essere anche riflessiva,
+% allora $w_1''$ sarà del tipo: $\alpha \lor \neg \Box \beta_1 \lor ... \lor \neg \Box \beta_n$,
+% con $n \ge 0$.
+% Nel caso in cui $n > 0$, dobbiamo aggiungere dei passaggi per poter ottenere $\vdash \alpha$.
+% Se $n > 0$, allora nel rettangolo $w_1$ c'è una formula $\beta_1$ che è stata scritta
+% perché c'è un rettangolo $w_j$,
+% in cui c'è una sottoformula del tipo $\Box \beta_1$
+% a cui è stata assegnato il valore di verità $1$ e dunque a $\beta_1$ è assegnato il valore di verità $1$
+% La formula $w_j''$ associata a $w_j$ è del tipo $\gamma \lor \neg \Box \delta_1 \lor ... \lor \neg \Box \delta_k$, con $k \ge 0$,
+% e per come sono costruiti gli S5-diagrammi, $\Box \beta_1$ può essere o una sottoformula di $\gamma$
+% o una sottoformula di qualche $\delta_i$, con $i < n$
 
-Ma per l'assioma S5:
-$$\vdash \neg \Box \beta_1 \rightarrow \Box \neg \Box \beta_1$$
-Quindi per sillogismo:
-$$\vdash \neg \Box \beta_1 \rightarrow \Box \gamma$$
+% Se $\Box \beta_1$ è una sottoformula di $\gamma$, allora per un argomento simile al lemma $1$ abbiamo che:
+% $$\vdash \neg \Box \beta_1 \rightarrow \gamma$$
+% e quindi per necessitazione e grazie all'assioma $K$:
+% $$\vdash \Box \neg \Box \beta_1 \rightarrow \Box \gamma$$
 
-Ma per come sono costruiti gli S5-diagrammi, o $w_j$ è $w_1$ e $\gamma$ è $\alpha$,
-oppure $w_j$ ha un predecessore diretto
-che chiamiamo $w_l$ e in $w_l$ a $\Box \gamma$ è associato il valore di verità $0$.
+% Ma per l'assioma S5:
+% $$\vdash \neg \Box \beta_1 \rightarrow \Box \neg \Box \beta_1$$
+% Quindi per sillogismo:
+% $$\vdash \neg \Box \beta_1 \rightarrow \Box \gamma$$
 
-Se $\Box \beta_1$ è una sottoformula di $\delta_i$, con $i < n$,
-allora, per un argomento simile al lemma $1$
-$$ \vdash \neg \Box \beta_1 \rightarrow \neg \delta_i$$
-e poiché
-$$ \vdash \neg \delta_i \rightarrow \neg \Box \delta_i$$
-e per sillogismo:
-$$ \vdash \neg \Box \beta_1 \rightarrow \neg \Box \delta_i$$
+% Ma per come sono costruiti gli S5-diagrammi, o $w_j$ è $w_1$ e $\gamma$ è $\alpha$,
+% oppure $w_j$ ha un predecessore diretto
+% che chiamiamo $w_l$ e in $w_l$ a $\Box \gamma$ è associato il valore di verità $0$.
 
-Ma per come sono costruiti gli S5-diagrammi, c'è un rettangolo $w_l$ in cui a $\Box \delta_i$
-è stato associato $1$.
+% Se $\Box \beta_1$ è una sottoformula di $\delta_i$, con $i < n$,
+% allora, per un argomento simile al lemma $1$
+% $$ \vdash \neg \Box \beta_1 \rightarrow \neg \delta_i$$
+% e poiché
+% $$ \vdash \neg \delta_i \rightarrow \neg \Box \delta_i$$
+% e per sillogismo:
+% $$ \vdash \neg \Box \beta_1 \rightarrow \neg \Box \delta_i$$
 
-Se abbiamo ottenuto $\neg \Box \beta_1 \rightarrow \alpha$, ci fermiamo,
-altrimenti, usando la formula, che chiameremo $\sigma$, implicata da $\neg \Box \beta_1$
-($\Box \gamma$ o $\neg \Box \delta_i$, a seconda dei casi) reiteriamo questo procedimento
-e otteniamo che è un teorema di S5 che $\sigma$ uno dei disgiunti della formula $w_l''$, e quindi
-per sillogismo $\neg \Box \beta_1$ implica uno dei disgiunti della formula $w_l''$
-Osserviamo, però, che ad ogni iterazione di questo procedimento la lunghezza
-della formula implicata da $\neg \Box \beta_1$ aumenta sempre di più, inoltre ogni formula
-è sempre una delle formule scritta nell'S5-diagramma che sono in numero finito,
-quindi non è possibile dover iterare questo procedimento all'infinito, ma prima o poi
-bisognerà arrivare in un numero finito di passi alla formula $\alpha$ che è la formula
-più lunga di tutte nell'S5-diagramma.
+% Ma per come sono costruiti gli S5-diagrammi, c'è un rettangolo $w_l$ in cui a $\Box \delta_i$
+% è stato associato $1$.
 
-Abbiamo perciò dimostrato che $\vdash \neg \Box \beta_1 \rightarrow \alpha$,
-è possibile fare lo stesso per tutti gli altri $\beta_i$, con $i = 2, ..., n$.
-Dunque abbiamo
-$$\vdash \neg \Box \beta_1 \rightarrow \alpha$$
-$...$
-$$\vdash \neg \Box \beta_n \rightarrow \alpha$$
+% Se abbiamo ottenuto $\neg \Box \beta_1 \rightarrow \alpha$, ci fermiamo,
+% altrimenti, usando la formula, che chiameremo $\sigma$, implicata da $\neg \Box \beta_1$
+% ($\Box \gamma$ o $\neg \Box \delta_i$, a seconda dei casi) reiteriamo questo procedimento
+% e otteniamo che è un teorema di S5 che $\sigma$ uno dei disgiunti della formula $w_l''$, e quindi
+% per sillogismo $\neg \Box \beta_1$ implica uno dei disgiunti della formula $w_l''$
+% Osserviamo, però, che ad ogni iterazione di questo procedimento la lunghezza
+% della formula implicata da $\neg \Box \beta_1$ aumenta sempre di più, inoltre ogni formula
+% è sempre una delle formule scritta nell'S5-diagramma che sono in numero finito,
+% quindi non è possibile dover iterare questo procedimento all'infinito, ma prima o poi
+% bisognerà arrivare in un numero finito di passi alla formula $\alpha$ che è la formula
+% più lunga di tutte nell'S5-diagramma.
 
-e inoltre:
+% Abbiamo perciò dimostrato che $\vdash \neg \Box \beta_1 \rightarrow \alpha$,
+% è possibile fare lo stesso per tutti gli altri $\beta_i$, con $i = 2, ..., n$.
+% Dunque abbiamo
+% $$\vdash \neg \Box \beta_1 \rightarrow \alpha$$
+% $...$
+% $$\vdash \neg \Box \beta_n \rightarrow \alpha$$
 
-$$\vdash \neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \alpha$$
+% e inoltre:
 
-Dunque sfruttando svariate volte la tautologia di $CP$:
-$$(p \rightarrow r) \rightarrow (p \lor q) \rightarrow (r \lor q)$$
-e il modus ponens, otteniamo:
-$$\vdash \alpha \lor ... \lor \alpha$$
-che è facile far vedere che ci porta a poter affermare che
-$$\vdash \alpha$$
+% $$\vdash \neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \alpha$$
+
+% Dunque sfruttando svariate volte la tautologia di $CP$:
+% $$(p \rightarrow r) \rightarrow (p \lor q) \rightarrow (r \lor q)$$
+% e il modus ponens, otteniamo:
+% $$\vdash \alpha \lor ... \lor \alpha$$
+% che è facile far vedere che ci porta a poter affermare che
+% $$\vdash \alpha$$
 
 \chapter*{Conclusioni}
 \addcontentsline{toc}{chapter}{Conclusioni}
@@ -1817,19 +1832,21 @@ come a una fonte di ricchezza di sfumature del concetto di ``necessità'' e perc
 senso chiedersi quale sia il sistema formale migliore, mentre ha più senso usare tali sistemi
 come strumento per un'analisi più approfondita per distinguere le varie sfumature del concetto
 di ``necessità'' che si usano nei ragionamenti.
-Alcuni esempi di questo approccio sono forniti da Lemmon [Lemmon] e terminiamo riportandone qui alcuni:
-Se vogliamo interpretare $\Box \alpha$ come ``è analiticamente vero che $\alpha$'', allora il sistema
-formale S5 è quello corretto. Mentre se vogliamo interpretare $\Box \alpha$ come
-è ``informalmente dimostrabile in matematica che $\alpha$'', allora il sistema corretto è S4.
+Per esempi di questo approccio si può far riferimento a \cite{Lemmon}.
 
 \chapter*{Ringraziamenti}
 \addcontentsline{toc}{chapter}{Ringraziamenti}
-Ringrazio solo me stesso e nessun altro.
+Ringrazio i Professori Roberto Tortora e Ulderico Dardano che mi hanno seguito
+nella stesura della tesi. Ringrazio poi il dott. Gianluca Esposito senza cui
+non sarei mai riuscito a consegnare tutti i documenti necessari per laurearmi
+e il dott. Marco Umbrello per avermi aiutato con l'utilizzo del sistema \LaTeX{}
+e per avermi segnalato vari errori presenti in questa tesi.
 
 \begin{thebibliography}{5}
 \bibitem{IntroModale} G.E. Hughes, M.J. Cresswell, \textit{Introduzione alla logica modale},
 edizione a cura di C. Pizzi, [1973], Milano, Il Saggiatore, $1983^{2}$.
 \bibitem{Kleene} S.C. Kleene, \textit{Mathematical Logic}, New York, J. Wiley \& Sons, 1967.
+\bibitem{Lemmon} E.J. Lemmon, \textit{Is there only one correct system of modal logic?}, Aristotelian Society Supplementary Volume XXXIII, 1959.
 \bibitem{Mendelson} E. Mendelson, \textit{Introduction to Mathematical Logic}, [1964], Londra, Chapman \& Hall, $1997^{4}$.
 \bibitem{Tortora} R. Tortora, \textit{Elementi di teoria degli insiemi}, Napoli, E.DI.S.U. - Napoli 1, 1989.
 \end{thebibliography}
