@@ -6,6 +6,10 @@
 \usepackage{lmodern}
 \usepackage{amssymb}
 \usepackage{amsmath}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows, positioning}
+
 \newtheorem{axiom}{Assioma}[chapter]
 \newtheorem{theorem}{Teorema}[chapter]
 \newtheorem{lemma}{Lemma}[chapter]
@@ -616,17 +620,11 @@ $\alpha$ è vera in tutti i mondi accessibili da $w$.
 Diciamo che una formula $\alpha$ è T-valida e scriviamo $\vDash \alpha$
 se per ogni T-modello $(w, W, R, I)$ $\forall w \in W. V(\alpha, w) = 1$.
 
-Ci occupiamo adesso di mostrare che tutti i teoremi del sistema T sono formule valide
-nella semantica che abbiamo fornito. Un risultato di questo tipo nel quale
-ci si assicura che ogni teorema di un sistema formale è anche una formula
-valida in una sua semantica viene chiamato
-\emph{teorema di adeguatezza} e può essere visto come una conferma
-importante che la semantica scelta sia una buona scelta per l'interpretazione
-del sistema formale.
-Procediamo dunque all'enuciazione e alla dimostrazione del:
+Ci occupiamo adesso di mostrare che tutti i teoremi del Sistema $T$ sono
+formule valide nella semantica che abbiamo fornito.
 
 \begin{theorem}[Teorema di adeguatezza per T]
-$\forall \alpha \in L. \vdash \alpha \Rightarrow \vDash \alpha$ in $T$
+Per ogni formula $\alpha \in L$ si ha: $\vdash \alpha \Rightarrow \vDash \alpha$ in $T$
 \end{theorem}
 
 \begin{proof}
@@ -635,7 +633,7 @@ Premettiamo alla dimostrazione vera e propria le seguenti osservazioni:
 
 Se $(W, R, I)$ è un T-modello, $w \in W$ e $\alpha, \beta \in L$, allora:
 $V(\alpha \rightarrow \beta, w) = V(\neg \alpha \lor \beta, w) = 0$ se e solo se
-$V(\neg \alpha, w) = 0$ e $V(\beta, w) = 0$, ovvero, se e solo se $V(\alpha, w) = 1$ e $V(\beta, w) = 0$.
+$V(\neg \alpha, w) = 0$ e $V(\beta, w) = 0$, ovvero se e solo se, $V(\alpha, w) = 1$ e $V(\beta, w) = 0$.
 
 Se poi $V(\alpha \rightarrow \beta, w) = 1$ e $V(\alpha, w) = 1$, allora, se fosse
 $V(\beta, w) = 0$, per quanto detto prima avremmo $V(\alpha \rightarrow \beta, w) = 1$, ma ciò
@@ -657,7 +655,7 @@ $V(\Box \alpha \rightarrow \alpha, w) = 0 \Leftrightarrow V(\Box \alpha, w) = 1$
 Siccome $R$ è una relazione riflessiva, dalla definizione di $V$ segue che:
 $V(\Box \alpha, w) <= V(\alpha, w)$ e quindi se $V(\Box \alpha, w) = 1$, si ha anche che
 $V(\alpha, w) = 1$ e quindi otteniamo che
-$\forall w \in W. V(\Box \alpha \rightarrow \alpha, w) = 1$ e per l'arbitrarietà
+$\forall w \in W. V(\Box \alpha \rightarrow \alpha, w) = 1$. Per l'arbitrarietà
 del T-modello otteniamo l'asserto.
 
 Mostriamo che $\vDash \Box (\alpha \rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$:
@@ -677,20 +675,15 @@ Quindi se $V(\Box(\alpha \rightarrow \beta), w) = 1$, deve essere $V(\Box \alpha
 e quindi per l'arbitrarietà di $w$ e del T-modello otteniamo l'asserto.
 
 Ci resta da verificare la T-validità degli assiomi ereditati da $CP$.
-Per il teorema di completezza per $CP$, tutti gli assiomi sono formule valide per $CP$,
-e poiché per la definizione di $V$ per i T-modelli coincide con la definizione di
-$V_I$ nella semantica di $CP$ per quanto riguarda le formule contenenti solo
-variabili proposizionali e i connettivi comuni a $T$ e $CP$, è facile
-verificare che gli assiomi derivati da $CP$ sono anche T-validi.
-
-Quindi, poiché, una volta forniti i valori di verità per $\alpha$ e $\beta$,
-le regole per determinare i valori di verità delle formule $\neg \alpha$ e $\alpha \lor \beta$
-sono le stesse sia per $CP$ che per il sistema T
-($\neg$ e $\lor$ sono interpretati allo stesso modo sia in T che in $CP$) e poiché
-gli schemi di assiomi ereditati da $CP$ contengono solo $\neg$ e $\lor$ come connettivi
+Per il Teorema di Completezza di $CP$, tutti gli assiomi sono formule valide per $CP$.
+Poiché le regole per determinare il valore di verità di fbf
+del tipo $\neg \alpha$ e $\alpha \lor \beta$, a partire dai valori di verità
+di $\alpha$ e $\beta$, sono le stesse sia per $CP$ che per il Sistema $T$
+($\neg$ e $\lor$ sono interpretati allo stesso modo sia in $CP$ che in $T$)
+e poiché gli assiomi di $CP$ contengono solo $\neg$ e $\lor$ come connettivi
 (gli altri connettivi di $CP$ sono definiti in termini di questi due),
-possiamo dedurre che tutte le possibili sostituzioni uniformi di formule di $L$
-negli schemi di assiomi derivati da $CP$ forniscono formule ancora valide.
+allora possiamo dedurre che gli assiomi ereditati da $CP$ sono tutti T-validi.
+
 
 Ora dimostriamo che il \emph{Modus Ponens} conserva la validità:
 
@@ -757,7 +750,7 @@ vale a dire che si ha: $\forall w_1, w_2 \in W. w_1 R w_2$.
 Anche per S4 e S5 proviamo un teorema di adeguatezza
 
 \begin{theorem}[Teorema di adeguatezza per S4]
-$\vdash \alpha \Rightarrow \vDash \alpha$ in $S4$
+Per ogni formula $\alpha \in L$ si ha: $\vdash \alpha \Rightarrow \vDash \alpha$ in $S4$
 \end{theorem}
 
 \begin{proof}
@@ -777,7 +770,7 @@ Per l'arbitrarietà di $w$ e dell'S4-modello abbiamo la tesi.
 
 
 \begin{theorem}[Teorema di adeguatezza per S5]
-$\vdash \alpha \Rightarrow \vDash \alpha$ in $S5$
+Per ogni formula $\alpha \in L$ si ha: $\vdash \alpha \Rightarrow \vDash \alpha$ in $S5$
 \end{theorem}
 
 \begin{proof}
@@ -801,7 +794,7 @@ Per l'arbitrarietà di $w$ e dell'S5-modello otteniamo la tesi.
 \section{Proprietà dei sistemi T, S4, S5}
 I teoremi di adeguatezza che abbiamo dimostrato ci dicono che ogni teorema
 è anche una formula valida per i vari sistemi.
-Questo significa che il concetto di semantico di validità che abbiamo poco fa definita
+Questo significa che il concetto di validità che abbiamo poco fa definita
 si concilia bene con quello di dimostrabilità. Ciò è una buona assicurazione circa
 la bontà delle semantiche.
 
@@ -861,9 +854,9 @@ S5 e S4 sono due sistemi distinti, ovvero l'assioma S5 non è una tesi del siste
 \begin{proof}
 
 In virtù del teorema di adeguatezza se troviamo un S4-modello nel quale l'assioma S5
-sia falso, potremo dedurre che S5 non può essere un teorema del sistema S4.
+sia falso, possiamo dedurre che S5 non può essere un teorema del sistema S4.
 
-Consideriamo 2 mondi $W = \{w_1, w_2\}$, e definiamo la relazione di accessibilità
+Consideriamo un insieme costituito da due soli mondi $W = \{w_1, w_2\}$, e definiamo la relazione di accessibilità
 in questo modo:
 \begin{itemize}
     \item $wRw, \forall w \in W$;
@@ -895,7 +888,7 @@ sono lo stesso sistema formale.
 \end{proof}
 
 In definitiva abbiamo dimostrato che i sistemi T, S4 e S5 sono tre sistemi distinti
-e questo significa che presentano tre nozioni diverse di ``necessità'' e ``possibilità''.
+e questo significa che esprimono tre nozioni diverse di ``necessità'' e ``possibilità''.
 
 Forniamo, infine quest'ultima dimostrazione:
 
@@ -907,7 +900,7 @@ Esiste $\alpha \in L$, tale che $\alpha \rightarrow \Box \alpha$ non è una tesi
 
 Costruiamo un T-modello in cui $\alpha \rightarrow \Box \alpha$ è falsa.
 
-Consideriamo 2 mondi $W = \{w_1, w_2\}$, e definiamo la relazione di accessibilità
+Consideriamo un insieme costituito da due soli mondi $W = \{w_1, w_2\}$, e definiamo la relazione di accessibilità
 in questo modo:
 \begin{itemize}
     \item $wRw, \forall w \in W$;
@@ -936,13 +929,13 @@ Abbiamo ottenuto così la tesi.
 
 Nei sistemi di logica modale in cui per ogni
 $\alpha \in L$ vale $\alpha \leftrightarrow \Box \alpha$ si dice che avviene il collasso
-delle modalità. Questi sistemi sono solo una versione barocca, con simboli inutili,
+delle modalità. Questi sistemi sono solo una versione, arricchita da simboli inutili,
 di un sistema formale per il calcolo proposizionale:
 i connettivi $\Box$ e $\diamond$ sono inutili, infatti la formula
 precedente ci dice che affermare $\Box \alpha$ è esattamente lo stesso che affermare $\alpha$
 e quindi non aggiungono niente di nuovo.
 
-Il teorema che abbiamo appena dimostrato ci assicura che nei sistemi definiti non avviene
+Il teorema che abbiamo appena dimostrato ci assicura che nei tre sistemi definiti non avviene
 il collasso delle modalità e che quindi i nuovi connettivi introdotti non sono solo inutili
 orpelli che non aggiungono niente a $CP$.
 
@@ -976,7 +969,7 @@ Data la formula $\alpha \in L$, iniziamo introducendo un rettangolo $w_1$ e
 al suo interno scriviamo $\alpha$ e le assegniamo il valore $0$ scrivendo uno zero
 sotto al suo operatore principale.
 
-Dato un qualsiasi rettangolo $w_i$, questo conterrà un numero finito di formule
+Dato un qualsiasi rettangolo $w_i$, esso conterrà un numero finito di formule
 $\beta_1, ..., \beta_n$
 e a ciascuna di essa è associato un valore di verità, allora proviamo
 a determinare un assegnamento di valori di verità per le variabili proposizionali
@@ -1004,8 +997,6 @@ $$\underset{1}{p} \underset{1}{\rightarrow} \underset{0}{q}$$
 Se nel fare ciò si arriva a dover associare alla stessa sottoformula
 due valori di verità diversi, allora arrestiamo il processo e sottolineiamo
 la sottoformula incriminata.
-
-\textbf{Fornire un altro esempio}
 
 Durante questo procedimento possono presentari vari casi particolari:
 Può capitare che nel rettangolo $w_i$ l'operatore principale di una sottoformula $\beta$ sia tale che le regole di $V$
@@ -1090,21 +1081,268 @@ Abbiamo perciò che il numero di rettangoli in un sistema completo di T-diagramm
 e che per ciascuno di essi le operazioni da compiere sono finite. In definitiva
 la procedura che abbiamo definito termina in un numero finito di passi.
 
-\textbf{Mettere foto esempi}
+Terminiamo questo paragrafo con alcuni esempi:
 
+\pagebreak
+
+\textbf{Esempio 1:}
+Costruiamo un sistema completo di T-diagrammi per la formula
+$\diamond (p \land \diamond q) \rightarrow (\Box \diamond p \rightarrow \diamond \Box q)$:
+
+\begin{tikzpicture}[
+world/.style={rectangle,draw},
+invisible/.style={rectangle}]
+    \node[world] (w_1)
+        {$\underset{*}{\underset{1}{\diamond}} (p \land \diamond q)
+          \underset{0}{\rightarrow}
+          (\stackrel{*}{\underset{1}{\Box}} \underset{*}{\underset{1}{\diamond}} p
+           \underset{0}{\rightarrow} \stackrel{*}{\underset{0}{\diamond}} \underset{*}{\underset{0}{\Box}} q)$
+        };
+
+    \node[black, left] at (w_1.west) {$w_1$};
+
+    \node[world] (w_2) [below left=of w_1]
+          {$\begin{array}{c|c|c}
+              \underset{1}{p} \underset{1}{\land} \underset{*}{\underset{1}{\diamond}} q &
+              \underset{1}{\diamond} \underset{1}{p} &
+              \underset{*}{\underset{0}{\Box}} q
+          \end{array}$};
+
+    \node[black, left] at (w_2.west) {$w_2$};
+
+    \node[world] (w_3) [below=of w_1]
+          {$\begin{array}{c|c|c}
+              \underset{1}{p} &
+              \underset{1}{\diamond}\underset{1}{p} &
+              \underset{*}{\underset{0}{\Box}} q
+          \end{array}$};
+
+    \node[black, right] at (w_3.east) {$w_3$};
+
+
+    \node[world] (w_4) [below right=of w_1]
+        {$\begin{array}{c|c|c}
+            \underset{0}{q} &
+            \underset{*}{\underset{1}{\diamond}} p &
+            \underset{0}{\Box}\underset{0}{q}
+        \end{array}$};
+
+    \node[black, left] at (w_4.west) {$w_4$};
+
+
+    \node[world] (w_5) [below left=of w_2]
+          {$\underset{1}{q}$};
+
+    \node[black, right] at (w_5.east) {$w_5$};
+
+    \node[world] (w_6) [below=of w_2]
+          {$\underset{0}{q}$};
+
+    \node[black, right] at (w_6.east) {$w_6$};
+
+    \node[world] (w_7) [below=of w_3]
+         {$\underset{0}{q}$};
+
+    \node[black, left] at (w_7.west) {$w_7$};
+
+    \node[world] (w_8) [below=of w_4]
+         {$\underset{1}{p}$};
+
+    \node[black, left] at (w_8.west) {$w_8$};
+
+    \draw[->] (w_1.south west) -- (w_2);
+    \draw[->] (w_1.south) -- (w_3);
+    \draw[->] (w_1.south east) -- (w_4);
+
+    \draw[->] (w_2) -- (w_5);
+    \draw[->] (w_2) -- (w_6);
+
+    \draw[->] (w_3) -- (w_7);
+
+    \draw[->] (w_4) -- (w_8);
+
+
+     % \draw[->] (w_1) to[bend left = 30] (w_2.east);
+     % \draw[->] (w_1) to[bend right = 20] (w_3.west);
+
+     % \draw[->] (w_1) to[bend left = 20] (w_4.east);
+     % \draw[->] (w_2) -- (w_4);
+     % \draw[->] (w_4) -- (w_2);
+
+     % \draw[->] (w_1) to[bend right = 20] (w_5.west);
+     % \draw[->] (w_3) -- (w_5);
+     % \draw[->] (w_5) -- (w_3);
+
+
+\end{tikzpicture}
+
+In questo sistema completo di T-diagrammi non ci sono rettangoli esplicitamente
+inconsistenti, quindi per quanto abbiamo dimostrato, ciò ci autorizza ad affermare
+che la formula
+$\diamond (p \land \diamond q) \rightarrow (\Box \diamond p \rightarrow \diamond \Box q)$
+non è T-valida.
+
+\textbf{Esempio 2:}
+Costruiamo un sistema completo di T-diagrammi per la formula
+$\Box p \leftrightarrow \neg \diamond \neg p$
+
+\begin{tikzpicture}[
+world/.style={rectangle,draw},
+invisible/.style={rectangle}]
+    \node[world] (w_1)
+        { $\Box p \underset{\dagger}{\underset{0}{\leftrightarrow}} \neg \diamond \neg p$
+        };
+
+    \node[black, left] at (w_1.west) {$w_1$};
+
+    \node[world] (w_1') [below left=of w_1]
+        { $\stackrel{*}{\underset{1}{\Box} \underset{1}{p}} \underset{0}{\leftrightarrow} \underset{0}{\neg} \underset{*}{\underset{1}{\diamond}} \neg p$
+        };
+
+    \node[black, left] at (w_1'.west) {$w_1(1)$};
+
+    \node[world] (w_2) [below=of w_1']
+        { $\begin{array}{c|c}
+            \underline{\underset{1}{\neg}\underset{0}{p}} &
+            \underset{1}{p}
+        \end{array}$
+        };
+
+    \node[black, right] at (w_2.east) {$w_2$};
+
+    \node[world] (w_1'') [below right=of w_1]
+        { $\underset{*}{\underset{0}{\Box}} p \underset{0}{\leftrightarrow} \underset{1}{\neg} \stackrel{*}{\underset{0}{\diamond}} \underset{0}{\neg} \underset{1}{p}$
+        };
+
+    \node[black, left] at (w_1''.west) {$w_1(2)$};
+
+    \node[world] (w_3) [below=of w_1'']
+        { $\begin{array}{c|c}
+            \underline{\underset{0}{p}} &
+            \underset{0}{\neg}\underset{1}{p}
+        \end{array}$
+        };
+
+    \node[black, right] at (w_3.east) {$w_3$};
+
+    \draw[->] (w_1') -- (w_2);
+    \draw[->] (w_1'') -- (w_3);
+
+\end{tikzpicture}
+
+In questo caso nel rettangolo $w_1$ c'è un connettivo contrassegnato con $\dagger$.
+Siccome entrambi i suoi rettangoli alternativi sono esplicitamente inconsistenti,
+allora anch'esso è esplicitamente inconsistente
+e quindi $\Box p \leftrightarrow \neg \diamond \neg p$
+è T-valida.
 
 \section{Procedura di decisione per S4}
 Cerchiamo di adattare la procedura appena definita per decidere le formule S4-valide.
 Siccome un S4-modello ha una relazione di accessibilità riflessiva e transitiva, allora bisogna stare
 attenti che qualora si introducano mondi nuovi le relazioni di accessibilità siano
-correttamente registrate in modo che se $w_3$ è accessibile da $w_2$ e $w_2$ è accessibile
-da $w_1$, allora $w_3$ risulti accessibile da $w_1$ e quindi bisogna aggiungere il giusto
+correttamente registrate in modo che se, ad esempio, $w_3$ è accessibile da $w_2$ e $w_2$ è accessibile
+da $w_1$, allora $w_3$ deve risultare accessibile da $w_1$ e quindi bisogna aggiungere il giusto
 numero di di frecce per far si che la transitività della relazione di accessibilità sia rispettata
 Questa situazione ci porta delle complicazione, per illustrare bene il problema
 mostriamo cosa succede con la seguente formula:
 
-$$MLp \rightarrow LMp$$
-\textbf{fare il grafico}
+$$\diamond \Box p \rightarrow \Box \Diamond p$$
+
+\begin{tikzpicture}[
+world/.style={rectangle,draw},
+invisible/.style={rectangle}]
+    \node[world] (w_1)
+          {$\underset{1}{\stackrel{*}{\Box}}
+          \underset{*}{\underset{1}{\Diamond}} p
+          \underset{0}{\rightarrow}
+          \underset{0}{\stackrel{*}{\Diamond}}
+          \underset{*}{\underset{0}{\Box}} p$};
+
+    \node[black, left] at (w_1.west) {$w_1$};
+
+    \node[world] (w_2) [below left=of w_1]
+          {$\begin{array}{c|c|c}
+              \underset{1}{p} &
+            \underset{1}{\Diamond}\underset{1}{p} &
+            \underset{*}{\underset{0}{\Box}}\underset{1}{p}
+          \end{array}$};
+
+    \node[black, left] at (w_2.west) {$w_2$};
+
+    \node[world] (w_3) [below right=of w_1]
+          {$\begin{array}{c|c|c}
+              \underset{0}{p} &
+              \underset{*}{\underset{1}{\Diamond}}\underset{0}{p} &
+              \underset{0}{\Box}\underset{0}{p}
+          \end{array}$};
+
+    \node[black, right] at (w_3.east) {$w_3$};
+
+
+    \node[world] (w_4) [below=of w_2]
+        {$\begin{array}{c|c|c}
+            \underset{0}{p} &
+            \underset{*}{\underset{1}{\Diamond}} \underset{0}{p} &
+            \underset{0}{\Box}\underset{0}{p}
+        \end{array}$};
+
+    \node[black, left] at (w_4.west) {$w_4$};
+
+
+    \node[world] (w_5) [below=of w_3]
+          {$\begin{array}{c|c|c}
+              \underset{1}{p} &
+            \underset{1}{\Diamond}\underset{1}{p} &
+            \underset{*}{\underset{0}{\Box}}\underset{1}{p}
+          \end{array}$};
+
+    \node[black, right] at (w_5.east) {$w_5$};
+
+
+    \node[world] (w_6) [below=of w_4]
+          {$\begin{array}{c|c|c}
+              \underset{1}{p} &
+            \underset{1}{\Diamond}\underset{1}{p} &
+            \underset{*}{\underset{0}{\Box}}\underset{1}{p}
+          \end{array}$};
+
+    \node[black, left] at (w_6.west) {$w_6$};
+
+
+    \node[world] (w_7) [below=of w_5]
+          {$\begin{array}{c|c|c}
+              \underset{0}{p} &
+              \underset{*}{\underset{1}{\Diamond}}\underset{0}{p} &
+              \underset{0}{\Box}\underset{0}{p}
+          \end{array}$};
+
+    \node[black, right] at (w_7.east) {$w_7$};
+
+
+    \node[invisible] (i_1) [below=of w_6] {};
+    \node[invisible] (i_2) [below=of w_7] {};
+
+     \draw[->] (w_1) to[bend left = 30] (w_2.east);
+     \draw[->] (w_1) to[bend right = 20] (w_3.west);
+
+     \draw[->] (w_1) to[bend left = 20] (w_4.east);
+     \draw[->] (w_2) -- (w_4);
+
+     \draw[->] (w_1) to[bend right = 20] (w_5.west);
+     \draw[->] (w_3) -- (w_5);
+
+     \draw[->] (w_1) to[bend left = 15] (w_6.east);
+     \draw[->] (w_2.south west) to[bend right = 50] (w_6.north west);
+     \draw[->] (w_4) -- (w_6);
+
+     \draw[->] (w_1) to[bend right = 15] (w_7.west);
+     \draw[->] (w_3.south east) to[bend left = 50] (w_7.north east);
+     \draw[->] (w_5) -- (w_7);
+
+    \draw[->] (w_6) -- (i_1);
+    \draw[->] (w_7) -- (i_2);
+
+\end{tikzpicture}
 
 Il problema che riscontriamo è che essendo la relazione di accessibilità transitiva,
 quando in $w_i$ si ha che $\Box \alpha$ è vera, dobbiamo registrare in ogni altro mondo
@@ -1135,16 +1373,81 @@ che contenga la formula e tutte le condizioni che vogliamo aggiungere $w_i$.
 Inoltre notiamo che anche se questo rettangolo contiene più condizioni di $w_i$,
 ciò non è un problema, perché essendo $w_i$ accessibile da questo rettangolo,
 quelle condizioni valgono anche in $w_i$, facendo parte della stessa catena.
-capiterà sicuramente che esista un altro rettangolo già introdotto
-con la stessa formula.
+
 
 I T-diagrammi in cui la relazione tra i rettangoli è transitiva e si usa la regola
 appena definita vengono detti S4-diagrammi. Se poi questi particolari T-diagrammi
 sono un sistema completo di T-diagrammi, allora si dirà che sono un sistema
 completo di S4-diagrammi.
 
+Con questa modifica l'S4-diagramma per $\diamond \Box p \rightarrow \Box \Diamond p$:
 
-Con questa modifica possiamo dimostrare che il numero di rettangoli in un sistema
+\begin{tikzpicture}[
+world/.style={rectangle,draw},
+invisible/.style={rectangle}]
+    \node[world] (w_1)
+          {$\underset{1}{\stackrel{*}{\Box}}
+          \underset{*}{\underset{1}{\Diamond}} p
+          \underset{0}{\rightarrow}
+          \underset{0}{\stackrel{*}{\Diamond}}
+          \underset{*}{\underset{0}{\Box}} p$};
+
+    \node[black, left] at (w_1.west) {$w_1$};
+
+    \node[world] (w_2) [below left=of w_1]
+          {$\begin{array}{c|c|c}
+              \underset{1}{p} &
+            \underset{1}{\Diamond}\underset{1}{p} &
+            \underset{*}{\underset{0}{\Box}}\underset{1}{p}
+          \end{array}$};
+
+    \node[black, left] at (w_2.west) {$w_2$};
+
+    \node[world] (w_3) [below right=of w_1]
+          {$\begin{array}{c|c|c}
+              \underset{0}{p} &
+              \underset{*}{\underset{1}{\Diamond}}\underset{0}{p} &
+              \underset{0}{\Box}\underset{0}{p}
+          \end{array}$};
+
+    \node[black, right] at (w_3.east) {$w_3$};
+
+
+    \node[world] (w_4) [below=of w_2]
+        {$\begin{array}{c|c|c}
+            \underset{0}{p} &
+            \underset{*}{\underset{1}{\Diamond}} \underset{0}{p} &
+            \underset{0}{\Box}\underset{0}{p}
+        \end{array}$};
+
+    \node[black, left] at (w_4.west) {$w_4$};
+
+
+    \node[world] (w_5) [below=of w_3]
+          {$\begin{array}{c|c|c}
+              \underset{1}{p} &
+            \underset{1}{\Diamond}\underset{1}{p} &
+            \underset{*}{\underset{0}{\Box}}\underset{1}{p}
+          \end{array}$};
+
+    \node[black, right] at (w_5.east) {$w_5$};
+
+
+     \draw[->] (w_1) to[bend left = 30] (w_2.east);
+     \draw[->] (w_1) to[bend right = 20] (w_3.west);
+
+     \draw[->] (w_1) to[bend left = 20] (w_4.east);
+     \draw[->] (w_2) -- (w_4);
+     \draw[->] (w_4) -- (w_2);
+
+     \draw[->] (w_1) to[bend right = 20] (w_5.west);
+     \draw[->] (w_3) -- (w_5);
+     \draw[->] (w_5) -- (w_3);
+
+
+\end{tikzpicture}
+
+Possiamo dimostrare che ora il numero di rettangoli in un sistema
 completo di S4-diagrammi è finito:
 
 Una catena di rettangoli è finita, per quanto detto prima.
@@ -1163,15 +1466,14 @@ Quindi anche per S5 c'è una procedura di decisione per le formule S5-valide.
 
 \section{Teorema di completezza per T}
 Data una formula $\alpha$, una volta costruito il suo sistema completo di T-diagrammi,
-associamo ad ogni rettango $w_i$ del sistema una formula $w_i'$ definita in questo modo:
+associamo ad ogni rettangolo $w_i$ del sistema una formula $w_i'$ definita in questo modo:
 
 nel rettangolo $w_i$ c'è una formula $\beta$ che deve essere falsa ed eventualmente delle condizioni,
 cioè un numero finito di formule $\gamma_1, ...\gamma_n$ che devono essere vere, ereditate
 dal suo predecessore diretto, allora definiamo $w_i'$ come la formula
 $\beta \lor \neg \gamma_1 \lor ... \lor \neg \gamma_n$, con $n \geq 0$.
 
-\begin{flushleft}
-\textbf{Lemma 1}
+\begin{lemma} \label{LemmaImportante}
 Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo,
 se $\beta$ è una sottoformula di $w_i'$ e a $\beta$ è assegnato univocamente il valore di verità falso
 nel rettangolo $w_i$,
@@ -1182,37 +1484,39 @@ Se invece a $\beta$ è associato il valore di verità vero,
 
 
 allora $\vdash \neg \beta \rightarrow w_i'$ in T
+\end{lemma}
 
-\textit{Dim.}
+\begin{proof}
 
-Supponiamo che a $\beta$ sia associato il valore di verità falso, l'altro caso è analogo,
+Supponiamo che a $\beta$ sia associato il valore di verità falso
+(l'altro caso essendo analogo),
 allora se $\delta_1, ..., \delta_n$ sono tutte le sottoformule ben formate di $w_i'$ è
-facile vedere che
+facile vedere che la formula
 $$(\Box \delta_1 \rightarrow \delta_1) \rightarrow ... \rightarrow (\Box \delta_n \rightarrow \delta_n) \rightarrow (\beta \rightarrow w_i')$$
 è ottenuta per sostituzione da una tautologia di $CP$, infatti l'unico modo per rendere
-falsa questa formula è assegnare a $\delta_k$ $1$ ogni volta che associamo a $\delta_k$ $1$,
-per $k = 1 ... n$, assegnare $1$ a $\beta$ e $0$ a $w_i'$.
-Ma sappiamo, per quanto dedotto dal T-diagramma, e per il fatto,
+falsa questa formula è assegnare il valore $1$ a $\delta_k$ ogni volta che
+assegniamo il valore $1$ a $\Box \delta_k$,
+per $k = 1 ... n$, il valore $1$ a $\beta$ e il valore $0$ a $w_i'$.
+Ma sappiamo, per quanto dedotto dal T-diagramma,
 che se $w_i'$ ha valore di verità $1$,
 allora $\beta$ deve avere valore di verità $0$.
 
 Quindi otteniamo l'asserto.
 
-\end{flushleft}
+\end{proof}
 
 
-\begin{flushleft}
-\textbf{Lemma}
-
+\begin{lemma}
 Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
 non ci sono operatori contrassegnati con $\dagger$,
 se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
+\end{lemma}
 
-\textit{Dim.}
+\begin{proof}
 
 Siccome $w_i$ è esplicitamente inconsistente, esiste una sottoformula $\beta$ di $w_i'$
-tale che ad essa è associata sia il valore di verità $0$ che il valore di verità $1$,
-allora per il lemma precedente si ha:
+tale che ad essa è associato sia il valore di verità $0$ che il valore di verità $1$,
+allora per il lemma \ref{LemmaImportante} si ha:
 $$\vdash \beta \rightarrow w_i'$$
 e
 $$\vdash \neg \beta \rightarrow w_i'$$
@@ -1224,19 +1528,17 @@ $(\neg \beta \rightarrow \alpha) \rightarrow (\beta \rightarrow \alpha) \rightar
 Allora applicando due volte il modus ponens e sfruttando anche i teoremi che abbiamo mostrato poco sopra,
 otteniamo che $\vdash w_i'$.
 
-\end{flushleft}
+\end{proof}
 
 
-\begin{flushleft}
-\textbf{Lemma}
-
+\begin{lemma}
 Dato un sistema completo di T-diagrammi e un rettangolo $w_i$, se $\vdash w_i'$
 e $w_j$ è il suo predecessore diretto e in $w_j$ non ci sono connettivi contrassegnati
 con $\dagger$,
 allora $\vdash w_j'$
+\end{lemma}
 
-\textit{Dim.}
-
+\begin{proof}
 Se $w_i$ e $w_j$ sono lo stesso rettangolo, non c'è niente da dimostrare.
 Mentre se $w_i$ e $w_j$ sono due rettangoli diversi, siccome $w_i$ è costruito
 a partire da $w_j$ secondo le regole della procedura, allora in $w_i$ c'è
@@ -1270,25 +1572,25 @@ Dunque per Modus Ponens si ricava:
 $$\vdash w_j'$$
 cioè la tesi.
 
-\end{flushleft}
+\end{proof}
 
 Consideriamo ora il caso in cui un rettangolo contenga delle sottoformule
 a cui non è possibile dare un valore di verità univoco e per cui bisogna
 usare la regola dei rettangoli alternativi. Se nelle formule rimuoviamo
 tutte le occorrenze di connettivi non primitivi, sostituendoli con la loro definizione
 in termini di $\neg$ e $\lor$, allora otteniamo che l'unico connettivo
-per cui si può presentare una situazione di ambiguità e $\lor$ e per le sue sottoformule
-sono possibili tre assegnamenti diversi. Inoltre ricordiamo che un rettangolo a cui è stata applicata
+per cui si può presentare una situazione di ambiguità è $\lor$ e per le sue sottoformule
+sono possibili tre assegnazioni diverse. Inoltre ricordiamo che un rettangolo a cui è stata applicata
 la regola dei rettangoli alternativi è esplicitamente inconsistente se tutti i
 rettangoli alternativi sono inconsistenti. Quindi dato un rettangolo
 a cui è applicata la regola dei rettangoli alternativi non perdiamo di generalità
 se assumiamo che i rettangoli alternativi siano tre. Allora dimostriamo il seguente lemma:
 
-\begin{flushleft}
-\textbf{Lemma}
+\begin{lemma}
 $$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
+\end{lemma}
 
-\textit{Dim.}
+\begin{proof}
 
 Siccome in $w_i$ c'è un'ambiguità sappiamo che c'è una sottoformula in $w_i'$
 del tipo $\beta \lor \gamma$ a cui è stato assegnato $1$, quindi vale:
@@ -1319,7 +1621,7 @@ $$\vdash (\neg (\beta \lor \epsilon) \rightarrow w_i') \rightarrow
          (w_i(1)' \rightarrow w_i(2)' \rightarrow w_i(3)' \rightarrow w_i')$$
 
 Allora applicando quattro volte il Modus Ponens, otteniamo $\vdash w_i'$
-\end{flushleft}
+\end{proof}
 
 Questi lemmi che abbiamo dimostrato ci permettono di concludere facilmente
 che se in un sistema completo di T-diagrammi per la formula c'è un rettangolo esplicitamente inconsistente,
@@ -1338,18 +1640,18 @@ cioè un numero finito di formule $\gamma_1, ...\gamma_n$ che devono essere vere
 dal suo predecessore diretto, allora definiamo $w_i''$ come la formula
 $\beta \lor \neg \Box \gamma_1 \lor ... \lor \neg \Box \gamma_n$, con $n \geq 0$.
 
-\begin{flushleft}
-\textbf{Lemma}
+\begin{lemma}
 Dato un sistema completo di S4-diagrammi e sia $w_i$ un suo rettangolo,
 
 allora $\vdash w_i' \rightarrow w_i''$ in T
+\end{lemma}
 
-\textit{Dim.}
+\begin{proof}
 
 La dimostrazione è semplice e si basa sul fatto che vale:
 $\vdash \neg \alpha \rightarrow \neg \Box \alpha$ in T
 
-\end{flushleft}
+\end{proof}
 
 Da questo lemma e dal lemma precedente per T ricaviamo che se un rettangolo $w_i$
 di un sistema completo di S4-diagrammi è esplicitamente inconsitente
@@ -1357,15 +1659,14 @@ allora $\vdash w_i''$
 
 Mostriamo ora:
 
-\begin{flushleft}
-\textbf{Lemma}
-
+\begin{lemma}
 Dato un sistema completo di S4-diagrammi e un rettangolo $w_i$, se $\vdash w_i''$
 e $w_j$ è il suo predecessore diretto e in $w_j$ non ci sono connettivi contrassegnati
 con $\dagger$,
 allora $\vdash w_j''$
+\end{lemma}
 
-\textit{Dim.}
+\begin{proof}
 
 Se $w_i$ e $w_j$ sono lo stesso rettangolo, non c'è niente da dimostrare.
 Mentre se $w_i$ e $w_j$ sono due rettangoli diversi, siccome $w_i$ è costruito
@@ -1402,13 +1703,13 @@ $$\vdash (\neg \Box \beta_1 \lor ... \neg \Box \beta_n \lor \Box \gamma) \righta
 Per modus ponens:
 $$\vdash w_j''$$
 
-\end{flushleft}
+\end{proof}
 
-Infine, con qualche piccola accortezza si può giungere anche qui a dimostrare il lemma:
-\begin{flushleft}
-\textbf{Lemma}
+Infine, con qualche piccola modifica rispetto
+alla dimostrazione usata per il Sistema T si può giungere anche qui a dimostrare il lemma:
+\begin{lemma}
 $$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
-\end{flushleft}
+\end{lemma}
 
 E perciò come prima otteniamo il nostro teorema di completezza.
 
@@ -1499,7 +1800,7 @@ possibili. Mentre in S4 e in T, ciò non è detto, infatti in questi sistemi una
 Questa differenza di definizioni mette in mostra una proprietà importante della necessità,
 infatti non è detto che una persona sia in grado di concepire tutti i mondi possibili,
 ma la nostra capacità di concepire stati di cose diversi è sicuramente condizionata dal mondo
-in cui viviamo. Proprio su quest'osservazione possiamo indagare sulla la distinzione tra T e S4,
+in cui viviamo. Proprio su quest'osservazione possiamo indagare sulla distinzione tra T e S4,
 infatti in S4 quando si concepisce un mondo alternativo è possibile concepire quel mondo
 come se ci vivessimo dentro, e quindi è per noi possibile concepire tutti i mondi che sarebbero
 concepibili se vivessimo in quel mondo. Al contrario in T non è così, concepire un mondo
@@ -1508,7 +1809,7 @@ di concepire mondi alterantivi.
 
 In definitiva ciò che viene messo in evidenza dalle semantiche di Kripke per questi sistemi è
 che il concetto di necessità è in un certo senso collegato al concetto di conoscenza, più
-è possibile conoscere mondi alternativi, più sarà forti saranno le proposizioni che possiamo
+è possibile conoscere mondi alternativi, più saranno le proposizioni che possiamo
 affermare essere vere.
 
 Questo fatto ci spinge a pensare alla pluralità di sistemi modali possibili
