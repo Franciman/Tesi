@@ -5,3 +5,6 @@
 *.log
 *.toc
 #*.pdf
+*.nav
+*.out
+*.snm

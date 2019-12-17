@@ -1,0 +1,771 @@
+\documentclass[notheorem]{beamer}
+\usepackage[italian]{babel}
+\deftranslation{Definition}{Definizione}
+\deftranslation{Theorem}{Teorema}
+\deftranslation{Lemma}{Lemma}
+\deftranslation{Remark}{Nota}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usetikzlibrary{arrows, positioning}
+
+% Ambiente per le dimostrazioni
+
+% Ambiente per le dimostrazioni formali formali
+\newenvironment{formal_proof}
+    {
+    \begin{center}
+    \begin{tabular} {c c|c}
+    }
+    {\end{tabular}
+    \end{center}
+    }
+
+\title{I Sistemi di Logica Modale T, S4, S5:}
+\subtitle{Sintassi e Semantica}
+\author{Francesco Magliocca}
+%\institute{Università di Napoli Federico II}
+\date{18/12/2019}
+
+\begin{document}
+\frame{\titlepage}
+\begin{frame}
+\frametitle{Calcolo Proposizionale}
+Introduciamo un sistema formale per il Calcolo Proposizionale
+che chiameremo $CP$.
+\end{frame}
+\begin{frame}
+\frametitle{Calcolo Proposizionale: L'alfabeto}
+Sia $A$ insieme numerable disgiunto da $\{\neg, \lor, (, )\}$ e contenente
+almeno tre elementi che indicheremo con $p, q, r$.
+
+Chiamiamo l'insieme $\Sigma = A \cup \{\neg, \lor, (, )\}$ \emph{alfabeto}
+e gli elementi di $A$ \emph{variabili proposizionali}.
+\end{frame}
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Il linguaggio}
+L'insieme delle formule ben formate (fbf) $L_{CP}$ è il più piccolo sottoinsieme di
+$\Sigma^{*} = \bigcup_{n \in \mathbb{N}} \Sigma^n$ tale che:
+\begin{itemize}
+\item $x \in A \Rightarrow x \in L_{CP}$;
+\item $\alpha \in L_{CP} \Rightarrow \neg (\alpha) \in L_{CP}$;
+\item $\alpha \in L_{CP}$ e $\beta \in L_{CP} \Rightarrow (\alpha) \lor (\beta) \in L_{CP}$.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Calcolo proposizionale: Connettivi aggiuntivi}
+Se $\alpha \in L_{CP}$ e $\beta \in L_{CP}$, allora diamo le seguenti definizioni:
+\begin{itemize}
+\item $(\alpha) \land (\beta) := \neg(\neg(\alpha) \lor \neg(\beta))$;
+\item $(\alpha) \rightarrow (\beta) := (\neg(\alpha)) \lor (\beta)$;
+\item $(\alpha) \leftrightarrow (\beta) := ((\alpha) \rightarrow (\beta)) \land ((\beta) \rightarrow (\alpha))$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Gli assiomi}
+\begin{itemize}
+\item HPD: $p \rightarrow (q \rightarrow p)$
+\item HPMP: $(r \rightarrow (p \rightarrow q)) \rightarrow (r \rightarrow p) \rightarrow (r \rightarrow q)$
+\item $\lor$-I1: $p \rightarrow (p \lor q)$
+\item $\lor$-I2: $q \rightarrow (p \lor q)$
+\item $\lor$-E: $(p \rightarrow r) \rightarrow (q \rightarrow r) \rightarrow (p \lor q \rightarrow r)$
+\item $\land$-I: $p \rightarrow q \rightarrow p \land q$
+\item $\land$-E1: $p \land q \rightarrow p$
+\item $\land$-E2: $p \land q \rightarrow q$
+\item $\neg$-I: $(p \rightarrow q) \land (p \rightarrow \neg q) \rightarrow \neg p$
+\item TER: $p \lor \neg p$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Le regole di deduzione}
+\begin{enumerate}
+\item Modus Ponens:
+
+$$\frac{\alpha \rightarrow \beta \ \alpha}{\beta}$$
+
+\item Regola di sostituzione:
+
+Se $\alpha \in L_{CP}$, $x \in A$ e $\beta \in L_{CP}$, allora
+la formula $\alpha[x/\beta]$ ottenuta sostituendo uniformente $\beta$ al posto di $x$
+all'interno di $\alpha$ è una conseguenza di $\alpha$.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Dimostrazioni}
+Una dimostrazione è una sequenza finita $D$ di fbf tale che
+ogni termine $D_i$ della sequenza soddisfa una delle seguenti condizioni
+\begin{itemize}
+\item $D_i$ è un assioma;
+\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \emph{Modus Ponens}
+da $D_h$ e $D_k$.
+\item esiste $D_h$, con $h < i$, tale che $D_i$ è derivato tramite
+la regola di \emph{sostituzione} a partire da $D_h$.
+\end{itemize}
+
+Se $\alpha \in L_{CP}$ ed esiste una dimostrazione $D$ il cui ultimo termine è $\alpha$,
+diciamo che esiste una dimostrazione di $\alpha$ e scriviamo $\vdash \alpha$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Semantica}
+Chiamiamo \emph{interpretazione} una funzione $I : A \to \{0, 1\} \subset \mathbb{N}$
+Data un'interpretazione $I$ definiamo la funzione $V_I : L_{CP} \to \{0, 1\} \subset \mathbb{N}$
+come segue:
+\begin{itemize}
+\item $V_I(x) = I(x)$, $\forall x \in A$
+\item $V_I((\alpha) \lor (\beta)) = max\{V_I(\alpha), V_I(\beta)\}$
+\item $V_I(\neg (\alpha)) = 1 - V_I(\alpha)$
+\end{itemize}
+
+Sia $\alpha \in L_{CP}$, diciamo che $\alpha$ è \emph{valida} e scriviamo $\vDash \alpha$ se
+$V_I(\alpha) = 1$, per ogni interpretazione $I$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Semantica}
+Tutti i connettivi presenti in $CP$ sono interpretati come operatori vero-funzionali.
+\end{frame}
+
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Semantica}
+Chiamiamo \emph{interpretazione} una funzione $I : A \to \{0, 1\} \subset \mathbb{N}$
+Data un'interpretazione $I$ definiamo la funzione $V_I : L_{CP} \to \{0, 1\} \subset \mathbb{N}$
+come segue:
+\begin{itemize}
+\item $V_I(x) = I(x)$, $\forall x \in A$
+\item $V_I((\alpha) \lor (\beta)) = max\{V_I(\alpha), V_I(\beta)\}$
+\item $V_I(\neg (\alpha)) = 1 - V_I(\alpha)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Calcolo Proposizionale: Teorema di Completezza}
+Per il sistema $CP$ vale il seguente importante risultato, chiamato
+\emph{Teorema di Completezza}:
+
+Per ogni $\alpha \in L_{CP}$ si ha:
+$$\vdash \alpha \Leftrightarrow \vDash \alpha$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Logica Modale}
+Estendiamo il sistema $CP$ in modo da introdurre due nuovi connettivi, $\Box$
+e $\Diamond$ corrispondenti alle nozioni di \emph{necessità} e \emph{possibilità}.
+\end{frame}
+
+\begin{frame}
+\frametitle{Logica Modale: Sulla vero-funzionalità di $\Box$ e $\Diamond$}
+È noto che qualsiasi operatore vero-funzionale sia definibile in termini
+di negazione e disgiunzione. Quindi se $\Box$ e $\Diamond$ fossero interpretabili
+come operatori vero-funzionali, potremmo semplicemente aggiungerli come connettivi
+derivati in $CP$ senza aggiungere altro.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Logica Modale: Sulla vero-funzionalità di $\Box$ e $\Diamond$}
+Ma così non è!
+
+Infatti non basta sapere che ``Vincenzo è ricco'' è vera per esprimersi
+circa la verità dell'affermazione ``È necessario che Vincenzo sia ricco''.
+
+Dobbiamo allora estendere $CP$ in maniera sostanziale.
+\end{frame}
+
+\begin{frame}
+\frametitle{Logica Modale: I Sistemi}
+
+Non c'è un unico sistema per la logica modale, anzi ce ne sono molti.
+Ne presentiamo tre:
+\begin{enumerate}
+\item Sistema T
+\item Sistema S4
+\item Sistema S5
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: L'alfabeto}
+Estendiamo l'alfabeto di $CP$ aggiungendo il simbolo $\Box$, quindi
+chiamiamo l'insieme $\Sigma_1 = A \cup \{\neg, \lor, \Box, (, )\}$ alfabeto
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Il linguaggio}
+L'insieme delle formule ben formate (fbf) $L$ è il più piccolo sottoinsieme di
+$\Sigma_1^{*} = \bigcup_{n \in \mathbb{N}} \Sigma_1^n$ tale che:
+\begin{itemize}
+\item $x \in A \Rightarrow x \in L$;
+\item $\alpha \in L \Rightarrow \neg (\alpha) \in L$;
+\item $\alpha \in L$ e $\beta \in L \Rightarrow (\alpha) \lor (\beta) \in L$;
+\item {\color{red} $\alpha \in L \Rightarrow \Box (\alpha) \in L.$}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Connettivi aggiuntivi}
+Se $\alpha \in L$, allora diamo la seguente definizione:
+$$\Diamond (\alpha) := \neg(\Box(\neg(\alpha)))$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Regole di deduzione}
+\begin{enumerate}
+\item Modus Ponens:
+
+$$\frac{\alpha \rightarrow \beta \ \alpha}{\beta}$$
+
+\item Regola di sostituzione:
+
+Se $\alpha \in L$, $x \in A$ e $\beta \in L$, allora
+la formula $\alpha[x/\beta]$ ottenuta sostituendo uniformente $\beta$ al posto di $x$
+all'interno di $\alpha$ è una conseguenza di $\alpha$.
+
+\item {\color{red} Regola di necessitazione:
+
+$$\frac{\alpha}{\Box alpha}$$}
+\end{enumerate}
+\end{frame}
+
+% \begin{frame}
+% \frametitle{Sistema T: Sulla regola di necessitazione}
+% $$\frac{\alpha}{\Box alpha}$$
+% \end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Assiomi}
+Gli assiomi del Sistema T sono tutti gli assiomi di $CP$ più i seguenti:
+\begin{itemize}
+\item T: $\Box p \rightarrow p$
+\item K: $\Box(p \rightarrow q) \rightarrow (\Box p \rightarrow \Box q)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema S4}
+Il Sistema S4 è ottenuto aggiungendo al Sistema T l'assioma S4:
+$$\Box p \rightarrow \Box \Box p$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema S5}
+Il Sistema S5 è ottenuto aggiungendo al Sistema T l'assioma S5:
+$$\Diamond p \rightarrow \Box \Diamond p$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Logica Modale: Dimostrazioni}
+Una dimostrazione in un sistema $S$ ($\in \{ T, S4, S5\}$)  è una sequenza finita $D$ di fbf tale che
+ogni termine $D_i$ della sequenza soddisfa una delle seguenti condizioni
+\begin{itemize}
+\item $D_i$ è un assioma di $S$;
+\item esistono $D_h, D_k$, con $h < i, k < i$, tali che $D_i$ è derivato per \emph{Modus Ponens}
+da $D_h$ e $D_k$.
+\item esiste $D_h$, con $h < i$, tale che $D_i$ è derivato tramite
+la regola di \emph{sostituzione} a partire da $D_h$.
+\item {\color{red} esiste $D_h$, con $h < i$, tale che $D_i$ è derivato tramite
+la regola di \emph{necessitazione} a partire da $D_h$}.
+\end{itemize}
+
+Se $\alpha \in L$ ed esiste una dimostrazione $D$ in un sistema $S$ il cui ultimo termine è $\alpha$,
+diciamo che esiste una dimostrazione di $\alpha$ e scriviamo $\vdash_S \alpha$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Relazioni tra i sistemi T, S4, S5}
+\begin{definition}
+Diremo che un sistema formale è meno forte di un altro se tutti i teoremi del primo
+sono teoremi anche del secondo.
+\end{definition}
+
+\begin{block}{Nota}
+È ovvio che $CP$ è meno forte del Sistema $T$, che è meno forte sia del sistema $S4$
+che del sistema $S5$.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Relazioni tra i sistemi T, S4, S5 II}
+\begin{theorem}
+$\vdash \Box p \rightarrow \Box \Box p$ in $S5$, ovvero il Sistema S5 è più forte del Sistema S4.
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Logica Modale: Semantica}
+
+Un modello di Kripke è una terna $(W, R, I)$ costituita da:
+\begin{itemize}
+\item $W$ insieme non vuoto i cui elementi sono detti \emph{mondi};
+\item $R$ relazione binaria su $W$ detta \emph{relazione di accessibilità};
+\item $I : A \times W \to \{0, 1\} \subset \mathbb{N}$ detta \emph{interpretazione}.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Logica Modale: Semantica II}
+
+Dato un modello di Kripke $K = (W, R, I)$ definiamo la funzione $V_K : L \times W \to \{0, 1\}$
+come segue.
+Fissato $w \in W$:
+\begin{itemize}
+\item $V(x, w) = I(x, w), \forall x \in A$
+\item $V(\neg (\alpha), w) = 1 - V(\alpha, w)$
+\item $V((\alpha) \lor (\beta), w) = max{V(\alpha, w), V(\beta, w)}$
+\item {\color{red} $V(\Box (\alpha), w) = min\{ V(\alpha, w') : w' \in W$ e $w R w' \}$}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Semantica}
+Chiamiamo T-modello un modello di Kripke in cui la relazione di \emph{accessibilità}
+sia \textbf{riflessiva}.
+
+Se $\alpha \in L$, diciamo che $\alpha$ è T-valida e
+scriviamo $\vDash_T \alpha$ se per ogni T-modello $K = (W, R, I)$
+si ha $\forall w \in W. V_K(\alpha, w) = 1$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema S4: Semantica}
+Chiamiamo S4-modello un modello di Kripke in cui la relazione di \emph{accessibilità}
+sia \textbf{riflessiva} e \textbf{transitiva}.
+
+Se $\alpha \in L$, diciamo che $\alpha$ è S4-valida e scriviamo
+$\vDash_{S4} \alpha$ se per ogni S4-modello $K = (W, R, I)$
+si ha $\forall w \in W. V_K(\alpha, w) = 1$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema S5: Semantica}
+Chiamiamo S5-modello un modello di Kripke in cui la relazione di \emph{accessibilità}
+sia la relazione binaria totale su $W$.
+
+Se $\alpha \in L$, diciamo che $\alpha$ è S5-valida e scriviamo
+$\vDash_{S5} \alpha$ se per ogni S5-modello $K = (W, R, I)$
+si ha $\forall w \in W. V_K(\alpha, w) = 1$.
+\end{frame}
+
+\begin{frame}
+\frametitle{T, S4, S5: Teorema di adeguatezza}
+Per tutti e tre i sistemi vale il teorema di adeguatezza che afferma:
+
+Per ogni formula $\alpha \in L$:
+$$\vdash \alpha \Rightarrow \vDash \alpha$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Collasso nel calcolo proposizionale}
+In nessun sistema è dimostrabile la formula $p \rightarrow \Box p$
+
+quindi non è un teorema la formula $p \leftrightarrow \Box p$ in nessun sistema.
+\end{frame}
+
+\begin{frame}
+\frametitle{Collasso nel calcolo proposizionale}
+Basta costruire un $S5$-modello come segue:
+\begin{itemize}
+    \item $W = \{w_1, w_2\}$;
+    \item $R = W x W$;
+    \item $I(1, w_1) = \begin{cases}
+                      1 & \mbox{se } x = p \mbox{ e } w = w_1 \\
+                      0 & \mbox{altrimenti}
+    \end{cases}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione}
+Data $\alpha \in L$, cerchiamo un T-modello che falsifichi $\alpha$, ovvero un T-modello $K$
+in cui esista un mondo $w$ tale che: $$V_K(\alpha, w) = 0$$.
+
+Rappresentiamo graficamente questo procedimento con dei diagrammi detti T-diagrammi
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione}
+\begin{center}
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            {$\underset{ }{\underset{ }{\diamond}} (p \land \diamond q)
+              \underset{0}{\rightarrow}
+              (\stackrel{ }{\underset{ }{\Box}} \underset{ }{\underset{ }{\diamond}} p
+               \underset{ }{\rightarrow} \stackrel{ }{\underset{ }{\diamond}} \underset{ }{\underset{ }{\Box}} q)$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+
+    \end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione}
+\begin{center}
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            {$\underset{*}{\underset{1}{\diamond}} (p \land \diamond q)
+              \underset{0}{\rightarrow}
+              (\stackrel{*}{\underset{1}{\Box}} \underset{ }{\underset{ }{\diamond}} p
+               \underset{0}{\rightarrow} \stackrel{*}{\underset{0}{\diamond}} \underset{ }{\underset{ }{\Box}} q)$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+
+    \end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione}
+\begin{center}
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            {$\underset{*}{\underset{1}{\diamond}} (p \land \diamond q)
+              \underset{0}{\rightarrow}
+              (\stackrel{*}{\underset{1}{\Box}} \underset{*}{\underset{1}{\diamond}} p
+               \underset{0}{\rightarrow} \stackrel{*}{\underset{0}{\diamond}} \underset{*}{\underset{0}{\Box}} q)$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+
+    \end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione}
+   \scalebox{0.75}{
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            {$\underset{*}{\underset{1}{\diamond}} (p \land \diamond q)
+              \underset{0}{\rightarrow}
+              (\stackrel{*}{\underset{1}{\Box}} \underset{*}{\underset{1}{\diamond}} p
+               \underset{0}{\rightarrow} \stackrel{*}{\underset{0}{\diamond}} \underset{*}{\underset{0}{\Box}} q)$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+        \node[world] (w_2) [below left=of w_1]
+              {$\begin{array}{c|c|c}
+                  \underset{1}{p} \underset{1}{\land} \underset{*}{\underset{1}{\diamond}} q &
+                  \underset{1}{\diamond} \underset{1}{p} &
+                  \underset{*}{\underset{0}{\Box}} q
+              \end{array}$};
+
+        \node[black, left] at (w_2.west) {$w_2$};
+
+        \node[world] (w_3) [below=of w_1]
+              {$\begin{array}{c|c|c}
+                  \underset{1}{p} &
+                  \underset{1}{\diamond}\underset{1}{p} &
+                  \underset{*}{\underset{0}{\Box}} q
+              \end{array}$};
+
+        \node[black, right] at (w_3.east) {$w_3$};
+
+
+        \node[world] (w_4) [below right=of w_1]
+            {$\begin{array}{c|c|c}
+                \underset{0}{q} &
+                \underset{*}{\underset{1}{\diamond}} p &
+                \underset{0}{\Box}\underset{0}{q}
+            \end{array}$};
+
+        \node[black, left] at (w_4.west) {$w_4$};
+
+
+
+        \draw[->] (w_1.south west) -- (w_2);
+        \draw[->] (w_1.south) -- (w_3);
+        \draw[->] (w_1.south east) -- (w_4);
+
+    \end{tikzpicture}
+    }
+\end{frame}
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione}
+   \scalebox{0.75}{
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            {$\underset{*}{\underset{1}{\diamond}} (p \land \diamond q)
+              \underset{0}{\rightarrow}
+              (\stackrel{*}{\underset{1}{\Box}} \underset{*}{\underset{1}{\diamond}} p
+               \underset{0}{\rightarrow} \stackrel{*}{\underset{0}{\diamond}} \underset{*}{\underset{0}{\Box}} q)$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+        \node[world] (w_2) [below left=of w_1]
+              {$\begin{array}{c|c|c}
+                  \underset{1}{p} \underset{1}{\land} \underset{*}{\underset{1}{\diamond}} q &
+                  \underset{1}{\diamond} \underset{1}{p} &
+                  \underset{*}{\underset{0}{\Box}} q
+              \end{array}$};
+
+        \node[black, left] at (w_2.west) {$w_2$};
+
+        \node[world] (w_3) [below=of w_1]
+              {$\begin{array}{c|c|c}
+                  \underset{1}{p} &
+                  \underset{1}{\diamond}\underset{1}{p} &
+                  \underset{*}{\underset{0}{\Box}} q
+              \end{array}$};
+
+        \node[black, right] at (w_3.east) {$w_3$};
+
+
+        \node[world] (w_4) [below right=of w_1]
+            {$\begin{array}{c|c|c}
+                \underset{0}{q} &
+                \underset{*}{\underset{1}{\diamond}} p &
+                \underset{0}{\Box}\underset{0}{q}
+            \end{array}$};
+
+        \node[black, left] at (w_4.west) {$w_4$};
+
+
+        \node[world] (w_5) [below left=of w_2]
+              {$\underset{1}{q}$};
+
+        \node[black, right] at (w_5.east) {$w_5$};
+
+        \node[world] (w_6) [below=of w_2]
+              {$\underset{0}{q}$};
+
+        \node[black, right] at (w_6.east) {$w_6$};
+
+        \node[world] (w_7) [below=of w_3]
+             {$\underset{0}{q}$};
+
+        \node[black, left] at (w_7.west) {$w_7$};
+
+        \node[world] (w_8) [below=of w_4]
+             {$\underset{1}{p}$};
+
+        \node[black, left] at (w_8.west) {$w_8$};
+
+        \draw[->] (w_1.south west) -- (w_2);
+        \draw[->] (w_1.south) -- (w_3);
+        \draw[->] (w_1.south east) -- (w_4);
+
+        \draw[->] (w_2) -- (w_5);
+        \draw[->] (w_2) -- (w_6);
+
+        \draw[->] (w_3) -- (w_7);
+
+        \draw[->] (w_4) -- (w_8);
+
+
+
+    \end{tikzpicture}
+    }
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione II}
+\begin{center}
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            { $\Box p \underset{ }{\underset{0}{\leftrightarrow}} \neg \diamond \neg p$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+    \end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione II}
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            { $\Box p \underset{\dagger}{\underset{0}{\leftrightarrow}} \neg \diamond \neg p$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+        \node[world] (w_1') [below left=of w_1]
+            { $\stackrel{*}{\underset{1}{\Box} \underset{1}{p}} \underset{0}{\leftrightarrow} \underset{0}{\neg} \underset{*}{\underset{1}{\diamond}} \neg p$
+            };
+
+        \node[black, left] at (w_1'.west) {$w_1(1)$};
+
+        \node[world] (w_2) [below=of w_1']
+            { $\begin{array}{c|c}
+                \underline{\underset{1}{\neg}\underset{0}{p}} &
+                \underset{1}{p}
+            \end{array}$
+            };
+
+        \node[black, right] at (w_2.east) {$w_2$};
+
+        \node[world] (w_1'') [below right=of w_1]
+            { $\underset{*}{\underset{0}{\Box}} p \underset{0}{\leftrightarrow} \underset{1}{\neg} \stackrel{*}{\underset{0}{\diamond}} \underset{0}{\neg} \underset{1}{p}$
+            };
+
+        \node[black, left] at (w_1''.west) {$w_1(2)$};
+
+        \node[world] (w_3) [below=of w_1'']
+            { $\begin{array}{c|c}
+                \underline{\underset{0}{p}} &
+                \underset{0}{\neg}\underset{1}{p}
+            \end{array}$
+            };
+
+        \node[black, right] at (w_3.east) {$w_3$};
+
+        \draw[->] (w_1') -- (w_2);
+        \draw[->] (w_1'') -- (w_3);
+
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Procedura di decisione III}
+Data una formula $\alpha \in L$, una volta seguita tutta la procedura
+diciamo che abbiamo ottenuto un sistema completo di T-diagrammi per $\alpha$.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Sistema T: Teorema di completezza}
+Data una formula $\alpha \in L$ costruiamo il suo sistema completo di T-diagrammi.
+Ad ogni rettangolo $w_i$ associamo la formula:
+$$w_i' := \gamma \lor \neg \beta_1 \lor \ldots \lor \neg \beta_n$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Teorema di completezza}
+\begin{block}{Lemma 1}
+Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo,
+se $\beta$ è una sottoformula di $w_i'$ e a $\beta$ è assegnato univocamente il valore di verità falso
+nel rettangolo $w_i$,
+
+allora $\vdash \beta \rightarrow w_i'$ in T
+
+Se invece a $\beta$ è associato il valore di verità vero,
+
+
+allora $\vdash \neg \beta \rightarrow w_i'$ in T
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Teorema di completezza}
+\begin{block}{Lemma 2}
+Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
+non ci sono operatori contrassegnati con $\dagger$,
+se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Teorema di completezza}
+\begin{block}{Lemma 3}
+Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
+non ci sono operatori contrassegnati con $\dagger$,
+se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Teorema di completezza}
+
+\begin{block}{Lemma 4}
+Se nel rettangolo $w_i$ c'è un operatore contrassegnato con $\dagger$
+e $w_i(1), w_i(2), w_i(3)$ sono i suoi rettangoli alternativi:
+$$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Sistema T: Teorema di completezza}
+    \begin{tikzpicture}[
+    world/.style={rectangle,draw},
+    invisible/.style={rectangle}]
+        \node[world] (w_1)
+            { $\Box p \underset{\dagger}{\underset{0}{\leftrightarrow}} \neg \diamond \neg p$
+            };
+
+        \node[black, left] at (w_1.west) {$w_1$};
+
+        \node[world] (w_1') [below left=of w_1]
+            { $\stackrel{*}{\underset{1}{\Box} \underset{1}{p}} \underset{0}{\leftrightarrow} \underset{0}{\neg} \underset{*}{\underset{1}{\diamond}} \neg p$
+            };
+
+        \node[black, left] at (w_1'.west) {$w_1(1)$};
+
+        \node[world] (w_2) [below=of w_1']
+            { $\begin{array}{c|c}
+                \underline{\underset{1}{\neg}\underset{0}{p}} &
+                \underset{1}{p}
+            \end{array}$
+            };
+
+        \node[black, right] at (w_2.east) {$w_2$};
+
+        \node[world] (w_1'') [below right=of w_1]
+            { $\underset{*}{\underset{0}{\Box}} p \underset{0}{\leftrightarrow} \underset{1}{\neg} \stackrel{*}{\underset{0}{\diamond}} \underset{0}{\neg} \underset{1}{p}$
+            };
+
+        \node[black, left] at (w_1''.west) {$w_1(2)$};
+
+        \node[world] (w_3) [below=of w_1'']
+            { $\begin{array}{c|c}
+                \underline{\underset{0}{p}} &
+                \underset{0}{\neg}\underset{1}{p}
+            \end{array}$
+            };
+
+        \node[black, right] at (w_3.east) {$w_3$};
+
+        \draw[->] (w_1') -- (w_2);
+        \draw[->] (w_1'') -- (w_3);
+
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema T: Teorema di completezza}
+Se $\alpha \in L$ e $\vDash_T \alpha$, nel sistema
+completo di T-diagrammi di $\alpha$ c'è sicuramente un'inconsistenza.
+Sfruttando i lemmi che abbiamo enunciato poc'anzi si riesce a mostrare
+che $w_1'$ è un teorema, ma per costruzione $w_1'$ è $\alpha$.
+Quindi otteniamo:
+$$\vdash_T \alpha \Leftrightarrow \vDash_T \alpha$$
+\end{frame}
+
+
+\begin{frame}
+Grazie per l'attenzione.
+\end{frame}
+
+\end{document}
