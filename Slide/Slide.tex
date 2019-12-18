@@ -1,4 +1,4 @@
-\documentclass[notheorem]{beamer}
+\documentclass[notheorem,aspectratio=169]{beamer}
 \usepackage[italian]{babel}
 \deftranslation{Definition}{Definizione}
 \deftranslation{Theorem}{Teorema}
@@ -7,6 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{arrows, positioning}
 
@@ -22,14 +23,27 @@
     \end{center}
     }
 
-\title{I Sistemi di Logica Modale T, S4, S5:}
-\subtitle{Sintassi e Semantica}
-\author{Francesco Magliocca}
-%\institute{Università di Napoli Federico II}
-\date{18/12/2019}
+% \title{I Sistemi di Logica Modale T, S4, S5:}
+% \subtitle{Sintassi e Semantica}
+% \author{Francesco Magliocca \and Ch.mo Prof. Ulderico Dardano}
+% \institute{Università di Napoli Federico II}
+% \date{18/12/2019}
 
 \begin{document}
-\frame{\titlepage}
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+        \begin{frame}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+        \node[at=(current page.center)] {
+        \includegraphics[keepaspectratio,
+                         width=\paperwidth,
+                         height=\paperheight]{frontespizio_slide}
+        };
+        \end{tikzpicture}
+        \end{frame}
+}
+
 \begin{frame}
 \frametitle{Calcolo Proposizionale}
 Introduciamo un sistema formale per il Calcolo Proposizionale
@@ -107,7 +121,7 @@ la regola di \emph{sostituzione} a partire da $D_h$.
 \end{itemize}
 
 Se $\alpha \in L_{CP}$ ed esiste una dimostrazione $D$ il cui ultimo termine è $\alpha$,
-diciamo che esiste una dimostrazione di $\alpha$ e scriviamo $\vdash \alpha$.
+diciamo che $\alpha$ è un \emph{teorema} e scriviamo $\vdash \alpha$.
 \end{frame}
 
 \begin{frame}
@@ -131,18 +145,6 @@ Tutti i connettivi presenti in $CP$ sono interpretati come operatori vero-funzio
 \end{frame}
 
 \begin{frame}
-\frametitle{Calcolo Proposizionale: Semantica}
-Chiamiamo \emph{interpretazione} una funzione $I : A \to \{0, 1\} \subset \mathbb{N}$
-Data un'interpretazione $I$ definiamo la funzione $V_I : L_{CP} \to \{0, 1\} \subset \mathbb{N}$
-come segue:
-\begin{itemize}
-\item $V_I(x) = I(x)$, $\forall x \in A$
-\item $V_I((\alpha) \lor (\beta)) = max\{V_I(\alpha), V_I(\beta)\}$
-\item $V_I(\neg (\alpha)) = 1 - V_I(\alpha)$
-\end{itemize}
-\end{frame}
-
-\begin{frame}
 \frametitle{Calcolo Proposizionale: Teorema di Completezza}
 Per il sistema $CP$ vale il seguente importante risultato, chiamato
 \emph{Teorema di Completezza}:
@@ -159,21 +161,20 @@ e $\Diamond$ corrispondenti alle nozioni di \emph{necessità} e \emph{possibilit
 
 \begin{frame}
 \frametitle{Logica Modale: Sulla vero-funzionalità di $\Box$ e $\Diamond$}
-È noto che qualsiasi operatore vero-funzionale sia definibile in termini
-di negazione e disgiunzione. Quindi se $\Box$ e $\Diamond$ fossero interpretabili
-come operatori vero-funzionali, potremmo semplicemente aggiungerli come connettivi
-derivati in $CP$ senza aggiungere altro.
+$\Box$ e $\Diamond$ non possono essere operatori vero-funzionali.
 
+Infatti non basta sapere che ``Vincenzo è ricco'' è vera per esprimersi
+circa il valore di verità da associare alla proposizione ``È necessario che Vincenzo sia ricco''.
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Logica Modale: Sulla vero-funzionalità di $\Box$ e $\Diamond$}
-Ma così non è!
+È noto che qualsiasi operatore vero-funzionale sia definibile in termini
+di negazione e disgiunzione. Quindi se $\Box$ e $\Diamond$ fossero stati interpretabili
+come operatori vero-funzionali, avremmo potuto semplicemente aggiungerli come connettivi
+derivati in $CP$ senza bisogno di fare altro.
 
-Infatti non basta sapere che ``Vincenzo è ricco'' è vera per esprimersi
-circa la verità dell'affermazione ``È necessario che Vincenzo sia ricco''.
-
-Dobbiamo allora estendere $CP$ in maniera sostanziale.
 \end{frame}
 
 \begin{frame}
@@ -228,7 +229,7 @@ all'interno di $\alpha$ è una conseguenza di $\alpha$.
 
 \item {\color{red} Regola di necessitazione:
 
-$$\frac{\alpha}{\Box alpha}$$}
+$$\frac{\alpha}{\Box \alpha}$$}
 \end{enumerate}
 \end{frame}
 
@@ -273,13 +274,13 @@ la regola di \emph{necessitazione} a partire da $D_h$}.
 \end{itemize}
 
 Se $\alpha \in L$ ed esiste una dimostrazione $D$ in un sistema $S$ il cui ultimo termine è $\alpha$,
-diciamo che esiste una dimostrazione di $\alpha$ e scriviamo $\vdash_S \alpha$.
+diciamo che $\alpha$ è un \emph{teorema} e scriviamo $\vdash_S \alpha$.
 \end{frame}
 
 \begin{frame}
 \frametitle{Relazioni tra i sistemi T, S4, S5}
 \begin{definition}
-Diremo che un sistema formale è meno forte di un altro se tutti i teoremi del primo
+Diciamo che un sistema formale è meno forte di un altro se tutti i teoremi del primo
 sono teoremi anche del secondo.
 \end{definition}
 
@@ -287,12 +288,8 @@ sono teoremi anche del secondo.
 È ovvio che $CP$ è meno forte del Sistema $T$, che è meno forte sia del sistema $S4$
 che del sistema $S5$.
 \end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Relazioni tra i sistemi T, S4, S5 II}
 \begin{theorem}
-$\vdash \Box p \rightarrow \Box \Box p$ in $S5$, ovvero il Sistema S5 è più forte del Sistema S4.
+$\vdash_{S5} \Box p \rightarrow \Box \Box p$, ovvero il Sistema S4 è meno forte del Sistema S5.
 \end{theorem}
 \end{frame}
 
@@ -317,7 +314,7 @@ Fissato $w \in W$:
 \begin{itemize}
 \item $V(x, w) = I(x, w), \forall x \in A$
 \item $V(\neg (\alpha), w) = 1 - V(\alpha, w)$
-\item $V((\alpha) \lor (\beta), w) = max{V(\alpha, w), V(\beta, w)}$
+\item $V((\alpha) \lor (\beta), w) = max\{V(\alpha, w), V(\beta, w)\}$
 \item {\color{red} $V(\Box (\alpha), w) = min\{ V(\alpha, w') : w' \in W$ e $w R w' \}$}
 \end{itemize}
 \end{frame}
@@ -373,7 +370,7 @@ Basta costruire un $S5$-modello come segue:
 \begin{itemize}
     \item $W = \{w_1, w_2\}$;
     \item $R = W x W$;
-    \item $I(1, w_1) = \begin{cases}
+    \item $I(x, w_1) = \begin{cases}
                       1 & \mbox{se } x = p \mbox{ e } w = w_1 \\
                       0 & \mbox{altrimenti}
     \end{cases}$
@@ -668,12 +665,12 @@ Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo,
 se $\beta$ è una sottoformula di $w_i'$ e a $\beta$ è assegnato univocamente il valore di verità falso
 nel rettangolo $w_i$,
 
-allora $\vdash \beta \rightarrow w_i'$ in T
+allora $\vdash_T \beta \rightarrow w_i'$
 
 Se invece a $\beta$ è associato il valore di verità vero,
 
 
-allora $\vdash \neg \beta \rightarrow w_i'$ in T
+allora $\vdash_T \neg \beta \rightarrow w_i'$
 \end{block}
 \end{frame}
 
@@ -682,7 +679,7 @@ allora $\vdash \neg \beta \rightarrow w_i'$ in T
 \begin{block}{Lemma 2}
 Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
 non ci sono operatori contrassegnati con $\dagger$,
-se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
+se in $w_i$ c'è un'inconsistenza, allora $\vdash_T w_i'$.
 \end{block}
 \end{frame}
 
@@ -691,7 +688,7 @@ se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
 \begin{block}{Lemma 3}
 Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
 non ci sono operatori contrassegnati con $\dagger$,
-se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
+se in $w_i$ c'è un'inconsistenza, allora $\vdash_T w_i'$.
 \end{block}
 \end{frame}
 
@@ -700,8 +697,8 @@ se in $w_i$ c'è un'inconsistenza, allora $\vdash w_i'$ in T.
 
 \begin{block}{Lemma 4}
 Se nel rettangolo $w_i$ c'è un operatore contrassegnato con $\dagger$
-e $w_i(1), w_i(2), w_i(3)$ sono i suoi rettangoli alternativi:
-$$\vdash w_i(1)', \vdash w_i(2)', \vdash w_i(3)' \rightarrow \vdash w_i'$$
+e $w_i(1), \ldots, w_i(n)$ sono i suoi rettangoli alternativi:
+$$\vdash_T w_i(1)', \ldots, \vdash_T w_i(n)' \rightarrow \vdash_T w_i'$$
 \end{block}
 \end{frame}
 
@@ -759,10 +756,19 @@ Se $\alpha \in L$ e $\vDash_T \alpha$, nel sistema
 completo di T-diagrammi di $\alpha$ c'è sicuramente un'inconsistenza.
 Sfruttando i lemmi che abbiamo enunciato poc'anzi si riesce a mostrare
 che $w_1'$ è un teorema, ma per costruzione $w_1'$ è $\alpha$.
-Quindi otteniamo:
+Quindi ricordando anche il Teorema di Adeguatezza otteniamo:
 $$\vdash_T \alpha \Leftrightarrow \vDash_T \alpha$$
 \end{frame}
 
+\begin{frame}
+\frametitle{Conclusioni}
+Le semantiche di Kripke si sono rivelate uno strumento molto utile per analizzare le differenze
+tra i vari sistemi di logica modale introdotti.
+
+Lo studio effettuato ci porta
+a considerare questi sistemi non tanto come antagonisti tra di loro, ma piuttosto come rappresentazioni
+di sfumature diverse dei concetti di \emph{necessità} e \emph{possibilità}.
+\end{frame}
 
 \begin{frame}
 Grazie per l'attenzione.
