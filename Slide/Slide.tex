@@ -135,22 +135,14 @@ come segue:
 \item $V_I(\neg (\alpha)) = 1 - V_I(\alpha)$
 \end{itemize}
 
+Tutti i connettivi presenti in $CP$ sono interpretati come operatori vero-funzionali.
+
 Sia $\alpha \in L_{CP}$, diciamo che $\alpha$ è \emph{valida} e scriviamo $\vDash \alpha$ se
 $V_I(\alpha) = 1$, per ogni interpretazione $I$.
 \end{frame}
 
 \begin{frame}
 \frametitle{Calcolo Proposizionale: Semantica}
-Tutti i connettivi presenti in $CP$ sono interpretati come operatori vero-funzionali.
-\end{frame}
-
-\begin{frame}
-\frametitle{Calcolo Proposizionale: Teorema di Completezza}
-Per il sistema $CP$ vale il seguente importante risultato, chiamato
-\emph{Teorema di Completezza}:
-
-Per ogni $\alpha \in L_{CP}$ si ha:
-$$\vdash \alpha \Leftrightarrow \vDash \alpha$$
 \end{frame}
 
 \begin{frame}
@@ -163,8 +155,8 @@ e $\Diamond$ corrispondenti alle nozioni di \emph{necessità} e \emph{possibilit
 \frametitle{Logica Modale: Sulla vero-funzionalità di $\Box$ e $\Diamond$}
 $\Box$ e $\Diamond$ non possono essere operatori vero-funzionali.
 
-Infatti non basta sapere che ``Vincenzo è ricco'' è vera per esprimersi
-circa il valore di verità da associare alla proposizione ``È necessario che Vincenzo sia ricco''.
+Infatti non basta sapere che ``Vincenzo è ricco'' è vera per potersi esprimere
+sul valore di verità da associare alla proposizione ``È necessario che Vincenzo sia ricco''.
 \end{frame}
 
 
@@ -651,112 +643,110 @@ diciamo che abbiamo ottenuto un sistema completo di T-diagrammi per $\alpha$.
 \end{frame}
 
 
-\begin{frame}
-\frametitle{Sistema T: Teorema di completezza}
-Data una formula $\alpha \in L$ costruiamo il suo sistema completo di T-diagrammi.
-Ad ogni rettangolo $w_i$ associamo la formula:
-$$w_i' := \gamma \lor \neg \beta_1 \lor \ldots \lor \neg \beta_n$$
-\end{frame}
+% \begin{frame}
+% \frametitle{Sistema T: Teorema di completezza}
+% Data una formula $\alpha \in L$ costruiamo il suo sistema completo di T-diagrammi.
+% Ad ogni rettangolo $w_i$ associamo la formula:
+% $$w_i' := \gamma \lor \neg \beta_1 \lor \ldots \lor \neg \beta_n$$
+% \end{frame}
+
+% \begin{frame}
+% \frametitle{Sistema T: Teorema di completezza}
+% \begin{block}{Lemma 1}
+% Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo,
+% se $\beta$ è una sottoformula di $w_i'$ e a $\beta$ è assegnato univocamente il valore di verità falso
+% nel rettangolo $w_i$,
+
+% allora $\vdash_T \beta \rightarrow w_i'$
+
+% Se invece a $\beta$ è associato il valore di verità vero,
+
+
+% allora $\vdash_T \neg \beta \rightarrow w_i'$
+% \end{block}
+% \end{frame}
+
+% \begin{frame}
+% \frametitle{Sistema T: Teorema di completezza}
+% \begin{block}{Lemma 2}
+% Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
+% non ci sono operatori contrassegnati con $\dagger$,
+% se in $w_i$ c'è un'inconsistenza, allora $\vdash_T w_i'$.
+% \end{block}
+% \end{frame}
+
+% \begin{frame}
+% \frametitle{Sistema T: Teorema di completezza}
+% \begin{block}{Lemma 3}
+% Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
+% non ci sono operatori contrassegnati con $\dagger$,
+% se in $w_i$ c'è un'inconsistenza, allora $\vdash_T w_i'$.
+% \end{block}
+% \end{frame}
+
+% \begin{frame}
+% \frametitle{Sistema T: Teorema di completezza}
+
+% \begin{block}{Lemma 4}
+% Se nel rettangolo $w_i$ c'è un operatore contrassegnato con $\dagger$
+% e $w_i(1), \ldots, w_i(n)$ sono i suoi rettangoli alternativi:
+% $$\vdash_T w_i(1)', \ldots, \vdash_T w_i(n)' \rightarrow \vdash_T w_i'$$
+% \end{block}
+% \end{frame}
+
+
+% \begin{frame}
+% \frametitle{Sistema T: Teorema di completezza}
+%     \begin{tikzpicture}[
+%     world/.style={rectangle,draw},
+%     invisible/.style={rectangle}]
+%         \node[world] (w_1)
+%             { $\Box p \underset{\dagger}{\underset{0}{\leftrightarrow}} \neg \diamond \neg p$
+%             };
+
+%         \node[black, left] at (w_1.west) {$w_1$};
+
+%         \node[world] (w_1') [below left=of w_1]
+%             { $\stackrel{*}{\underset{1}{\Box} \underset{1}{p}} \underset{0}{\leftrightarrow} \underset{0}{\neg} \underset{*}{\underset{1}{\diamond}} \neg p$
+%             };
+
+%         \node[black, left] at (w_1'.west) {$w_1(1)$};
+
+%         \node[world] (w_2) [below=of w_1']
+%             { $\begin{array}{c|c}
+%                 \underline{\underset{1}{\neg}\underset{0}{p}} &
+%                 \underset{1}{p}
+%             \end{array}$
+%             };
+
+%         \node[black, right] at (w_2.east) {$w_2$};
+
+%         \node[world] (w_1'') [below right=of w_1]
+%             { $\underset{*}{\underset{0}{\Box}} p \underset{0}{\leftrightarrow} \underset{1}{\neg} \stackrel{*}{\underset{0}{\diamond}} \underset{0}{\neg} \underset{1}{p}$
+%             };
+
+%         \node[black, left] at (w_1''.west) {$w_1(2)$};
+
+%         \node[world] (w_3) [below=of w_1'']
+%             { $\begin{array}{c|c}
+%                 \underline{\underset{0}{p}} &
+%                 \underset{0}{\neg}\underset{1}{p}
+%             \end{array}$
+%             };
+
+%         \node[black, right] at (w_3.east) {$w_3$};
+
+%         \draw[->] (w_1') -- (w_2);
+%         \draw[->] (w_1'') -- (w_3);
+
+%     \end{tikzpicture}
+% \end{frame}
 
 \begin{frame}
 \frametitle{Sistema T: Teorema di completezza}
-\begin{block}{Lemma 1}
-Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo,
-se $\beta$ è una sottoformula di $w_i'$ e a $\beta$ è assegnato univocamente il valore di verità falso
-nel rettangolo $w_i$,
-
-allora $\vdash_T \beta \rightarrow w_i'$
-
-Se invece a $\beta$ è associato il valore di verità vero,
-
-
-allora $\vdash_T \neg \beta \rightarrow w_i'$
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Sistema T: Teorema di completezza}
-\begin{block}{Lemma 2}
-Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
-non ci sono operatori contrassegnati con $\dagger$,
-se in $w_i$ c'è un'inconsistenza, allora $\vdash_T w_i'$.
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Sistema T: Teorema di completezza}
-\begin{block}{Lemma 3}
-Dato un sistema completo di T-diagrammi e sia $w_i$ un suo rettangolo in cui
-non ci sono operatori contrassegnati con $\dagger$,
-se in $w_i$ c'è un'inconsistenza, allora $\vdash_T w_i'$.
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Sistema T: Teorema di completezza}
-
-\begin{block}{Lemma 4}
-Se nel rettangolo $w_i$ c'è un operatore contrassegnato con $\dagger$
-e $w_i(1), \ldots, w_i(n)$ sono i suoi rettangoli alternativi:
-$$\vdash_T w_i(1)', \ldots, \vdash_T w_i(n)' \rightarrow \vdash_T w_i'$$
-\end{block}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Sistema T: Teorema di completezza}
-    \begin{tikzpicture}[
-    world/.style={rectangle,draw},
-    invisible/.style={rectangle}]
-        \node[world] (w_1)
-            { $\Box p \underset{\dagger}{\underset{0}{\leftrightarrow}} \neg \diamond \neg p$
-            };
-
-        \node[black, left] at (w_1.west) {$w_1$};
-
-        \node[world] (w_1') [below left=of w_1]
-            { $\stackrel{*}{\underset{1}{\Box} \underset{1}{p}} \underset{0}{\leftrightarrow} \underset{0}{\neg} \underset{*}{\underset{1}{\diamond}} \neg p$
-            };
-
-        \node[black, left] at (w_1'.west) {$w_1(1)$};
-
-        \node[world] (w_2) [below=of w_1']
-            { $\begin{array}{c|c}
-                \underline{\underset{1}{\neg}\underset{0}{p}} &
-                \underset{1}{p}
-            \end{array}$
-            };
-
-        \node[black, right] at (w_2.east) {$w_2$};
-
-        \node[world] (w_1'') [below right=of w_1]
-            { $\underset{*}{\underset{0}{\Box}} p \underset{0}{\leftrightarrow} \underset{1}{\neg} \stackrel{*}{\underset{0}{\diamond}} \underset{0}{\neg} \underset{1}{p}$
-            };
-
-        \node[black, left] at (w_1''.west) {$w_1(2)$};
-
-        \node[world] (w_3) [below=of w_1'']
-            { $\begin{array}{c|c}
-                \underline{\underset{0}{p}} &
-                \underset{0}{\neg}\underset{1}{p}
-            \end{array}$
-            };
-
-        \node[black, right] at (w_3.east) {$w_3$};
-
-        \draw[->] (w_1') -- (w_2);
-        \draw[->] (w_1'') -- (w_3);
-
-    \end{tikzpicture}
-\end{frame}
-
-\begin{frame}
-\frametitle{Sistema T: Teorema di completezza}
-Se $\alpha \in L$ e $\vDash_T \alpha$, nel sistema
-completo di T-diagrammi di $\alpha$ c'è sicuramente un'inconsistenza.
-Sfruttando i lemmi che abbiamo enunciato poc'anzi si riesce a mostrare
-che $w_1'$ è un teorema, ma per costruzione $w_1'$ è $\alpha$.
-Quindi ricordando anche il Teorema di Adeguatezza otteniamo:
+Se $\alpha \in L$, si può sfruttare la procedura di decisione definita
+per dimostrare che ogni formula T-valida è anche un teorema di T.
+Quindi, ricordando anche il Teorema di Adeguatezza otteniamo:
 $$\vdash_T \alpha \Leftrightarrow \vDash_T \alpha$$
 \end{frame}
 
